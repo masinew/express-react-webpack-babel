@@ -6,9 +6,9 @@ import PageNotFound from './components/PageNotFound';
 import HelloWorld from './components/HelloWorld';
 
 const routes = (
-  <Route path="/member" component={Layout}>
+  <Route path="/" component={Layout}>
     <IndexRoute component={LoginForm} />
-    <Route path="/member/blog" component={HelloWorld} />
+    <Route path="/blog" component={HelloWorld} />
     <Route path="*" component={PageNotFound} />
   </Route>
 );

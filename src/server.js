@@ -1,25 +1,39 @@
 import path from 'path';
 import Express from 'express'
 import { Server } from 'http'
+import React from 'react';
 import { match, RouterContext } from 'react-router';
+import { renderToString } from 'react-dom/server';
 import routes from './routes'
 import PageNotFound from './components/PageNotFound';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
+
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var mongoose = require('mongoose');
+var jwt = require('jsonwebtoken');
+var config = require('./config');
+var User = require('./app/models/user');
+var apiRoute = require('./routes/api-route');
 
 const app = new Express();
 const server = new Server(app);
+
+mongoose.connect(config.database);
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(morgan('dev'));
 
 app.set('views', path.join(__dirname, 'static'));
 app.set('view engine', 'ejs');
 
 app.use(Express.static(path.join(__dirname, 'public')));
+app.use('/api', apiRoute);
 
-app.get('/blog', function(req, res) {
+app.get('/auth', function(req, res) {
   res.end('555');
 });
 
-app.get('/member', (req, res) => {
+app.get('*', (req, res) => {
   match(
     {routes, location: req.url},
     (err, redirectLocation, renderProps) => {

@@ -21508,10 +21508,13 @@
 	var LoginForm = function (_Component) {
 	  _inherits(LoginForm, _Component);
 
-	  function LoginForm() {
+	  function LoginForm(props) {
 	    _classCallCheck(this, LoginForm);
 
-	    return _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+
+	    _this.state = { asd: 'asd' };
+	    return _this;
 	  }
 
 	  _createClass(LoginForm, [{
@@ -21536,7 +21539,8 @@
 	                _react2.default.createElement(
 	                  'label',
 	                  { className: 'col-xs-3 col-form-label' },
-	                  'Username'
+	                  'Username',
+	                  this.state.asd
 	                ),
 	                _react2.default.createElement(
 	                  'div',
@@ -21704,7 +21708,7 @@
 	              { className: 'nav-item active' },
 	              _react2.default.createElement(
 	                _reactRouter.Link,
-	                { className: 'nav-link', to: '/member' },
+	                { className: 'nav-link', to: '/' },
 	                'Home'
 	              )
 	            ),
@@ -21713,7 +21717,7 @@
 	              { className: 'nav-item' },
 	              _react2.default.createElement(
 	                _reactRouter.Link,
-	                { className: 'nav-link', to: '/member/blog' },
+	                { className: 'nav-link', to: '/blog' },
 	                'Blog'
 	              )
 	            )
@@ -26782,9 +26786,9 @@
 
 	var routes = _react2.default.createElement(
 	  _reactRouter.Route,
-	  { path: '/member', component: _Layout2.default },
+	  { path: '/', component: _Layout2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _LoginForm2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/member/blog', component: _HelloWorld2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _HelloWorld2.default }),
 	  _react2.default.createElement(_reactRouter.Route, { path: '*', component: _PageNotFound2.default })
 	);
 
