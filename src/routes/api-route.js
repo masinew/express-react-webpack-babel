@@ -1,10 +1,10 @@
-import Express from 'express';
+import Express, { Router } from 'express';
 import User from '../app/models/user';
 import jwt from 'jsonwebtoken';
 import config from '../config';
 import { LocalStorage } from 'node-localstorage';
-const app = Express();
-const apiRoute = Express.Router();
+const app = new Express();
+const apiRoute =  new Router();
 let localStorage = new LocalStorage('./scratch');
 
 app.set('superSecret', config.secret);

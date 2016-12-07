@@ -21508,13 +21508,10 @@
 	var LoginForm = function (_Component) {
 	  _inherits(LoginForm, _Component);
 
-	  function LoginForm(props) {
+	  function LoginForm() {
 	    _classCallCheck(this, LoginForm);
 
-	    var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
-
-	    _this.state = { asd: 'asd' };
-	    return _this;
+	    return _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).apply(this, arguments));
 	  }
 
 	  _createClass(LoginForm, [{
@@ -21539,8 +21536,7 @@
 	                _react2.default.createElement(
 	                  'label',
 	                  { className: 'col-xs-3 col-form-label' },
-	                  'Username',
-	                  this.state.asd
+	                  'Username'
 	                ),
 	                _react2.default.createElement(
 	                  'div',
@@ -21630,12 +21626,18 @@
 	  }
 
 	  _createClass(HelloWorld, [{
+	    key: 'asd',
+	    value: function asd() {
+	      return 123;
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'HelloWorld'
+	        'HelloWorld ',
+	        this.asd()
 	      );
 	    }
 	  }]);

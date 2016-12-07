@@ -1,24 +1,46 @@
 import path from 'path';
-import Express from 'express'
-import { Server } from 'http'
+import Express from 'express';
+import { Server } from 'http';
+import bodyParser from 'body-parser';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
+
+// System configuration
+import config from './config';
+
+// Mongoose models
+import User from './app/models/user';
+
+// Express routes
+import apiRoute from './routes/api-route';
+import authRoute from './routes/auth-route';
+
+// React for handling routes
 import React from 'react';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
 import routes from './routes'
 import PageNotFound from './components/PageNotFound';
 
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-var mongoose = require('mongoose');
-var jwt = require('jsonwebtoken');
-var config = require('./config');
-var User = require('./app/models/user');
-var apiRoute = require('./routes/api-route');
-
 const app = new Express();
 const server = new Server(app);
 
-mongoose.connect(config.database);
+mongoose.connect(config.database, function(err) {
+  if (err) throw err;
+
+  const port = process.env.PORT || 3000;
+  const env = process.env.NODE_ENV || 'production';
+  server.listen(port, (err) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.info(`Server running on http://localhost:${port} [${env}]`);
+  });
+});
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -28,10 +50,7 @@ app.set('view engine', 'ejs');
 
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', apiRoute);
-
-app.get('/auth', function(req, res) {
-  res.end('555');
-});
+app.use('/auth', authRoute);
 
 app.get('*', (req, res) => {
   match(
@@ -60,13 +79,13 @@ app.get('*', (req, res) => {
 
 
 
-const port = process.env.PORT || 3000;
-const env = process.env.NODE_ENV || 'production';
-server.listen(port, (err) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-
-  console.info(`Server running on http://localhost:${port} [${env}]`);
-});
+// const port = process.env.PORT || 3000;
+// const env = process.env.NODE_ENV || 'production';
+// server.listen(port, (err) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+//
+//   console.info(`Server running on http://localhost:${port} [${env}]`);
+// });
