@@ -34,7 +34,7 @@
 /******/ 	__webpack_require__.c = installedModules;
 
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/assets/";
+/******/ 	__webpack_require__.p = "/assets/js/";
 
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
@@ -21508,13 +21508,44 @@
 	var LoginForm = function (_Component) {
 	  _inherits(LoginForm, _Component);
 
-	  function LoginForm() {
+	  function LoginForm(props) {
 	    _classCallCheck(this, LoginForm);
 
-	    return _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
+
+	    _this.state = {
+	      username: ''
+	    };
+
+	    _this.handleUserName = _this.handleUserName.bind(_this);
+	    _this.handlePassword = _this.handlePassword.bind(_this);
+	    _this.handleOnSubmit = _this.handleOnSubmit.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(LoginForm, [{
+	    key: 'handleUserName',
+	    value: function handleUserName(event) {
+	      var value = event.target.value;
+	      this.setState({
+	        username: value
+	      });
+	    }
+	  }, {
+	    key: 'handlePassword',
+	    value: function handlePassword(event) {
+	      var value = event.target.value;
+	      this.setState({
+	        password: value
+	      });
+	    }
+	  }, {
+	    key: 'handleOnSubmit',
+	    value: function handleOnSubmit(event) {
+	      console.log(event.target);
+	      event.preventDefault();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -21529,7 +21560,7 @@
 	            { className: 'col-sm-8' },
 	            _react2.default.createElement(
 	              'form',
-	              null,
+	              { onSubmit: this.handleOnSubmit },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'form-group row' },
@@ -21541,7 +21572,7 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'col-xs-9' },
-	                  _react2.default.createElement('input', { type: 'text', className: 'form-control' })
+	                  _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.username, onChange: this.handleUserName })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -21626,18 +21657,12 @@
 	  }
 
 	  _createClass(HelloWorld, [{
-	    key: 'asd',
-	    value: function asd() {
-	      return 123;
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'HelloWorld ',
-	        this.asd()
+	        'HelloWorld'
 	      );
 	    }
 	  }]);
@@ -21720,6 +21745,15 @@
 	              _react2.default.createElement(
 	                _reactRouter.Link,
 	                { className: 'nav-link', to: '/blog' },
+	                'Blog'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'li',
+	              { className: 'nav-item' },
+	              _react2.default.createElement(
+	                _reactRouter.Link,
+	                { className: 'nav-link', to: '/member/login' },
 	                'Blog'
 	              )
 	            )
@@ -26790,7 +26824,12 @@
 	  _reactRouter.Route,
 	  { path: '/', component: _Layout2.default },
 	  _react2.default.createElement(_reactRouter.IndexRoute, { component: _LoginForm2.default }),
-	  _react2.default.createElement(_reactRouter.Route, { path: '/blog', component: _HelloWorld2.default }),
+	  _react2.default.createElement(_reactRouter.Route, { path: 'blog', component: _HelloWorld2.default }),
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: 'member', component: _LoginForm2.default },
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _LoginForm2.default })
+	  ),
 	  _react2.default.createElement(_reactRouter.Route, { path: '*', component: _PageNotFound2.default })
 	);
 

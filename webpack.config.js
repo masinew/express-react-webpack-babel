@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/app-client.js',
   output: {
     path: path.join(__dirname, 'src', 'public', 'assets', 'js'),
-    publicPath: '/assets/',
+    publicPath: '/assets/js/',
     filename: 'bundle.js'
   },
   module: {

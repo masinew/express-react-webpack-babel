@@ -7,7 +7,7 @@ const app = new Express();
 const apiRoute =  new Router();
 let localStorage = new LocalStorage('./scratch');
 
-app.set('superSecret', config.secret);
+app.set('secretKey', config.secret);
 
 app.get('/setup', function(req, res) {
   var champ = new User({
@@ -39,7 +39,7 @@ apiRoute.post('/authenticate', function(req, res) {
         res.json({ sucess: false, message: 'wrong password'})
       }
       else {
-        var token = jwt.sign(user, app.get('superSecret'), {
+        var token = jwt.sign(user, app.get('secretKey'), {
           expiresIn: 600
         });
 
@@ -56,7 +56,7 @@ apiRoute.post('/authenticate', function(req, res) {
 apiRoute.use(function(req, res, next) {
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   if (token) {
-    jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+    jwt.verify(token, app.get('secretKey'), function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.' });
       }

@@ -22,6 +22,11 @@ export default class Navbar extends Component {
                 Blog
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/member/login">
+                Blog
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
