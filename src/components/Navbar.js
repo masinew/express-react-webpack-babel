@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Search from './Search'
-import { Link } from 'react-router';
+import NavLink from './NavLink';
 
 export default class Navbar extends Component {
   render() {
@@ -12,20 +12,20 @@ export default class Navbar extends Component {
             {' '}Brand
           </a>
           <ul className="nav navbar-nav">
-            <li className="nav-item active">
-              <Link className="nav-link" to="/">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/" onlyActiveOnIndex={true}>
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/blog">
+              <NavLink className="nav-link" to="/blog">
                 Blog
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/member/login">
+              <NavLink className="nav-link" to="/member/login">
                 Blog
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </nav>
