@@ -9,7 +9,7 @@ let localStorage = new LocalStorage('./scratch');
 
 app.set('secretKey', config.secret);
 
-app.get('/setup', function(req, res) {
+apiRoute.get('/setup', function(req, res) {
   var champ = new User({
     name: 'champ',
     password: 'champpassword',
