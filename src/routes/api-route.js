@@ -2,12 +2,34 @@ import Express, { Router } from 'express';
 import User from '../app/models/user';
 import jwt from 'jsonwebtoken';
 import config from '../config';
-import { LocalStorage } from 'node-localstorage';
+import Session from 'express-session';
+import MongoStore from 'connect-mongo';
+import mongoose from 'mongoose';
+
+const SessionStore = new MongoStore(Session);
 const app = new Express();
 const apiRoute =  new Router();
-let localStorage = new LocalStorage('./scratch');
 
 app.set('secretKey', config.secret);
+const sessionOptions = {
+  name: 'token',
+  genid: function(req) {
+    return jwt.sign({champ: 'champ'}, app.get('secretKey'), {
+      expiresIn: 60000
+    });
+  },
+  cookie: {
+    maxAge: 30000
+  },
+  secret: app.get('secretKey'),
+  resave: false,
+  saveUninitialized: true,
+  store: new SessionStore({ mongooseConnection: mongoose.connection })
+}
+
+apiRoute.get('/', function(req, res) {
+  res.json({message: 'Welcome to API route'});
+});
 
 apiRoute.get('/setup', function(req, res) {
   var champ = new User({
@@ -24,7 +46,7 @@ apiRoute.get('/setup', function(req, res) {
   });
 });
 
-apiRoute.post('/authenticate', function(req, res) {
+apiRoute.post('/authenticate', function(req, res, next) {
   var body = req.body;
   User.findOne({
     name: body.name
@@ -40,7 +62,7 @@ apiRoute.post('/authenticate', function(req, res) {
       }
       else {
         var token = jwt.sign(user, app.get('secretKey'), {
-          expiresIn: 600
+          expiresIn: 60000
         });
 
         res.json({
@@ -48,9 +70,37 @@ apiRoute.post('/authenticate', function(req, res) {
           message: "Welcome",
           token: token
         });
+
       }
     }
   });
+});
+
+
+
+apiRoute.get('/test', function(req, res, next) {
+  const token = jwt.sign({champ: 'champ'}, app.get('secretKey'), {
+    expiresIn: 60000
+  });
+
+  next()
+});
+
+apiRoute.use(Session(sessionOptions));
+
+apiRoute.use(function(req, res, next) {
+  req.session.champ = 1;
+  // res.end('asd');
+  next();
+});
+
+apiRoute.get('/token', function(req, res) {
+  if (req.session.id) {
+    res.end(req.session.id);
+  }
+  else {
+    res.end('No Token Cookie!!');
+  }
 });
 
 apiRoute.use(function(req, res, next) {
@@ -62,7 +112,6 @@ apiRoute.use(function(req, res, next) {
       }
       else {
         req.decoded = decoded;
-        localStorage.setItem('token', token);
         next();
       }
     })
@@ -75,8 +124,8 @@ apiRoute.use(function(req, res, next) {
   }
 });
 
-apiRoute.get('/', function(req, res) {
-  res.json({message: 'Welcome to API route', token: localStorage.getItem('token')});
+apiRoute.get('/welcome', function(req, res) {
+  res.json({message: 'Welcome to API route'});
 });
 
 apiRoute.get('/users', function(req, res) {

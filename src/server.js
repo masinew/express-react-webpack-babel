@@ -15,6 +15,7 @@ import User from './app/models/user';
 // Express routes
 import apiRoute from './routes/api-route';
 import authRoute from './routes/auth-route';
+import apiv1 from './routes/api/v1/auth';
 
 // React for handling routes
 import React from 'react';
@@ -23,8 +24,27 @@ import { renderToString } from 'react-dom/server';
 import routes from './routes'
 import PageNotFound from './components/PageNotFound';
 
+// Express Session
+import Session from 'express-session';
+import MongoStore from 'connect-mongo';
+
+// Express Setting
 const app = new Express();
+app.set('views', path.join(__dirname, 'static'));
+app.set('view engine', 'ejs');
+app.set('secretKey', config.secret);
+
 const server = new Server(app);
+const SessionStore = new MongoStore(Session);
+const sessionOptions = {
+  cookie: {
+    maxAge: 10000
+  },
+  secret: app.get('secretKey'),
+  resave: false,
+  saveUninitialized: true,
+  store: new SessionStore({ mongooseConnection: mongoose.connection })
+};
 
 mongoose.connect(config.database, function(err) {
   if (err) throw err;
@@ -44,13 +64,23 @@ mongoose.connect(config.database, function(err) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-
-app.set('views', path.join(__dirname, 'static'));
-app.set('view engine', 'ejs');
+// app.use(Session(sessionOptions));
 
 app.use(Express.static(path.join(__dirname, 'public')));
-app.use('/api', apiRoute);
+app.use('/apis', apiRoute);
+app.use('/api/v1', apiv1);
 app.use('/auth', authRoute);
+
+// app.get('/', function(req, res) {
+//   if (req.session.view) {
+//     req.session.view++;
+//   }
+//   else {
+//     req.session.view = 1;
+//   }
+//
+//   res.end(req.session.view.toString());
+// });
 
 app.get('*', (req, res) => {
   match(
