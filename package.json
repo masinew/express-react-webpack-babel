@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Nattajak Grisiam",
   "scripts": {
-    "react-dev": "webpack-dev-server --hot --inline --content-base src/static --port 3000",
+    "react-dev": "SET NODE_ENV=development&& webpack-dev-server --hot --inline --content-base src/static --port 3000",
     "dev": "SET NODE_ENV=development && SET PORT=3000 && nodemon --exec babel-node src/server.js",
     "prestart": "babel src --out-dir dist",
     "start": "node dist/server.js"

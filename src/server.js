@@ -13,9 +13,7 @@ import config from './config';
 import User from './app/models/user';
 
 // Express routes
-import apiRoute from './routes/api-route';
-import authRoute from './routes/auth-route';
-import apiv1 from './routes/api/v1/auth';
+import apiV1 from './routes/api/v1/main';
 
 // React for handling routes
 import React from 'react';
@@ -32,18 +30,18 @@ import MongoStore from 'connect-mongo';
 const app = new Express();
 app.set('views', path.join(__dirname, 'static'));
 app.set('view engine', 'ejs');
-app.set('secretKey', config.secret);
+app.set('sessionKey', config.sessionKey);
 
 const server = new Server(app);
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
-    maxAge: 10000
+    maxAge: 60*60*1000
   },
-  secret: app.get('secretKey'),
-  resave: false,
-  saveUninitialized: true,
-  store: new SessionStore({ mongooseConnection: mongoose.connection })
+  store: new SessionStore({mongooseConnection: mongoose.connection}),
+  secret: app.get('sessionKey'),
+  resave: true,
+  saveUninitialized: true
 };
 
 mongoose.connect(config.database, function(err) {
@@ -64,23 +62,18 @@ mongoose.connect(config.database, function(err) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-// app.use(Session(sessionOptions));
+app.use(Session(sessionOptions));
 
 app.use(Express.static(path.join(__dirname, 'public')));
-app.use('/apis', apiRoute);
-app.use('/api/v1', apiv1);
-app.use('/auth', authRoute);
+app.use('/api/v1', apiV1);
 
-// app.get('/', function(req, res) {
-//   if (req.session.view) {
-//     req.session.view++;
-//   }
-//   else {
-//     req.session.view = 1;
-//   }
-//
-//   res.end(req.session.view.toString());
-// });
+app.get('/checktoken', function(req, res) {
+  console.log(req.session.token);
+  if (req.session.token)
+    res.end(req.session.token);
+
+  res.end('123456465465');
+});
 
 app.get('*', (req, res) => {
   match(
@@ -106,16 +99,3 @@ app.get('*', (req, res) => {
     }
   );
 });
-
-
-
-// const port = process.env.PORT || 3000;
-// const env = process.env.NODE_ENV || 'production';
-// server.listen(port, (err) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-//
-//   console.info(`Server running on http://localhost:${port} [${env}]`);
-// });

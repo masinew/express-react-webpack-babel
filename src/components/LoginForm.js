@@ -28,7 +28,7 @@ export default class LoginForm extends Component {
   }
 
   handleOnSubmit(event) {
-    console.log(event.target);
+    alert(event.target);
     event.preventDefault();
   }
 

@@ -21542,7 +21542,7 @@
 	  }, {
 	    key: 'handleOnSubmit',
 	    value: function handleOnSubmit(event) {
-	      console.log(event.target);
+	      alert(event.target);
 	      event.preventDefault();
 	    }
 	  }, {

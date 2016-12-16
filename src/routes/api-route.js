@@ -10,23 +10,6 @@ const SessionStore = new MongoStore(Session);
 const app = new Express();
 const apiRoute =  new Router();
 
-app.set('secretKey', config.secret);
-const sessionOptions = {
-  name: 'token',
-  genid: function(req) {
-    return jwt.sign({champ: 'champ'}, app.get('secretKey'), {
-      expiresIn: 60000
-    });
-  },
-  cookie: {
-    maxAge: 30000
-  },
-  secret: app.get('secretKey'),
-  resave: false,
-  saveUninitialized: true,
-  store: new SessionStore({ mongooseConnection: mongoose.connection })
-}
-
 apiRoute.get('/', function(req, res) {
   res.json({message: 'Welcome to API route'});
 });
@@ -76,8 +59,6 @@ apiRoute.post('/authenticate', function(req, res, next) {
   });
 });
 
-
-
 apiRoute.get('/test', function(req, res, next) {
   const token = jwt.sign({champ: 'champ'}, app.get('secretKey'), {
     expiresIn: 60000
@@ -85,8 +66,6 @@ apiRoute.get('/test', function(req, res, next) {
 
   next()
 });
-
-apiRoute.use(Session(sessionOptions));
 
 apiRoute.use(function(req, res, next) {
   req.session.champ = 1;
