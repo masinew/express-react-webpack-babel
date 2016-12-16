@@ -63,6 +63,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+  // res.header('Access-Control-Allow-Method', 'GET,POST');
+  // res.header('Access-Control-Allow-Header', 'Content-Type');
+  next();
+});
 
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api/v1', apiV1);
@@ -73,6 +79,14 @@ app.get('/checktoken', function(req, res) {
     res.end(req.session.token);
 
   res.end('123456465465');
+});
+
+app.post('/checktoken', function(req, res) {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log(username);
+  console.log(password);
+  res.end(username + "=" + password);
 });
 
 app.get('*', (req, res) => {
