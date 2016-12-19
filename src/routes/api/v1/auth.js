@@ -1,36 +1,36 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../../../app/models/user';
-
+import config from '../../../config';
 
 const router = new Router();
+const success = {success: true};
+const error = {success: false};
 
-router.post('/', function(req, res) {
+router.post('/login', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
-  const errMessage = {success: false, message: 'username or password incorrect'};
+  const successMessage = Object.assign(success, {message: 'Success'});
+  const errMessage = Object.assign(error, {message: 'Username or Password incorrect'});
   User.findOne({
     username: username
   }, function(err, result) {
-    if (err) {
+    if (err || !result || password != result.password) {
       res.json(errMessage);
-    }
-
-    if (password != result.password) {
-      res.json(errMessage);
+      return;
     }
 
     const token = req.session.token = jwt.sign({id: result._id}, 'asd',{
-      expiresIn: 6000
+      expiresIn: config.authExpire
     });
 
-    res.end(token);
+    res.json(success);
   });
 });
 
-router.get('/d', function(req, res) {
+router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
-    res.end('bye session');
+    res.json();
   });
 });
 

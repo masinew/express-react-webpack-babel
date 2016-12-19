@@ -21504,6 +21504,9 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import { polyfill } from 'es6-promise'; polyfill();
+	// import 'isomorphic-fetch';
+
 
 	var LoginForm = function (_Component) {
 	  _inherits(LoginForm, _Component);
@@ -21520,6 +21523,7 @@
 	    _this.handleUserName = _this.handleUserName.bind(_this);
 	    _this.handlePassword = _this.handlePassword.bind(_this);
 	    _this.handleOnSubmit = _this.handleOnSubmit.bind(_this);
+	    _this.forget = _this.forget.bind(_this);
 	    return _this;
 	  }
 
@@ -21542,8 +21546,47 @@
 	  }, {
 	    key: 'handleOnSubmit',
 	    value: function handleOnSubmit(event) {
-	      alert(event.target);
 	      event.preventDefault();
+
+	      var username = this.state.username;
+	      var password = this.state.password;
+	      var formData = new FormData();
+	      formData.append('username', 'champ');
+	      formData.append('password', 'password');
+	      var fetchOptions = {
+	        method: 'POST',
+	        body: formData
+	      };
+
+	      fetch('http://localhost:3000/api/v1/auth', {
+	        method: 'POST',
+	        body: formData,
+	        credentials: 'include'
+	      }).then(function (response) {
+	        response.text().then(function (text) {
+	          alert(text);
+	        });
+	      });
+
+	      // fetch('http://localhost:3000/checktoken', {
+	      //   credentials: 'include'
+	      // })
+	      //   .then(function(response) {
+	      //     response.text().then(function(text) {
+	      //       alert(text)
+	      //     })
+	      //   });
+	    }
+	  }, {
+	    key: 'forget',
+	    value: function forget() {
+	      fetch('http://localhost:3000/checktoken', {
+	        credentials: 'include'
+	      }).then(function (response) {
+	        response.text().then(function (text) {
+	          alert(text);
+	        });
+	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -21560,7 +21603,7 @@
 	            { className: 'col-sm-8' },
 	            _react2.default.createElement(
 	              'form',
-	              { onSubmit: this.handleOnSubmit },
+	              { onSubmit: this.handleOnSubmit, name: 'login-form' },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'form-group row' },
@@ -21572,7 +21615,7 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'col-xs-9' },
-	                  _react2.default.createElement('input', { type: 'text', className: 'form-control', value: this.state.username, onChange: this.handleUserName })
+	                  _react2.default.createElement('input', { type: 'text', name: 'username', className: 'form-control', value: this.state.username, onChange: this.handleUserName })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -21586,7 +21629,7 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'col-xs-9' },
-	                  _react2.default.createElement('input', { type: 'password', className: 'form-control' })
+	                  _react2.default.createElement('input', { type: 'password', name: 'password', className: 'form-control' })
 	                )
 	              ),
 	              _react2.default.createElement(
@@ -21596,10 +21639,14 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'col-xs-9' },
-	                  _react2.default.createElement('input', { type: 'submit', className: 'btn btn-primary', value: 'Login' }),
-	                  _react2.default.createElement('input', { type: 'submit', className: 'btn btn-outline-secondary', style: { marginLeft: 10 }, value: 'Forget Password' })
+	                  _react2.default.createElement('input', { type: 'submit', className: 'btn btn-primary', value: 'Login' })
 	                )
 	              )
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-outline-secondary', style: { marginLeft: 10 }, onClick: this.forget },
+	              'Forget Password'
 	            )
 	          ),
 	          _react2.default.createElement('div', { className: 'col-sm-2' })

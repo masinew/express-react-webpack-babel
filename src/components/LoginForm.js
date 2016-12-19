@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { polyfill } from 'es6-promise'; polyfill();
-import 'isomorphic-fetch';
+// import { polyfill } from 'es6-promise'; polyfill();
+// import 'isomorphic-fetch';
 import HelloWorld from './HelloWorld'
 
 export default class LoginForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        username: ''
+        username: '',
+        password: ''
     };
 
     this.handleUserName = this.handleUserName.bind(this);
@@ -31,22 +32,53 @@ export default class LoginForm extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    const a = new FormData(document.getElementById('login-form'));
-    const b = new FormData({username: "asd", password: "dsa"});
-
     const username = this.state.username;
     const password = this.state.password;
+    let formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
     const fetchOptions = {
       method: 'POST',
-      body: b
+      body: formData
     };
 
-    fetch('http://localhost:3000/checktoken', fetchOptions)
-      .then(function(response) {
-        response.text().then(function(text) {
-          alert(text)
-        })
+    fetch('http://localhost:3000/api/v1/auth/login', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include'
+    })
+      .then((response) => {
+        response.json().then((result) => {
+          const status = result.success;
+          const message = result.message;
+          if (status) {
+            alertify.success(message);
+          }
+          else {
+            alertify.error(message);
+          }
+        });
       });
+
+
+      // .then(function(response) {
+      //   response.json().then(function(jsonObj) {
+      //     const status = jsonObj.success;
+      //     console.log(status + '123');
+      //     console.log(this);
+      //     // this.state.isErr = jsonObj.success;
+      //     // console.log(this.state.isErr);
+      //   })
+      // });
+
+    // fetch('http://localhost:3000/checktoken', {
+    //   credentials: 'include'
+    // })
+    //   .then(function(response) {
+    //     response.text().then(function(text) {
+    //       alert(text)
+    //     })
+    //   });
   }
 
   render() {
@@ -65,7 +97,7 @@ export default class LoginForm extends Component {
             <div className="form-group row">
               <label className="col-xs-3 col-form-label">Password</label>
               <div className="col-xs-9">
-                <input type="password" name="password" className="form-control" />
+                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.handlePassword} />
               </div>
             </div>
             <div className="form-group row">

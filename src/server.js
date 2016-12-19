@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
 
 // System configuration
 import config from './config';
@@ -33,6 +34,7 @@ app.set('view engine', 'ejs');
 app.set('sessionKey', config.sessionKey);
 
 const server = new Server(app);
+const upload = new multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
@@ -59,12 +61,14 @@ mongoose.connect(config.database, function(err) {
   });
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(upload.array());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+  res.header('Access-Control-Allow-Credentials', 'true');
   // res.header('Access-Control-Allow-Method', 'GET,POST');
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
@@ -78,7 +82,7 @@ app.get('/checktoken', function(req, res) {
   if (req.session.token)
     res.end(req.session.token);
 
-  res.end('123456465465');
+  res.end('1');
 });
 
 app.post('/checktoken', function(req, res) {
@@ -86,6 +90,7 @@ app.post('/checktoken', function(req, res) {
   const password = req.body.password;
   console.log(username);
   console.log(password);
+  console.log(req.body);
   res.end(username + "=" + password);
 });
 
