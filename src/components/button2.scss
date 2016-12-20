@@ -1,0 +1,12 @@
+.greeting {
+  color: red;
+}
+
+@keyframes text-animation {
+  0% {
+    color: yellow;
+  }
+  100% {
+    color: red;
+  }
+}

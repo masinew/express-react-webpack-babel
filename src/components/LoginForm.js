@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 // import { polyfill } from 'es6-promise'; polyfill();
 // import 'isomorphic-fetch';
 
-import localStyle from './button.scss';
+import localStyle from './button2.scss';
 import 'bootstrap';
 import "bootstrap/dist/css/bootstrap.css";
 

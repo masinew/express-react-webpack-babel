@@ -34,8 +34,8 @@ var common = {
         exclude: /node_modules/,
         loaders: [
           'style-loader',
-          'css-loader?sourceMap=true&module=true',
-          'sass-loader',
+          'css-loader?sourceMap=true&module=true&localIdentName=[local]___[hash:base64:5]',
+          'sass-loader?outputStyle=expanded&sourceMap=true',
           'postcss-loader'
         ]
       },

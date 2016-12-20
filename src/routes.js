@@ -5,7 +5,6 @@ import LoginForm from './components/LoginForm';
 import PageNotFound from './components/PageNotFound';
 import HelloWorld from './components/HelloWorld';
 import Member from './components/Member';
-import Test from './components/test';
 
 const routes = (
   <Route path="/" component={Layout}>

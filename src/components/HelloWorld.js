@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import LoginForm from './LoginForm'
 import Navbar from './Navbar'
+import localStyle from './button2.scss';
 
 
 export default class HelloWorld extends Component {
@@ -9,7 +9,7 @@ export default class HelloWorld extends Component {
   render() {
     return (
       <div>
-        HelloWorld
+        <h1 className={localStyle.greeting}>HelloWorld</h1>
       </div>
     );
   }
