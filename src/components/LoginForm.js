@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 // import { polyfill } from 'es6-promise'; polyfill();
 // import 'isomorphic-fetch';
+
+import localStyle from './button.scss';
+import 'bootstrap';
+import "bootstrap/dist/css/bootstrap.css";
+
 import HelloWorld from './HelloWorld'
 
 export default class LoginForm extends Component {
@@ -84,12 +89,13 @@ export default class LoginForm extends Component {
   render() {
     return (
       <div className="container">
+        <h1 className={localStyle.greeting}>Hello World</h1>
         <div className="row">
         <div className="col-sm-2"></div>
         <div className="col-sm-8">
           <form onSubmit={this.handleOnSubmit} name="login-form">
             <div className="form-group row">
-              <label className="col-xs-3 col-form-label">Username</label>
+              <label className={"col-xs-3 col-form-label " + localStyle.greeting}>Username</label>
               <div className="col-xs-9">
                 <input type="text" name="username" className="form-control" value={this.state.username} onChange={this.handleUserName} />
               </div>
