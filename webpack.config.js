@@ -19,7 +19,7 @@ var common = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [
-          'babel-loader'
+          'babel-loader?babelrc=false&presets[]=es2015&presets[]=react&presets[]=stage-0'
         ]
       },
       {
