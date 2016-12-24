@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import Layout from './components/Layout';
-import LoginForm from './components/LoginForm';
-import PageNotFound from './components/PageNotFound';
-import HelloWorld from './components/HelloWorld';
-import Member from './components/Member';
+import Layout from './ui/components/Layout';
+import LoginForm from './ui/components/LoginForm';
+import PageNotFound from './ui/components/PageNotFound';
+import HelloWorld from './ui/components/HelloWorld';
+import Member from './ui/components/Member';
 
 const routes = (
   <Route path="/" component={Layout}>

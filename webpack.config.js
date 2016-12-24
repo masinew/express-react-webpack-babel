@@ -6,10 +6,15 @@ var autoprefixer = require('autoprefixer');
 
 const TARGET = process.env.npm_lifecycle_event;
 
-var common = {
-  entry: './src/app-client.js',
+module.exports = {
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-dev-server/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './src/client/client-app.js'
+  ],
   output: {
-    path: path.join(__dirname, 'src', 'public', 'assets', 'js'),
+    path: path.join(__dirname, 'src', 'server', 'public', 'assets', 'js'),
     publicPath: '/assets/js/',
     filename: 'bundle.js'
   },
@@ -19,7 +24,7 @@ var common = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [
-          'babel-loader?babelrc=false&presets[]=es2015&presets[]=react&presets[]=stage-0'
+          'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0'
         ]
       },
       {
@@ -62,6 +67,7 @@ var common = {
     ]
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -73,19 +79,12 @@ var common = {
     return [autoprefixer({
       browsers: ['last 3 versions']
     })];
+  },
+  devServer: {
+    hot: true,
+    inline: false,
+    historyApiFallback: true,
+    contentBase: 'static',
+    port: 3000
   }
-}
-
-if (TARGET === 'react-dev' || !TARGET) {
-  module.exports = merge(common, {
-    devtool: 'eval-source-map',
-    devServer: {
-      historyApiFallback: true
-    },
-    plugins: [
-      new NpmInstallPlugin({
-        save: true // --save
-      })
-    ]
-  });
 }

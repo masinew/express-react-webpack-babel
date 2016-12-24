@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
-import Navbar from './Navbar'
 
 
 export default class HelloWorld extends Component {
