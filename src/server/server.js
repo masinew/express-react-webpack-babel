@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
+import minifyHTML from 'express-minify-html';
 
 // System configuration
 import config from '../common/config/config';
@@ -73,6 +74,7 @@ app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
+app.use(minifyHTML(config.minifyHTMLOptions));
 
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api/v1', apiV1);
@@ -95,6 +97,7 @@ app.post('/checktoken', function(req, res) {
 });
 
 app.get('*', (req, res) => {
+  console.log(req.url);
   match(
     {routes, location: req.url},
     (err, redirectLocation, renderProps) => {

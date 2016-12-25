@@ -4,9 +4,6 @@ import { AppContainer } from 'react-hot-loader'
 
 import AppRoutes from './ui/components/AppRoutes'
 
-import 'bootstrap';
-import "bootstrap/dist/css/bootstrap.css";
-
 const rootElement = document.getElementById('app')
 
 render(

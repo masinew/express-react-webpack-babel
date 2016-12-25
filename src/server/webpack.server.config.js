@@ -1,23 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 var merge = require('webpack-merge');
-var NpmInstallPlugin = require('npm-install-webpack-plugin');
 var autoprefixer = require('autoprefixer');
-var config = require('../common/config/dev');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const TARGET = process.env.npm_lifecycle_event;
 
 module.exports = {
+  devtool: "source-map",
   entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://${config.server.host}:${config.server.port}`,
-    'webpack/hot/only-dev-server',
     './src/client/server-app.js'
   ],
   output: {
-    path: path.join(__dirname, 'public', 'assets', 'js'),
+    path: path.join(__dirname, 'public', 'assets'),
     publicPath: '/assets/js/',
-    filename: 'bundle.js'
+    filename: 'js/bundle.js'
   },
   module: {
     loaders: [
@@ -30,20 +27,12 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader'
-        ]
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       },
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap=true&module=true&localIdentName=[name]__[local]___[hash:base64:5]',
-          'sass-loader?outputStyle=expanded&sourceMap=true',
-          'postcss-loader'
-        ]
+        loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap=true&module=true&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader?outputStyle=expanded&sourceMap=true!postcss-loader")
       },
       {
         test: /\.less$/,
@@ -68,7 +57,15 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.DefinePlugin({
+        'process.env': {
+            'NODE_ENV': JSON.stringify('production')
+        }
+    }),
     new webpack.HotModuleReplacementPlugin(),
+    new ExtractTextPlugin("css/style.css"),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
