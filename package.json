@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "author": "Nattajak Grisiam",
   "scripts": {
-    "react-dev": "\"node_modules\\.bin\\webpack-dev-server\"",
-    "dev": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/index.js",
+    "windows-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-client-dev windows-server-dev",
+    "windows-client-dev": "SET BABEL_ENV=client-dev& \"node_modules\\.bin\\webpack-dev-server\" --config src/client/webpack.client.config.js",
+    "windows-server-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-server-webpack-dev windows-server-start-dev",
+    "windows-server-webpack-dev": "SET BABEL_ENV=server-dev&& \"node_modules\\.bin\\webpack\" --config src/server/webpack.server.config.js",
+    "windows-server-start-dev": "SET NODE_ENV=development && SET PORT=3000 && nodemon src/server/server-app.js",
+    "windows-server-dev-tmp": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/server/server-app.js",
     "prestart": "babel src --out-dir dist",
     "start": "node dist/server.js"
   },
@@ -21,6 +25,7 @@
     "morgan": "^1.7.0",
     "multer": "^1.2.1",
     "node-localstorage": "^1.3.0",
+    "npm-run-all": "^3.1.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-router": "^3.0.0"
@@ -40,6 +45,7 @@
     "babel-preset-stage-0": "^6.16.0",
     "bootstrap": "^4.0.0-alpha.5",
     "css-loader": "^0.26.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "fluxxor": "^1.7.3",
     "jquery": "^3.1.1",

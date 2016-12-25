@@ -1,4 +1,21 @@
 {
-  "presets": ["react", "stage-0", "es2015"],
-  "plugins": ["react-hot-loader/babel"]
+  "env": {
+    "client-dev": {
+      "presets": ["react", "stage-0", "es2015"]
+    },
+    "server-dev": {
+      "presets": ["react", "stage-0", "es2015"],
+      "plugins": [
+        [
+          "css-modules-transform", {
+            "preprocessCss": "./src/client/lib/processSass.js",
+            "extensions": [".css", ".scss"]
+          }
+        ]
+      ]
+    },
+    "production": {
+
+    }
+  }
 }

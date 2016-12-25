@@ -3,18 +3,19 @@ const webpack = require('webpack');
 var merge = require('webpack-merge');
 var NpmInstallPlugin = require('npm-install-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var config = require('../common/config/dev');
 
 const TARGET = process.env.npm_lifecycle_event;
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3000',
+    `webpack-dev-server/client?http://${config.server.host}:${config.server.port}`,
     'webpack/hot/only-dev-server',
-    './src/client/client-app.js'
+    './src/client/server-app.js'
   ],
   output: {
-    path: path.join(__dirname, 'src', 'server', 'public', 'assets', 'js'),
+    path: path.join(__dirname, 'public', 'assets', 'js'),
     publicPath: '/assets/js/',
     filename: 'bundle.js'
   },
@@ -24,7 +25,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         loaders: [
-          'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0&babelrc=fales'
+          'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0&babelrc=false'
         ]
       },
       {
@@ -79,12 +80,5 @@ module.exports = {
     return [autoprefixer({
       browsers: ['last 3 versions']
     })];
-  },
-  devServer: {
-    hot: true,
-    inline: false,
-    historyApiFallback: true,
-    contentBase: 'static',
-    port: 3000
   }
 }

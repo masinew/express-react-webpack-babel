@@ -3,19 +3,20 @@ const webpack = require('webpack');
 var merge = require('webpack-merge');
 var NpmInstallPlugin = require('npm-install-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var config = require('../common/config/dev');
 
 const TARGET = process.env.npm_lifecycle_event;
 
 module.exports = {
   entry: [
     'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3000',
+    `webpack-dev-server/client?http://${config.server.host}:${config.server.port}`,
     'webpack/hot/only-dev-server',
     './src/client/client-app.js'
   ],
   output: {
     path: path.join(__dirname, 'src', 'server', 'public', 'assets', 'js'),
-    publicPath: '/assets/js/',
+    publicPath: 'http://localhost:4000/assets/js/',
     filename: 'bundle.js'
   },
   module: {
@@ -85,6 +86,6 @@ module.exports = {
     inline: false,
     historyApiFallback: true,
     contentBase: 'static',
-    port: 3000
+    port: config.server.port
   }
 }

@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 // import 'isomorphic-fetch';
 
 import localStyle from './button2.scss';
-import 'bootstrap';
-import "bootstrap/dist/css/bootstrap.css";
 
 import HelloWorld from './HelloWorld'
 

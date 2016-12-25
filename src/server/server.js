@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import multer from 'multer';
 
 // System configuration
-import config from './config';
+import config from '../common/config/config';
 
 // Mongoose models
 import User from './app/models/user';
@@ -20,8 +20,8 @@ import apiV1 from './routes/api/v1/main';
 import React from 'react';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
-import routes from './routes'
-import PageNotFound from './components/PageNotFound';
+import routes from '../client/routes'
+import PageNotFound from '../client/ui/components/PageNotFound';
 
 // Express Session
 import Session from 'express-session';
@@ -29,7 +29,7 @@ import MongoStore from 'connect-mongo';
 
 // Express Setting
 const app = new Express();
-app.set('views', path.join(__dirname, 'static'));
+app.set('views', path.join(__dirname, 'template'));
 app.set('view engine', 'ejs');
 app.set('sessionKey', config.sessionKey);
 
@@ -110,7 +110,7 @@ app.get('*', (req, res) => {
       if (renderProps) {
         markup = renderToString(<RouterContext {...renderProps}/>);
       } else {
-        markup = renderToString(<NotFoundPage/>);
+        markup = renderToString(<PageNotFound/>);
         res.status(404);
       }
 
