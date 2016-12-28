@@ -4,7 +4,7 @@ import routes from '../../routes';
 
 import 'bootstrap';
 import 'alertifyjs';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import 'alertifyjs/build/css/alertify.min.css';
 import 'alertifyjs/build/css/themes/bootstrap.min.css';
 

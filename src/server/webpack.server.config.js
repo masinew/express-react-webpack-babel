@@ -64,13 +64,13 @@ module.exports = {
             'NODE_ENV': JSON.stringify('production')
         }
     }),
-    new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin("css/style.css"),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
       "window.jQuery": "jquery",
-      "window.Tether": 'tether'
+      "window.Tether": 'tether',
+      alertify: "alertifyjs"
     })
   ],
   postcss: function() {
