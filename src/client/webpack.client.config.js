@@ -15,9 +15,7 @@ module.exports = {
     './src/client/client-app.js'
   ],
   output: {
-    path: path.join(__dirname, 'src', 'server', 'public', 'assets', 'js'),
-    publicPath: 'http://localhost:4000/assets/js/',
-    filename: 'bundle.js'
+    publicPath: 'http://localhost:4000/assets/js/'
   },
   module: {
     loaders: [
