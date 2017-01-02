@@ -1,49 +1,10 @@
-const path = require('path');
 const webpack = require('webpack');
-var merge = require('webpack-merge');
-var NpmInstallPlugin = require('npm-install-webpack-plugin');
-var autoprefixer = require('autoprefixer');
-
-const TARGET = process.env.npm_lifecycle_event;
+const merge = require('webpack-merge');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
-    './src/client/client-app.js'
-  ],
-  output: {
-    path: path.join(__dirname, 'src', 'server', 'public', 'assets', 'js'),
-    publicPath: '/assets/js/',
-    filename: 'bundle.js'
-  },
   module: {
     loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: [
-          'babel-loader?presets[]=es2015&presets[]=react&presets[]=stage-0&babelrc=fales'
-        ]
-      },
-      {
-        test: /\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loaders: [
-          'style-loader',
-          'css-loader?sourceMap=true&module=true&localIdentName=[name]__[local]___[hash:base64:5]',
-          'sass-loader?outputStyle=expanded&sourceMap=true',
-          'postcss-loader'
-        ]
-      },
       {
         test: /\.less$/,
         loaders: [
@@ -67,7 +28,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
       jQuery: "jquery",
@@ -80,12 +40,5 @@ module.exports = {
     return [autoprefixer({
       browsers: ['last 3 versions']
     })];
-  },
-  devServer: {
-    hot: true,
-    inline: false,
-    historyApiFallback: true,
-    contentBase: 'static',
-    port: 3000
   }
 }

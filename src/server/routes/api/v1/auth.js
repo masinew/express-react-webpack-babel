@@ -7,6 +7,15 @@ const router = new Router();
 const success = {success: true};
 const error = {success: false};
 
+router.get('/isAuth', function(req, res) {
+  if (!req.session.token) {
+    res.json(Object.assign(error, {message: 'Your session is expired.'}));
+    return;
+  }
+
+  res.json(Object.assign(success, {message: ''}));
+});
+
 router.post('/login', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
@@ -20,7 +29,7 @@ router.post('/login', function(req, res) {
       return;
     }
 
-    const token = req.session.token = jwt.sign({id: result._id}, 'asd',{
+    const token = req.session.token = jwt.sign({id: result._id}, config.sessionKey,{
       expiresIn: config.authExpire
     });
 
@@ -30,7 +39,9 @@ router.post('/login', function(req, res) {
 
 router.get('/logout', function(req, res) {
   req.session.destroy(function(err) {
-    res.json();
+    res.json(Object.assign(success, {
+      message: 'Logout Successful'
+    }));
   });
 });
 

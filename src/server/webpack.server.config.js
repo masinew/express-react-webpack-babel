@@ -3,10 +3,11 @@ const webpack = require('webpack');
 var merge = require('webpack-merge');
 var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const mainWebpackConfig = require('../../webpack.config');
 
 const TARGET = process.env.npm_lifecycle_event;
 
-module.exports = {
+module.exports = merge(mainWebpackConfig, {
   devtool: "source-map",
   entry: [
     './src/client/server-app.js'
@@ -33,26 +34,6 @@ module.exports = {
         test: /\.scss$/,
         exclude: /node_modules/,
         loader: ExtractTextPlugin.extract("style-loader", "css-loader?sourceMap=true&module=true&localIdentName=[name]__[local]___[hash:base64:5]!sass-loader?outputStyle=expanded&sourceMap=true!postcss-loader")
-      },
-      {
-        test: /\.less$/,
-        loaders: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.woff$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[path][name].[ext]"
-      },
-      {
-        test: /\.woff2$/,
-        loader: "url-loader?limit=10000&mimetype=application/font-woff2&name=[path][name].[ext]"
-      },
-      {
-        test: /\.(eot|ttf|svg|gif|png)$/,
-        loader: "file-loader"
       }
     ]
   },
@@ -64,18 +45,6 @@ module.exports = {
             'NODE_ENV': JSON.stringify('production')
         }
     }),
-    new ExtractTextPlugin("css/style.css"),
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "window.jQuery": "jquery",
-      "window.Tether": 'tether',
-      alertify: "alertifyjs"
-    })
-  ],
-  postcss: function() {
-    return [autoprefixer({
-      browsers: ['last 3 versions']
-    })];
-  }
-}
+    new ExtractTextPlugin("css/style.css")
+  ]
+})

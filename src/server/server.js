@@ -39,7 +39,7 @@ const upload = new multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
-    maxAge: 60*60*1000
+    maxAge: config.authExpire
   },
   store: new SessionStore({mongooseConnection: mongoose.connection}),
   secret: app.get('sessionKey'),
@@ -68,7 +68,7 @@ app.use(upload.array());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
   res.header('Access-Control-Allow-Credentials', 'true');
   // res.header('Access-Control-Allow-Method', 'GET,POST');
   // res.header('Access-Control-Allow-Header', 'Content-Type');
@@ -96,8 +96,25 @@ app.post('/checktoken', function(req, res) {
   res.end(username + "=" + password);
 });
 
+app.get('/user/login', function(req, res) {
+  if (req.session.token) {
+    res.redirect('/');
+    return;
+  }
+
+  getClientUIPath(req, res);
+});
+
 app.get('*', (req, res) => {
-  console.log(req.url);
+  if (!req.session.token) {
+    res.redirect('/user/login');
+    return;
+  }
+
+  getClientUIPath(req, res);
+});
+
+function getClientUIPath(req, res) {
   match(
     {routes, location: req.url},
     (err, redirectLocation, renderProps) => {
@@ -120,4 +137,4 @@ app.get('*', (req, res) => {
       return res.render('index', { markup });
     }
   );
-});
+}
