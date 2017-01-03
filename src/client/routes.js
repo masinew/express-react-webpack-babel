@@ -9,7 +9,8 @@ import LoginForm from './ui/components/LoginForm';
 import PageNotFound from './ui/components/PageNotFound';
 import HelloWorld from './ui/components/HelloWorld';
 import Home from './ui/components/Home';
-import BlogList from './ui/components/BlogList';
+
+import BlogList from './ui/containers/BlogList';
 
 const apiServer = config.apiServer.host + ':' + config.apiServer.port;
 
