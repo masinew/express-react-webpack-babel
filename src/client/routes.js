@@ -11,6 +11,7 @@ import HelloWorld from './ui/components/HelloWorld';
 import Home from './ui/components/Home';
 
 import BlogList from './ui/containers/BlogList';
+import BlogDetail from './ui/containers/BlogDetail';
 
 const apiServer = config.apiServer.host + ':' + config.apiServer.port;
 
@@ -22,7 +23,9 @@ const routes = (
     </Route>
     <Route path="/" component={Layout} onChange={isAuth}>
       <IndexRoute component={Home} />
-      <Route path="blogs" component={BlogList} />
+      <Route path="/blogs" component={BlogList}>
+        <Route path="/blogs/test" component={HelloWorld} />
+      </Route>
     </Route>
     <Route path="*" component={PageNotFound} />
   </Route>

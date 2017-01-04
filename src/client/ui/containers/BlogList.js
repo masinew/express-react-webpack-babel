@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
+import { Link } from 'react-router';
 import Blog from '../components/Blog';
 import localStyle from '../style/BlogList.scss';
 
@@ -19,7 +20,7 @@ export default class BlogListContainer extends Component {
       response.json().then((json) => {
         const dataSet = json.map((data) => {
           return <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.id}>
-            <h3>{data.header}</h3>
+            <Link to={"/blogs/test"}><h3>{data.header}</h3></Link>
             <hr/>
             <p>{data.shortInfo}</p>
           </div>
