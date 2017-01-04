@@ -76,31 +76,43 @@ export default class LoginForm extends Component {
     return (
       <div className={"container " + localStyle.middleOfScreen}>
         <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8">
-          <form onSubmit={this.handleOnSubmit} name="login-form">
-            <div className="form-group row">
-              <label className="col-xs-3 col-form-label">Username</label>
-              <div className="col-xs-9">
-                <input type="text" name="username" className="form-control" value={this.state.username} onChange={this.handleUserName} />
+          <div className="col-xs-12 col-sm-2 col-md-2"></div>
+          <div className="col-xs-12 col-sm-8 col-md-8">
+            <form onSubmit={this.handleOnSubmit} name="login-form">
+
+              <div className="form-group row">
+                <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Username</label>
+                <div className="col-xs-9 col-sm-10 col-md-10">
+                  <div className="col-xs-12 col-sm-12 col-md-12">
+                    <input type="text" name="username" className="form-control" value={this.state.username} onChange={this.handleUserName} />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="form-group row">
-              <label className="col-xs-3 col-form-label">Password</label>
-              <div className="col-xs-9">
-                <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.handlePassword} />
+
+              <div className="form-group row">
+                <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Password</label>
+                <div className="col-xs-9 col-sm-10 col-md-10">
+                  <div className="col-xs-12 col-sm-12 col-md-12">
+                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.handlePassword} />
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="form-group row">
-              <span className="col-xs-3"></span>
-              <div className="col-xs-9">
-                <input type="submit" className="btn btn-primary" value="Login" />
-                <input type="submit" className="btn btn-outline-secondary" style={{marginLeft: 10}} onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
+
+              <div className="form-group row">
+                <span className="col-xs-12 col-sm-2 col-md-2"></span>
+                <div className="col-xs-12 col-sm-10 col-md-10">
+                  <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
+                    <input type="submit" className="btn btn-primary form-control" value="Login" />
+                  </div>
+                  <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
+                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
+                  </div>
+                </div>
               </div>
-            </div>
-          </form>
-        </div>
-        <div className="col-sm-2"></div>
+
+            </form>
+          </div>
+          <div className="col-xs-12 col-sm-2 col-md-2"></div>
         </div>
       </div>
     );

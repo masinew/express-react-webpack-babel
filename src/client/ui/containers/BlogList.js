@@ -20,7 +20,7 @@ export default class BlogListContainer extends Component {
       response.json().then((json) => {
         const dataSet = json.map((data) => {
           return <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.id}>
-            <Link to={"/blogs/test"}><h3>{data.header}</h3></Link>
+            <Link to={"/blogs/" + data.id}><h3>{data.header}</h3></Link>
             <hr/>
             <p>{data.shortInfo}</p>
           </div>
@@ -35,7 +35,7 @@ export default class BlogListContainer extends Component {
 
   render() {
     return (
-      <Blog blogList={this.state.blogList} />
+      <Blog info={this.state.blogList} />
     );
   }
 }

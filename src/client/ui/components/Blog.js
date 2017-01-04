@@ -1,16 +1,23 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 
 export default class Blog extends Component {
   render() {
     return (
       <div className="blog-list">
-        <div className="jumbotron" style={{marginBottom: 0}}>
+        <div className="jumbotron" style={{marginBottom: 0, paddingTop: 20, paddingBottom: 20}}>
           <div className="container">
-            <h1 className="display-3">Blog</h1>
+            <h3 className="display-3">
+              <Link to="/blogs">Blog</Link>
+              {
+                !this.props.header ? '' :
+                [<span key="1">{" > "}{this.props.header}</span>]
+              }
+            </h3>
           </div>
         </div>
         <div className="container">
-          {this.props.blogList}
+          {this.props.info}
         </div>
       </div>
     );
@@ -18,5 +25,5 @@ export default class Blog extends Component {
 }
 
 Blog.propTypes = {
-  blogList: PropTypes.array.isRequired
+  info: PropTypes.array.isRequired
 }

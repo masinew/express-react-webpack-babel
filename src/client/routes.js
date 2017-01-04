@@ -23,8 +23,9 @@ const routes = (
     </Route>
     <Route path="/" component={Layout} onChange={isAuth}>
       <IndexRoute component={Home} />
-      <Route path="/blogs" component={BlogList}>
-        <Route path="/blogs/test" component={HelloWorld} />
+      <Route path="/blogs">
+        <IndexRoute component={BlogList} />
+        <Route path="/blogs/:id" component={BlogDetail} />
       </Route>
     </Route>
     <Route path="*" component={PageNotFound} />
