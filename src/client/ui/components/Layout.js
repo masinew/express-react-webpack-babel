@@ -3,6 +3,7 @@ import Navbar from './Navbar';
 
 export default class Layout extends Component {
   render() {
+    const historyState = this.props.location.state;
     return (
       <div className="app-container">
         <header>

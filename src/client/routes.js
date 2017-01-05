@@ -23,9 +23,9 @@ const routes = (
     </Route>
     <Route path="/" component={Layout} onChange={isAuth}>
       <IndexRoute component={Home} />
-      <Route path="/blogs">
+      <Route path="blogs">
         <IndexRoute component={BlogList} />
-        <Route path="/blogs/:id" component={BlogDetail} />
+        <Route path=":id" component={BlogDetail} />
       </Route>
     </Route>
     <Route path="*" component={PageNotFound} />
@@ -41,6 +41,7 @@ function isAuth() {
       const message = json.message;
       if (!status) {
         alertify.warning(message);
+        // localStorage.clear();
         browserHistory.push('/user/login');
       }
     });

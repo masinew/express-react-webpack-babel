@@ -9,6 +9,9 @@ const apiServer = config.apiServer.host + ":" + config.apiServer.port;
 export default class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userFullName: ''
+    }
     this.handleUserForm = this.handleUserForm.bind(this);
     this.handleOnClickProfile = this.handleOnClickProfile.bind(this);
     this.handleOnClickLogout = this.handleOnClickLogout.bind(this);
@@ -24,6 +27,7 @@ export default class Navbar extends Component {
 
   handleOnClickLogout(event) {
     event.preventDefault()
+    localStorage.clear();
     fetch('http://' + apiServer + '/api/v1/auth/logout', {
       credentials: 'include'
     })
@@ -40,6 +44,10 @@ export default class Navbar extends Component {
 
   componentDidMount() {
     // set width of userGroupDropdown to the same width of
+    this.setState({
+      userFullName: localStorage.userFullName
+    });
+    console.log();
     const btUserGroupWidth = $("#btUserGroup").outerWidth();
     $("#userGroupDropdown").outerWidth(btUserGroupWidth);
   }
@@ -49,7 +57,7 @@ export default class Navbar extends Component {
       <nav className="navbar navbar-default">
         <div className="container">
           <div className="navbar-header">
-            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#myCollapseNavbar" aria-expanded="false">
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
@@ -60,7 +68,7 @@ export default class Navbar extends Component {
             </Link>
           </div>
 
-          <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <div className="collapse navbar-collapse" id="myCollapseNavbar">
             <ul className="nav navbar-nav">
                 <ListItemLink className="nav-link" to="/" onlyActiveOnIndex={true}>
                   Home
@@ -71,7 +79,7 @@ export default class Navbar extends Component {
             </ul>
             <ul className="nav navbar-nav navbar-right" id="b">
               <li className="dropdown">
-                <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Nattajak Grisiam<span className="caret"></span></a>
+                <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.userFullName}<span className="caret"></span></a>
                 <ul className="dropdown-menu">
                   <ListItemLink className="nav-link" to="/user/profile" onClick={this.handleOnClickProfile}>
                     Profile

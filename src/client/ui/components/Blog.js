@@ -1,29 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import Content from './Content';
 
 export default class Blog extends Component {
   render() {
     return (
-      <div className="blog-list">
-        <div className="jumbotron" style={{marginBottom: 0, paddingTop: 20, paddingBottom: 20}}>
-          <div className="container">
-            <h3 className="display-3">
-              <Link to="/blogs">Blog</Link>
-              {
-                !this.props.header ? '' :
-                [<span key="1">{" > "}{this.props.header}</span>]
-              }
-            </h3>
-          </div>
-        </div>
-        <div className="container">
-          {this.props.info}
-        </div>
-      </div>
+      <Content rootName="Blog" rootPath="/blogs" info={this.props.info} header={this.props.header} />
     );
   }
-}
-
-Blog.propTypes = {
-  info: PropTypes.array.isRequired
 }

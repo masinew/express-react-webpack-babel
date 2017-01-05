@@ -33,7 +33,7 @@ router.post('/login', function(req, res) {
       expiresIn: config.authExpire
     });
 
-    res.json(success);
+    res.json(Object.assign(successMessage, {userInfo: result.userInfo}));
   });
 });
 
@@ -47,9 +47,13 @@ router.get('/logout', function(req, res) {
 
 router.get('/setup', function(req, res) {
   const newUser = new User({
-    username: 'champ',
+    username: 'champ1',
     password: 'password',
-    admin: false
+    admin: false,
+    userInfo: {
+      firstName: "CHAMP",
+      lastName: "555"
+    }
   });
 
   newUser.save(function(err) {

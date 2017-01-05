@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import Blog from '../components/Blog';
 import localStyle from '../style/BlogList.scss';
 
-export default class BlogListContainer extends Component {
+export default class BlogList extends Component {
 
   constructor(props) {
     super(props);

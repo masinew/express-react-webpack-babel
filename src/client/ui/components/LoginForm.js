@@ -4,7 +4,7 @@ import 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import localStyle from '../style/utility.scss';
+import localStyle from '../style/LoginForm.scss';
 import HelloWorld from './HelloWorld';
 import config from '../../../common/config/config';
 
@@ -57,6 +57,9 @@ export default class LoginForm extends Component {
           const status = result.success;
           const message = result.message;
           if (status) {
+            const firstName = result.userInfo.firstName;
+            const lastName = result.userInfo.lastName;
+            localStorage.setItem("userFullName", firstName + " " + lastName);
             alertify.success(message);
             browserHistory.push('/');
           }
