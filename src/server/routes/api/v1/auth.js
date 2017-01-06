@@ -47,12 +47,12 @@ router.get('/logout', function(req, res) {
 
 router.get('/setup', function(req, res) {
   const newUser = new User({
-    username: 'champ1',
+    username: 'champ',
     password: 'password',
     admin: false,
     userInfo: {
-      firstName: "CHAMP",
-      lastName: "555"
+      firstName: "Nattajak",
+      lastName: "Grisiam"
     }
   });
 

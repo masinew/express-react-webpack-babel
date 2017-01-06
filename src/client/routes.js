@@ -41,7 +41,7 @@ function isAuth() {
       const message = json.message;
       if (!status) {
         alertify.warning(message);
-        // localStorage.clear();
+        localStorage.clear();
         browserHistory.push('/user/login');
       }
     });
