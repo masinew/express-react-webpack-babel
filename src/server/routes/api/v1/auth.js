@@ -8,12 +8,15 @@ const success = {success: true};
 const error = {success: false};
 
 router.get('/isAuth', function(req, res) {
-  if (!req.session.token) {
-    res.json(Object.assign(error, {message: 'Your session is expired.'}));
-    return;
-  }
+  setTimeout(() => {
+    if (!req.session.token) {
+      res.json(Object.assign(error, {message: 'Your session is expired.'}));
+      return;
+    }
 
-  res.json(Object.assign(success, {message: ''}));
+    res.json(Object.assign(success, {message: ''}));
+  }, 2000);
+
 });
 
 router.post('/login', function(req, res) {

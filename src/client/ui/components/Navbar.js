@@ -23,6 +23,7 @@ export default class Navbar extends Component {
 
   handleOnClickProfile(event) {
     event.preventDefault();
+    alertify.error("Coming Soon");
   }
 
   handleOnClickLogout(event) {

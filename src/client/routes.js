@@ -21,7 +21,7 @@ const routes = (
       <Route path="login" component={LoginForm} />
       <Route path="forgetPassword" component={HelloWorld} />
     </Route>
-    <Route path="/" component={Layout} onChange={isAuth}>
+    <Route path="/" component={Layout} onChange={requireCredentials}>
       <IndexRoute component={Home} />
       <Route path="blogs">
         <IndexRoute component={BlogList} />
@@ -32,7 +32,7 @@ const routes = (
   </Route>
 );
 
-function isAuth() {
+function requireCredentials(prevState, nextState, replace, next) {
   fetch('http://' + apiServer + '/api/v1/auth/isAuth', {
     credentials: 'include'
   }).then((response) => {
@@ -42,8 +42,14 @@ function isAuth() {
       if (!status) {
         alertify.warning(message);
         localStorage.clear();
-        browserHistory.push('/user/login');
+        browserHistory.push({
+          pathname: '/user/login',
+          state: {nextPathname: nextState.location.pathname}
+        })
+        next();
       }
+
+      next()
     });
   });
 }

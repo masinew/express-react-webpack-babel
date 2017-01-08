@@ -13,35 +13,14 @@ const apiServer = config.apiServer.host + ":" + config.apiServer.port;
 export default class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-        username: '',
-        password: ''
-    };
-
-    this.handleUserName = this.handleUserName.bind(this);
-    this.handlePassword = this.handlePassword.bind(this);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
   }
 
-  handleUserName(event) {
-    const value = event.target.value;
-    this.setState({
-      username: value
-    });
-  }
-
-  handlePassword(event) {
-    const value = event.target.value;
-    this.setState({
-      password: value
-    });
-  }
-
   handleOnSubmit(event) {
     event.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
+    const username = this.refs.username.value;
+    const password = this.refs.password.value;
     let formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
@@ -61,7 +40,12 @@ export default class LoginForm extends Component {
             const lastName = result.userInfo.lastName;
             localStorage.setItem("userFullName", firstName + " " + lastName);
             alertify.success(message);
-            browserHistory.push('/');
+            const { location } = this.props;
+            if (location.state && location.state.nextPathname) {
+              browserHistory.push(location.state.nextPathname);
+            } else {
+              browserHistory.push('/');
+            }
           }
           else {
             alertify.error(message);
@@ -72,7 +56,8 @@ export default class LoginForm extends Component {
 
   handleOnClickBtForgetPassword(event) {
     event.preventDefault();
-    browserHistory.push('/user/forgetPassword');
+    alertify.error("Coming Soon");
+    // browserHistory.push('/user/forgetPassword');
   }
 
   render() {
@@ -87,7 +72,7 @@ export default class LoginForm extends Component {
                 <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Username</label>
                 <div className="col-xs-9 col-sm-10 col-md-10">
                   <div className="col-xs-12 col-sm-12 col-md-12">
-                    <input type="text" name="username" className="form-control" value={this.state.username} onChange={this.handleUserName} />
+                    <input type="text" name="username" className="form-control" ref="username" />
                   </div>
                 </div>
               </div>
@@ -96,7 +81,7 @@ export default class LoginForm extends Component {
                 <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Password</label>
                 <div className="col-xs-9 col-sm-10 col-md-10">
                   <div className="col-xs-12 col-sm-12 col-md-12">
-                    <input type="password" name="password" className="form-control" value={this.state.password} onChange={this.handlePassword} />
+                    <input type="password" name="password" className="form-control" ref="password" />
                   </div>
                 </div>
               </div>
