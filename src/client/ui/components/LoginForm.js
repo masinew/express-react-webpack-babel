@@ -41,8 +41,8 @@ export default class LoginForm extends Component {
             localStorage.setItem("userFullName", firstName + " " + lastName);
             alertify.success(message);
             const { location } = this.props;
-            if (location.state && location.state.nextPathname) {
-              browserHistory.push(location.state.nextPathname);
+            if (location.state && location.state.lastPathname) {
+              browserHistory.push(location.state.lastPathname);
             } else {
               browserHistory.push('/');
             }

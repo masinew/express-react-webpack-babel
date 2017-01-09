@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, IndexRoute, browserHistory } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 
@@ -42,9 +42,9 @@ function requireCredentials(prevState, nextState, replace, next) {
       if (!status) {
         alertify.warning(message);
         localStorage.clear();
-        browserHistory.push({
+        replace({
           pathname: '/user/login',
-          state: {nextPathname: nextState.location.pathname}
+          state: {lastPathname: prevState.location.pathname}
         })
         next();
       }
