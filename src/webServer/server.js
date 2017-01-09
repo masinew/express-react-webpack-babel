@@ -5,8 +5,9 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import multer from 'multer';
+import Multer from 'multer';
 import minifyHTML from 'express-minify-html';
+import proxy from 'express-http-proxy';
 
 // System configuration
 import config from '../common/config/config';
@@ -35,7 +36,7 @@ app.set('view engine', 'ejs');
 app.set('sessionKey', config.sessionKey);
 
 const server = new Server(app);
-const upload = new multer();
+const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
@@ -64,7 +65,7 @@ mongoose.connect(config.database, function(err) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(upload.array());
+app.use(multer.array());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
 app.use(function(req, res, next) {
@@ -77,6 +78,13 @@ app.use(function(req, res, next) {
 app.use(minifyHTML(config.minifyHTMLOptions));
 
 app.use(Express.static(path.join(__dirname, 'public')));
+app.use('/testProxy', proxy('localhost:5000', {
+  decorateRequest: function(proxyReq, originalReq) {
+    if (originalReq.session.token) {
+      proxyReq.headers['Authorization'] = originalReq.session.token
+    }
+  }
+}));
 app.use('/api/v1', apiV1);
 
 app.get('/checktoken', function(req, res) {

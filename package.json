@@ -6,12 +6,12 @@
     "windows-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-client-dev windows-server-dev",
     "windows-client-dev": "SET BABEL_ENV=client-dev& \"node_modules\\.bin\\webpack-dev-server\" --config src/client/webpack.client.config.js",
     "windows-server-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-server-webpack-dev windows-server-start-dev",
-    "windows-server-webpack-dev": "SET BABEL_ENV=server-dev&& \"node_modules\\.bin\\webpack\" --config src/server/webpack.server.config.js",
-    "windows-server-start-dev": "SET BABEL_ENV=server-dev&& SET NODE_ENV=development&& SET PORT=3000&& \"node_modules\\.bin\\nodemon\" src/server/server-app.js",
-    "windows-api-server": "\"node_modules\\.bin\\nodemon\" src/apiServer/api-server-app.js",
-    "windows-server-dev-tmp": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/server/server-app.js",
+    "windows-server-webpack-dev": "SET BABEL_ENV=server-dev&& \"node_modules\\.bin\\webpack\" --config src/webServer/webpack.server.config.js",
+    "windows-server-start-dev": "SET BABEL_ENV=server-dev&& SET NODE_ENV=development&& SET PORT=3000&& \"node_modules\\.bin\\nodemon\" src/webServer/server-app.js",
+    "windows-api-server": "SET BABEL_ENV=api-server&& \"node_modules\\.bin\\nodemon\" src/apiServer/server-app.js",
+    "windows-server-dev-tmp": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/webServer/server-app.js",
     "prestart": "SET BABEL_ENV=production&& babel src --out-dir dist&&\"node_modules\\.bin\\webpack\"",
-    "start": "node dist/server/server.js"
+    "start": "node dist/webServer/server.js"
   },
   "dependencies": {
     "alertifyjs": "^1.8.0",
@@ -21,6 +21,7 @@
     "ejs": "^2.5.3",
     "es6-promise": "^4.0.5",
     "express": "^4.14.0",
+    "express-http-proxy": "^0.10.1",
     "express-minify-html": "^0.9.0",
     "express-session": "^1.14.2",
     "isomorphic-fetch": "^2.2.1",
