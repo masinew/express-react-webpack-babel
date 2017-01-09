@@ -8,6 +8,7 @@
     "windows-server-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-server-webpack-dev windows-server-start-dev",
     "windows-server-webpack-dev": "SET BABEL_ENV=server-dev&& \"node_modules\\.bin\\webpack\" --config src/server/webpack.server.config.js",
     "windows-server-start-dev": "SET BABEL_ENV=server-dev&& SET NODE_ENV=development&& SET PORT=3000&& \"node_modules\\.bin\\nodemon\" src/server/server-app.js",
+    "windows-api-server": "\"node_modules\\.bin\\nodemon\" src/apiServer/api-server-app.js",
     "windows-server-dev-tmp": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/server/server-app.js",
     "prestart": "SET BABEL_ENV=production&& babel src --out-dir dist&&\"node_modules\\.bin\\webpack\"",
     "start": "node dist/server/server.js"
@@ -31,7 +32,9 @@
     "npm-run-all": "^3.1.2",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-router": "^3.0.0"
+    "react-router": "^3.0.0",
+    "restify": "^4.3.0",
+    "restify-plugins": "^1.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.5.4",
