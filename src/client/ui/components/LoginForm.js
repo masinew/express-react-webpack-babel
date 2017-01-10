@@ -30,7 +30,7 @@ export default class LoginForm extends Component {
       credentials: 'include'
     };
 
-    fetch('http://' + apiServer + '/api/v1/auth/login', fetchOptions)
+    fetch('http://localhost:3000/user/login', fetchOptions)
       .then((response) => {
         response.json().then((result) => {
           const status = result.success;

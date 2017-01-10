@@ -29,7 +29,7 @@ export default class Navbar extends Component {
   handleOnClickLogout(event) {
     event.preventDefault()
     localStorage.clear();
-    fetch('http://' + apiServer + '/api/v1/auth/logout', {
+    fetch('http://localhost:3000/user/logout', {
       credentials: 'include'
     })
     .then((response) => {

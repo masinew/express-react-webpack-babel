@@ -15,7 +15,9 @@ export default class BlogList extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/blog/list')
+    fetch('http://localhost:3000/api/v1/blog/list', {
+      credentials: 'include'
+    })
     .then((response) => {
       response.json().then((json) => {
         const dataSet = json.map((data) => {

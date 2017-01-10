@@ -14,7 +14,9 @@ export default class BlogDetail extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/blog/' + this.blogId).then((response) => {
+    fetch('http://localhost:3000/api/v1/blog/' + this.blogId, {
+      credentials: 'include'
+    }).then((response) => {
       response.json().then((json) => {
         var paragraphCount = 0;
         const header = json.header;

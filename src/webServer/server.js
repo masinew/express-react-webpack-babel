@@ -17,6 +17,7 @@ import User from './app/models/user';
 
 // Express routes
 import apiV1 from './routes/api/v1/main';
+import userRoute from './routes/user';
 
 // React for handling routes
 import React from 'react';
@@ -44,8 +45,8 @@ const sessionOptions = {
   },
   store: new SessionStore({mongooseConnection: mongoose.connection}),
   secret: app.get('sessionKey'),
-  resave: true,
-  saveUninitialized: true
+  resave: false, // resave infomation in the db not in the express session
+  saveUninitialized: false // initial information when users call the website
 };
 
 mongoose.connect(config.database, function(err) {
@@ -78,14 +79,15 @@ app.use(function(req, res, next) {
 app.use(minifyHTML(config.minifyHTMLOptions));
 
 app.use(Express.static(path.join(__dirname, 'public')));
-app.use('/testProxy', proxy('localhost:5000', {
+app.use('/api', proxy('localhost:5000', {
   decorateRequest: function(proxyReq, originalReq) {
     if (originalReq.session.token) {
       proxyReq.headers['Authorization'] = originalReq.session.token
     }
   }
 }));
-app.use('/api/v1', apiV1);
+// app.use('/api/v1', apiV1);
+app.use('/user', userRoute);
 
 app.get('/checktoken', function(req, res) {
   console.log(req.session.token);
