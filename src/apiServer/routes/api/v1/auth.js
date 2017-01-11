@@ -1,29 +1,16 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../../../app/models/user';
 import config from '../../../../common/config/config';
+
+import User from '../../../app/models/user';
 
 const router = new Router();
 const success = {success: true};
 const error = {success: false};
 
-router.get('/isAuth', function(req, res) {
-  if (!req.get('Authorization')) {
-    res.json(Object.assign(error, {message: 'Your session is expired.'}));
-    return;
-  }
-
-  const token = req.get('Authorization');
-  jwt.verify(token, config.sessionKey, function(err, decoded) {
-    console.log(decoded.exp);
-  });
-  res.json(Object.assign(success, {message: ''}));
-});
-
 router.post('/generateAuth', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
-  console.log(username);
   const successMessage = Object.assign(success, {message: 'Success'});
   const errMessage = Object.assign(error, {message: 'Username or Password incorrect'});
   User.findOne({
@@ -35,19 +22,11 @@ router.post('/generateAuth', function(req, res) {
     }
 
     const token = jwt.sign({id: result._id}, config.sessionKey,{
-      expiresIn: config.authExpire
+      expiresIn: config.authExpire/1000
     });
 
     res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
   });
-});
-
-router.get('/logout', function(req, res) {
-  // req.session.destroy(function(err) {
-  //   res.json(Object.assign(success, {
-  //     message: 'Logout Successful'
-  //   }));
-  // });
 });
 
 router.get('/setup', function(req, res) {

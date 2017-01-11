@@ -33,7 +33,7 @@ const routes = (
 );
 
 function requireCredentials(prevState, nextState, replace, next) {
-  fetch('http://' + apiServer + '/api/v1/auth/isAuth', {
+  fetch('http://' + apiServer + '/api/v1/token/isActive', {
     credentials: 'include'
   }).then((response) => {
     response.json().then((json) => {

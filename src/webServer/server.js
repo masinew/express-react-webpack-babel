@@ -49,6 +49,7 @@ const sessionOptions = {
   saveUninitialized: false // initial information when users call the website
 };
 
+mongoose.Promise = global.Promise;
 mongoose.connect(config.database, function(err) {
   if (err) throw err;
 

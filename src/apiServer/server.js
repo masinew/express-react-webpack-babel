@@ -31,6 +31,7 @@ app.get('*', (req, res) => {
 /*start server and database*/
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV || 'production';
+mongoose.Promise = global.Promise;
 mongoose.connect(config.database, (err) => {
   if (err) throw err;
 

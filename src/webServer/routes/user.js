@@ -18,10 +18,16 @@ router.post('/login', function(req, res) {
 });
 
 router.get('/logout', function(req, res) {
+  const token = req.session.token;
   req.session.destroy(function(err) {
-    res.json(Object.assign(success, {
-      message: 'Logout Successful'
-    }));
+    if (err) console.log('destroy session error');
+
+    request.post({url: 'http://localhost:5000/v1/token/destroy', headers: {'Authorization': token}}, function(err, httpResponse, body) {
+      // TODO: if err what is next to do
+      res.json(Object.assign(success, {
+        message: 'Logout Successful'
+      }));
+    });
   });
 });
 
