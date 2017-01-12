@@ -2,15 +2,17 @@ const path = require('path');
 const webpack = require('webpack');
 var merge = require('webpack-merge');
 var autoprefixer = require('autoprefixer');
-var config = require('../common/config/dev');
+var config = require('../common/config/devServer');
 const mainWebpackConfig = require('../../webpack.config');
 
 const TARGET = process.env.npm_lifecycle_event;
 
+const devServer = `${config.protocal}://${config.host}:${config.port}`;
+
 module.exports = merge(mainWebpackConfig, {
   entry: [
     'react-hot-loader/patch',
-    `webpack-dev-server/client?http://${config.server.host}:${config.server.port}`,
+    `webpack-dev-server/client?${devServer}`,
     'webpack/hot/only-dev-server',
     './src/client/ui/style/Home.scss',
     './src/client/client-app.js'
@@ -54,6 +56,6 @@ module.exports = merge(mainWebpackConfig, {
     inline: false,
     historyApiFallback: true,
     contentBase: 'static',
-    port: config.server.port
+    port: config.port
   }
 })

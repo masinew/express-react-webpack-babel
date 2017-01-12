@@ -1,13 +1,11 @@
-const apiPath = '/api/v1';
+import webServer from './webServer';
+import apisPath from './apisPath';
+
 export default {
   server: {
-    protocal: 'http',
-    host: 'localhost',
-    port: 3000
+    protocal: webServer.protocal,
+    host: webServer.host,
+    port: webServer.port
   },
-  apis: {
-    user: `${apiPath}/user`,
-    auth: `${apiPath}/auth`,
-    blog: `${apiPath}/blog`
-  }
+  apis: apisPath
 }

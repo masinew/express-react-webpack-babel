@@ -10,10 +10,7 @@ import minifyHTML from 'express-minify-html';
 import proxy from 'express-http-proxy';
 
 // System configuration
-import config from '../common/config/config';
 import * as serverConfig from '../common/config/server';
-
-// Mongoose models
 
 // Express routes
 import userRoute from './routes/user';
