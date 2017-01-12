@@ -3,6 +3,10 @@ import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 import Blog from '../components/Blog';
 import localStyle from '../style/BlogList.scss';
+import config from '../../../common/config/client';
+
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
 
 export default class BlogDetail extends Component {
   constructor(props) {
@@ -14,7 +18,7 @@ export default class BlogDetail extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/blog/' + this.blogId, {
+    fetch(`${server}${config.apis.blog}/${this.blogId}`, {
       credentials: 'include'
     }).then((response) => {
       response.json().then((json) => {
@@ -41,10 +45,5 @@ export default class BlogDetail extends Component {
     return (
       <Blog info={this.state.blogDetail} header={this.state.header} />
     );
-    // return (
-    //   <div>
-    //     {this.state.blogDetail}
-    //   </div>
-    // );
   }
 }

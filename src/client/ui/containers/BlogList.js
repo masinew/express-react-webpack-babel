@@ -5,6 +5,11 @@ import { Link } from 'react-router';
 import Blog from '../components/Blog';
 import localStyle from '../style/BlogList.scss';
 
+import config from '../../../common/config/client';
+
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
+
 export default class BlogList extends Component {
 
   constructor(props) {
@@ -15,7 +20,7 @@ export default class BlogList extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/v1/blog/list', {
+    fetch(`${server}${config.apis.blog}/list`, {
       credentials: 'include'
     })
     .then((response) => {

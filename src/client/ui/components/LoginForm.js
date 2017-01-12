@@ -6,9 +6,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import localStyle from '../style/LoginForm.scss';
 import HelloWorld from './HelloWorld';
-import config from '../../../common/config/config';
+import config from '../../../common/config/client';
 
-const apiServer = config.apiServer.host + ":" + config.apiServer.port;
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : '' }`;
 
 export default class LoginForm extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ export default class LoginForm extends Component {
       credentials: 'include'
     };
 
-    fetch('http://localhost:3000/user/login', fetchOptions)
+    fetch(`${server}/user/login`, fetchOptions)
       .then((response) => {
         response.json().then((result) => {
           const status = result.success;

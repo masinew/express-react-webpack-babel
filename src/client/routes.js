@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 
-import config from '../common/config/config';
+import config from '../common/config/client';
 import Layout from './ui/components/Layout';
 import LoginForm from './ui/components/LoginForm';
 import PageNotFound from './ui/components/PageNotFound';
@@ -13,7 +13,8 @@ import Home from './ui/components/Home';
 import BlogList from './ui/containers/BlogList';
 import BlogDetail from './ui/containers/BlogDetail';
 
-const apiServer = config.apiServer.host + ':' + config.apiServer.port;
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
 
 const routes = (
   <Route>
@@ -33,7 +34,7 @@ const routes = (
 );
 
 function requireCredentials(prevState, nextState, replace, next) {
-  fetch('http://' + apiServer + '/api/v1/auth/isActive', {
+  fetch(`${server}${config.apis.auth}/isActive`, {
     credentials: 'include'
   }).then((response) => {
     response.json().then((json) => {

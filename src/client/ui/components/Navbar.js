@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { Link } from 'react-router';
 import ListItemLink from './ListItemLink';
 import { browserHistory } from 'react-router';
-import config from '../../../common/config/config';
+import config from '../../../common/config/client';
 
-const apiServer = config.apiServer.host + ":" + config.apiServer.port;
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : '' }`;
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -12,13 +13,9 @@ export default class Navbar extends Component {
     this.state = {
       userFullName: ''
     }
-    this.handleUserForm = this.handleUserForm.bind(this);
+
     this.handleOnClickProfile = this.handleOnClickProfile.bind(this);
     this.handleOnClickLogout = this.handleOnClickLogout.bind(this);
-  }
-
-  handleUserForm(event) {
-    event.preventDefault();
   }
 
   handleOnClickProfile(event) {
@@ -29,7 +26,7 @@ export default class Navbar extends Component {
   handleOnClickLogout(event) {
     event.preventDefault()
     localStorage.clear();
-    fetch('http://localhost:3000/user/logout', {
+    fetch(`${server}/user/logout`, {
       credentials: 'include'
     })
     .then((response) => {
@@ -44,13 +41,9 @@ export default class Navbar extends Component {
   }
 
   componentDidMount() {
-    // set width of userGroupDropdown to the same width of
     this.setState({
       userFullName: localStorage.userFullName
     });
-    console.log();
-    const btUserGroupWidth = $("#btUserGroup").outerWidth();
-    $("#userGroupDropdown").outerWidth(btUserGroupWidth);
   }
 
   render() {
