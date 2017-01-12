@@ -11,12 +11,11 @@ import proxy from 'express-http-proxy';
 
 // System configuration
 import config from '../common/config/config';
+import * as serverConfig from '../common/config/server';
 
 // Mongoose models
-import User from './app/models/user';
 
 // Express routes
-import apiV1 from './routes/api/v1/main';
 import userRoute from './routes/user';
 
 // React for handling routes
@@ -34,23 +33,22 @@ import MongoStore from 'connect-mongo';
 const app = new Express();
 app.set('views', path.join(__dirname, 'template'));
 app.set('view engine', 'ejs');
-app.set('sessionKey', config.sessionKey);
 
 const server = new Server(app);
 const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
-    maxAge: config.authExpire
+    maxAge: serverConfig.expiration.sessionExpired
   },
   store: new SessionStore({mongooseConnection: mongoose.connection}),
-  secret: app.get('sessionKey'),
+  secret: serverConfig.key.sessionKey,
   resave: false, // resave infomation in the db not in the express session
   saveUninitialized: false // initial information when users call the website
 };
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database, function(err) {
+mongoose.connect(serverConfig.mongodb.urlConnection, function(err) {
   if (err) throw err;
 
   const port = process.env.PORT || 3000;
@@ -71,13 +69,13 @@ app.use(multer.array());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  // res.header('Access-Control-Allow-Origin', '*');
+  // res.header('Access-Control-Allow-Credentials', 'true');
   // res.header('Access-Control-Allow-Method', 'GET,POST');
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
-app.use(minifyHTML(config.minifyHTMLOptions));
+app.use(minifyHTML(serverConfig.optimization.minifyHTMLOptions)); //TODO: this is not working
 
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:5000', {
@@ -90,25 +88,7 @@ app.use('/api', proxy('localhost:5000', {
     return proxyReq;
   }
 }));
-// app.use('/api/v1', apiV1);
 app.use('/user', userRoute);
-
-app.get('/checktoken', function(req, res) {
-  console.log(req.session.token);
-  if (req.session.token)
-    res.end(req.session.token);
-
-  res.end('1');
-});
-
-app.post('/checktoken', function(req, res) {
-  const username = req.body.username;
-  const password = req.body.password;
-  console.log(username);
-  console.log(password);
-  console.log(req.body);
-  res.end(username + "=" + password);
-});
 
 app.get('/user/login', function(req, res) {
   if (req.session.token) {
