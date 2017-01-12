@@ -82,9 +82,12 @@ app.use(minifyHTML(config.minifyHTMLOptions));
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:5000', {
   decorateRequest: function(proxyReq, originalReq) {
+    proxyReq.headers['Content-Type'] = 'application/json';
     if (originalReq.session.token) {
       proxyReq.headers['Authorization'] = originalReq.session.token
     }
+
+    return proxyReq;
   }
 }));
 // app.use('/api/v1', apiV1);

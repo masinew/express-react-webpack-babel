@@ -8,7 +8,7 @@ const router = new Router();
 const success = {success: true};
 const error = {success: false};
 
-router.post('/generateAuth', function(req, res) {
+router.post('/login', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
   const successMessage = Object.assign(success, {message: 'Success'});

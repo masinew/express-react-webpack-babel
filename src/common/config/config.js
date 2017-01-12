@@ -4,7 +4,7 @@ module.exports = {
     port: 3000
   },
   sessionKey: 'session-key',
-  authExpire: 30000, /*millisec*/
+  authExpire: 60*60*1000, /*one hour in millisec*/
   database:   'mongodb://localhost:27017/express-react-webpack-babel',
   minifyHTMLOptions: {
       htmlMinifier: {
