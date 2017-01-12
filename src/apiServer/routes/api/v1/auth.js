@@ -9,23 +9,32 @@ const success = {success: true};
 const error = {success: false};
 
 router.get('/isActive', function(req, res) {
-  res.json(Object.assign(success, {message: ''}));
+  res.json(success);
 });
 
 // destroy token by add it to blacklistToken, so I have to use POST method for saving info on the database
 router.post('/logout', function(req, res) {
   const token = req.token;
   jwt.verify(token, key.tokenKey, function(err, decoded) {
+    if (err) {
+      res.json(error);
+      return;
+    }
+
+    const expireAt = decoded.exp*1000;
     const blacklistToken = new BlacklistToken({
       token: token,
-      expireAt: decoded.exp
+      expireAt: expireAt
     });
 
     blacklistToken.save(function(err) {
-      if (err) throw err;
+      if (err) {
+        res.json(error) ;
+        return;
+      }
 
       console.log('User saved successfully.');
-      res.json({success: true});
+      res.json(success);
     });
   });
 });

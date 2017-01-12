@@ -16,6 +16,7 @@ router.post('/login', function(req, res) {
   User.findOne({
     username: username
   }, function(err, result) {
+    console.log(result);
     if (err || !result || password != result.password) {
       res.json(errMessage);
       return;

@@ -4,6 +4,7 @@ import { apiServer, apisPath } from '../../common/config/server'
 
 const router = new Router();
 const success = {success: true};
+const error = {success: false};
 const port = apiServer.port;
 const server = `${apiServer.protocal}://${apiServer.host}${ port ? `:${port}` : '' }`
 
@@ -15,7 +16,7 @@ router.post('/login', function(req, res) {
       let json = JSON.parse(body);
       console.log(json.token); // for checking when user already logout and then the token can access data that is required authening
       req.session.token = json.token
-      delete json.token;
+      delete json.token; // do not send token value to client in case website
       res.json(json);
     }
   );
@@ -23,17 +24,29 @@ router.post('/login', function(req, res) {
 
 router.get('/logout', function(req, res) {
   const token = req.session.token;
-  req.session.destroy(function(err) {
-    if (err) console.log('destroy session error');
+  const successMessage = Object.assign(success, {message: 'Logout Successful'});
+  const errorMessage = Object.assign(error, {message: 'Logout Unsuccessful'});
+  request.post({url: `${server}${apisPath.auth}/logout`, headers: {'Authorization': token}}, function(err, httpResponse, body) {
+    const json = JSON.parse(body);
+    if (err || !json.success) {
+      res.json(errorMessage);
+      return;
+    }
+    
+    req.session.destroy(function(err) {
+      if (err) {
+        res.json(errorMessage);
+        return;
+      }
 
-    request.post({url: `${server}${apisPath.auth}/logout`, headers: {'Authorization': token}}, function(err, httpResponse, body) {
-      // TODO: if err what is next to do
-      // TODO: have to swap between request and detroy session
-      res.json(Object.assign(success, {
-        message: 'Logout Successful'
-      }));
+      res.json(successMessage);
     });
   });
+  // req.session.destroy(function(err) {
+  //   if (err) console.log('destroy session error');
+  //
+  //
+  // });
 });
 
 export default router;

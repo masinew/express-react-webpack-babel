@@ -31,7 +31,6 @@ routes.use(function(req, res, next) {
       token: req.token
     }, function(err, result) {
       if (err || result) {
-        console.log('asdqwe123');
         res.json(errMessage);
         return;
       }
