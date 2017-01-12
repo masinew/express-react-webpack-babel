@@ -22,7 +22,9 @@ app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
+
 app.use('/v1', apiV1);
+app.use('/api/v1', apiV1);
 
 app.get('*', (req, res) => {
   res.json({success: false, message: "APIs not found"});

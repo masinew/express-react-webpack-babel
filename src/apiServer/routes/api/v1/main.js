@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
-import authRoute from './auth';
+import userRoute from './user';
 import blogRoute from './blog';
-import tokenRoute from './token';
+import authRoute from './auth';
 import config from '../../../../common/config/config';
 import BlacklistToken from '../../../app/models/blacklistToken';
 
 const routes = new Router();
-routes.use('/auth', authRoute);
+routes.use('/user', userRoute);
 
 // below apis require auth
 routes.use(function(req, res, next) {
@@ -41,7 +41,7 @@ routes.use(function(req, res, next) {
   });
 });
 
-routes.use('/token', tokenRoute);
+routes.use('/auth', authRoute);
 routes.use('/blog', blogRoute);
 
 export default routes;
