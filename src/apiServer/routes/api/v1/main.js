@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';
-import config from '../../../../common/config/config';
+import { key } from '../../../../common/config/server';
 import BlacklistToken from '../../../app/models/blacklistToken';
 
 const routes = new Router();
@@ -20,7 +20,7 @@ routes.use(function(req, res, next) {
 
   req.token = req.get('Authorization');
   // Is token verify?
-  jwt.verify(req.token, config.sessionKey, function(err, decoded) {
+  jwt.verify(req.token, key.tokenKey, function(err, decoded) {
     if (err) {
       res.json(errMessage);
       return;

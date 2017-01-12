@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import Multer from 'multer';
 import mongoose from 'mongoose'
 import morgan from 'morgan';
-import config from '../common/config/config';
+import { mongodb } from '../common/config/server';
 import apiV1 from './routes/api/v1/main';
 
 const app = new Express();
@@ -16,8 +16,8 @@ app.use(bodyParser.json());
 app.use(multer.array());
 app.use(morgan('dev'));
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', 'true');
+  // res.header('Access-Control-Allow-Origin', '*');
+  // res.header('Access-Control-Allow-Credentials', 'true');
   // res.header('Access-Control-Allow-Method', 'GET,POST');
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
@@ -34,7 +34,7 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 const env = process.env.NODE_ENV || 'production';
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database, (err) => {
+mongoose.connect(mongodb.urlConnection, (err) => {
   if (err) throw err;
 
   server.listen(5000, (err) => {

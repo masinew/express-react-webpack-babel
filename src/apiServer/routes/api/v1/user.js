@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
-import config from '../../../../common/config/config';
+import { key, expiration } from '../../../../common/config/server';
 
 import User from '../../../app/models/user';
 
@@ -21,8 +21,8 @@ router.post('/login', function(req, res) {
       return;
     }
 
-    const token = jwt.sign({id: result._id}, config.sessionKey,{
-      expiresIn: config.authExpire/1000
+    const token = jwt.sign({id: result._id}, key.tokenKey,{
+      expiresIn: expiration.tokenExpired
     });
 
     res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));

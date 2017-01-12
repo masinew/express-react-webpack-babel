@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
-import config from '../../../../common/config/config';
+import { key } from '../../../../common/config/server';
 
 import BlacklistToken from '../../../app/models/blacklistToken';
 
@@ -15,7 +15,7 @@ router.get('/isActive', function(req, res) {
 // destroy token by add it to blacklistToken, so I have to use POST method for saving info on the database
 router.post('/logout', function(req, res) {
   const token = req.token;
-  jwt.verify(token, config.sessionKey, function(err, decoded) {
+  jwt.verify(token, key.tokenKey, function(err, decoded) {
     const blacklistToken = new BlacklistToken({
       token: token,
       expireAt: decoded.exp
