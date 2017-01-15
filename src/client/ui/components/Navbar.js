@@ -16,6 +16,11 @@ export default class Navbar extends Component {
 
     this.handleOnClickProfile = this.handleOnClickProfile.bind(this);
     this.handleOnClickLogout = this.handleOnClickLogout.bind(this);
+    this.handleOnClickNavbar = this.handleOnClickNavbar.bind(this);
+  }
+
+  handleOnClickNavbar() {
+    $('#myCollapseNavbar').collapse('hide');
   }
 
   handleOnClickProfile(event) {
@@ -48,7 +53,7 @@ export default class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-default">
+      <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
           <div className="navbar-header">
             <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#myCollapseNavbar" aria-expanded="false">
@@ -63,7 +68,7 @@ export default class Navbar extends Component {
           </div>
 
           <div className="collapse navbar-collapse" id="myCollapseNavbar">
-            <ul className="nav navbar-nav">
+            <ul className="nav navbar-nav" onClick={this.handleOnClickNavbar}>
                 <ListItemLink className="nav-link" to="/" onlyActiveOnIndex={true}>
                   Home
                 </ListItemLink>
@@ -71,10 +76,10 @@ export default class Navbar extends Component {
                   Blogs
                 </ListItemLink>
             </ul>
-            <ul className="nav navbar-nav navbar-right" id="b">
+            <ul className="nav navbar-nav navbar-right" id="b" >
               <li className="dropdown">
                 <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.userFullName}<span className="caret"></span></a>
-                <ul className="dropdown-menu">
+                <ul className="dropdown-menu" onClick={this.handleOnClickNavbar}>
                   <ListItemLink className="nav-link" to="/user/profile" onClick={this.handleOnClickProfile}>
                     Profile
                   </ListItemLink>

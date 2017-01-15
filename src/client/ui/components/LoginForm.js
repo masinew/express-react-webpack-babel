@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
-import 'bootstrap/dist/css/bootstrap.css';
 
 import localStyle from '../style/LoginForm.scss';
-import HelloWorld from './HelloWorld';
 import config from '../../../common/config/client';
 
 const port = config.server.port;
@@ -22,37 +20,7 @@ export default class LoginForm extends Component {
     event.preventDefault();
     const username = this.refs.username.value;
     const password = this.refs.password.value;
-    let formData = new FormData();
-    formData.append('username', username);
-    formData.append('password', password);
-    const fetchOptions = {
-      method: 'POST',
-      body: formData,
-      credentials: 'include'
-    };
-
-    fetch(`${server}/user/login`, fetchOptions)
-      .then((response) => {
-        response.json().then((result) => {
-          const status = result.success;
-          const message = result.message;
-          if (status) {
-            const firstName = result.userInfo.firstName;
-            const lastName = result.userInfo.lastName;
-            localStorage.setItem("userFullName", firstName + " " + lastName);
-            alertify.success(message);
-            const { location } = this.props;
-            if (location.state && location.state.lastPathname) {
-              browserHistory.push(location.state.lastPathname);
-            } else {
-              browserHistory.push('/');
-            }
-          }
-          else {
-            alertify.error(message);
-          }
-        });
-      });
+    this.props.onSubmitListener(username, password);
   }
 
   handleOnClickBtForgetPassword(event) {

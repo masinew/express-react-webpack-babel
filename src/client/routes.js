@@ -12,6 +12,7 @@ import Home from './ui/components/Home';
 
 import BlogList from './ui/containers/BlogList';
 import BlogDetail from './ui/containers/BlogDetail';
+import Login from './ui/containers/Login';
 
 const port = config.server.port;
 const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
@@ -19,7 +20,7 @@ const server = `${config.server.protocal}://${config.server.host}${ port ? `:${p
 const routes = (
   <Route>
     <Route path="/user">
-      <Route path="login" component={LoginForm} />
+      <Route path="login" component={Login} />
       <Route path="forgetPassword" component={HelloWorld} />
     </Route>
     <Route path="/" component={Layout} onChange={requireCredentials}>

@@ -6,7 +6,7 @@ export default class Blog extends Component {
     return (
       <div className="content">
         <div className="contentHeader">
-          <div className="jumbotron" style={{marginBottom: 0, paddingTop: 20, paddingBottom: 20}}>
+          <div className="jumbotron" style={{marginBottom: 0, paddingTop: 60, paddingBottom: 20}}>
             <div className="container">
               <h3 className="display-3">
                 <Link to={this.props.rootPath}>{this.props.rootName}</Link>

@@ -5,6 +5,7 @@ import blogRoute from './blog';
 import authRoute from './auth';
 import { key } from '../../../../common/config/server';
 import BlacklistToken from '../../../app/models/blacklistToken';
+import User from '../../../app/models/user';
 
 const routes = new Router();
 routes.use('/user', userRoute);
@@ -29,13 +30,21 @@ routes.use(function(req, res, next) {
     // token is in blacklist?
     BlacklistToken.findOne({
       token: req.token
-    }, function(err, result) {
-      if (err || result) {
+    }, function(err, blacklistResult) {
+      if (err || blacklistResult) {
         res.json(errMessage);
         return;
       }
 
-      next();
+      // Is a our user?
+      User.findOne({_id: decoded.id}, function(err, userResult) {
+        if (err || !userResult) {
+          res.json(errMessage);
+          return;
+        }
+
+        next();
+      })
     });
   });
 });
