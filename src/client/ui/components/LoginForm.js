@@ -14,6 +14,20 @@ export default class LoginForm extends Component {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
+    this.handleFacebook = this.handleFacebook.bind(this);
+  }
+
+  handleFacebook(event) {
+    event.preventDefault();
+    console.log(this.a);
+    // FB.getLoginStatus(function(response) {
+    //   console.log(response);
+    //   if (response.status !== 'connected') {
+    //     FB.login(function(response) {
+    //       console.log(response);
+    //     })
+    //   }
+    // });
   }
 
   handleOnSubmit(event) {
@@ -27,6 +41,51 @@ export default class LoginForm extends Component {
     event.preventDefault();
     alertify.error("Coming Soon");
     // browserHistory.push('/user/forgetPassword');
+  }
+
+  componentDidMount() {
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '379797422386810',
+          xfbml      : true,
+          version    : 'v2.6'
+        });
+
+        // FB.AppEvents.logPageView();
+      }.bind(this);
+
+      this.a = (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+
+         js = d.createElement(s);
+         js.id = id;
+         js.src = "//connect.facebook.net/asd/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+
+    //  function() {
+    //    var e=this.props,t=e.appId,n=e.locale,r=e.version,i=e.xfbml;
+    //    window.fbAsyncInit = function() {
+    //      FB.init(
+    //        {
+    //          appId:t,
+    //          xfbml:i,
+    //          version:r
+    //        }
+    //      )
+    //    },
+    //    function(e,t,r) {
+    //      var i=e.getElementsByTagName(t)[0],o=i,a=i;
+    //      e.getElementById(r)||
+    //      (
+    //        a=e.createElement(t),
+    //        a.id=r,
+    //        a.src="//connect.facebook.net/"+n+"/sdk.js",
+    //        o.parentNode.insertBefore(a,o)
+    //      )
+    //    }(document,"script","facebook-jssdk")
+    //  }
   }
 
   render() {
@@ -63,6 +122,9 @@ export default class LoginForm extends Component {
                   </div>
                   <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
                     <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
+                  </div>
+                  <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
+                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleFacebook} value="Facebook" />
                   </div>
                 </div>
               </div>
