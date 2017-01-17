@@ -87,6 +87,10 @@ app.use('/api', proxy('localhost:5000', {
 }));
 app.use('/user', userRoute);
 
+app.get('/facebook_test', function(req, res) {
+  res.sendFile(__dirname + '/template/facebook_test.html');
+});
+
 app.get('/user/login', function(req, res) {
   if (req.session.token) {
     res.redirect('/');
