@@ -7,7 +7,7 @@
     "windows-client-dev": "SET BABEL_ENV=client-dev& \"node_modules\\.bin\\webpack-dev-server\" --config src/client/webpack.client.config.js",
     "windows-server-start-dev": "\"node_modules\\.bin\\npm-run-all\" --parallel windows-server-webpack-dev windows-server-start-dev",
     "windows-server-webpack-dev": "SET BABEL_ENV=server-dev&& \"node_modules\\.bin\\webpack\" --config src/webServer/webpack.server.config.js",
-    "windows-server-dev": "SET BABEL_ENV=server-dev&& SET NODE_ENV=development&& SET PORT=3000&& \"node_modules\\.bin\\nodemon\" src/webServer/server-app.js",
+    "windows-server-dev": "SET BABEL_ENV=server-dev&& SET NODE_ENV=development&& \"node_modules\\.bin\\nodemon\" src/webServer/server-app.js",
     "windows-api-server": "SET BABEL_ENV=api-server&& \"node_modules\\.bin\\nodemon\" src/apiServer/server-app.js",
     "windows-server-dev-tmp": "SET NODE_ENV=development && SET PORT=4000 && nodemon --exec \"node_modules\\.bin\\babel-node\" src/webServer/server-app.js",
     "prestart": "SET BABEL_ENV=production&& babel src --out-dir dist&&\"node_modules\\.bin\\webpack\"",

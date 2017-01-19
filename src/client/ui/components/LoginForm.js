@@ -48,7 +48,8 @@ export default class LoginForm extends Component {
         FB.init({
           appId      : '379797422386810',
           xfbml      : true,
-          version    : 'v2.6'
+          version    : 'v2.6',
+          cookie     : true
         });
 
         // FB.AppEvents.logPageView();

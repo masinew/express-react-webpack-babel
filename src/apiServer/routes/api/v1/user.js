@@ -22,9 +22,7 @@ router.post('/login', function(req, res) {
       return;
     }
 
-    const token = jwt.sign({id: result._id}, key.tokenKey,{
-      expiresIn: expiration.tokenExpired
-    });
+    const token = jwt.sign({id: result._id}, key.tokenKey);
 
     res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
   });
