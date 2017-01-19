@@ -65,6 +65,7 @@ app.use(bodyParser.json());
 app.use(multer.array());
 app.use(morgan('dev'));
 app.use(Session(sessionOptions));
+app.use(minifyHTML(serverConfig.optimization.minifyHTMLOptions));
 app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Origin', '*');
   // res.header('Access-Control-Allow-Credentials', 'true');
@@ -72,7 +73,6 @@ app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
-app.use(minifyHTML(serverConfig.optimization.minifyHTMLOptions)); //TODO: this is not working
 
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:5000', {

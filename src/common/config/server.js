@@ -29,13 +29,16 @@ export const mongodb = {
 
 export const optimization = {
   minifyHTMLOptions: {
+    override:      true,
+    exception_url: false,
     htmlMinifier: {
         removeComments:            true,
         collapseWhitespace:        true,
         collapseBooleanAttributes: true,
         removeAttributeQuotes:     true,
         removeEmptyAttributes:     true,
-        minifyJS:                  true
+        minifyJS:                  true,
+        minifyCSS:                 true
     }
   }
 }
