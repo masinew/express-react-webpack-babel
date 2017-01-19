@@ -14,7 +14,6 @@ router.post('/login', function(req, res) {
   request.post({url: `${server}${apisPath.user}/login`,
     form: {username: username, password: password}}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      console.log(json.token); // for checking when user already logout and then the token can access data that is required authening
       req.session.token = json.token
       delete json.token; // do not send token value to client in case website
       res.json(json);
@@ -32,7 +31,7 @@ router.get('/logout', function(req, res) {
       res.json(errorMessage);
       return;
     }
-    
+
     req.session.destroy(function(err) {
       if (err) {
         res.json(errorMessage);
