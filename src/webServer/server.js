@@ -36,19 +36,21 @@ const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
   cookie: {
-    maxAge: serverConfig.expiration.sessionExpired
+    maxAge: serverConfig.expiration.sessionExpired,
+    httpOnly: true
   },
   store: new SessionStore({mongooseConnection: mongoose.connection}),
   secret: serverConfig.key.sessionKey,
-  resave: false, // resave infomation in the db not in the express session
-  saveUninitialized: false // initial information when users call the website
+  resave: true, // resave only in the store
+  saveUninitialized: false,
+  rolling: true // resave session's cookie only on client
 };
 
 mongoose.Promise = global.Promise;
 mongoose.connect(serverConfig.mongodb.urlConnection, function(err) {
   if (err) throw err;
 
-  const port = process.env.PORT || 3000;
+  const port = serverConfig.webServer.port;
   const env = process.env.NODE_ENV || 'production';
   server.listen(port, (err) => {
     if (err) {
@@ -56,7 +58,8 @@ mongoose.connect(serverConfig.mongodb.urlConnection, function(err) {
       return;
     }
 
-    console.info(`Server running on http://localhost:${port} [${env}]`);
+    const serverUrl = `${serverConfig.webServer.protocal}://${serverConfig.webServer.host}:${port}`;
+    console.info(`Server running on ${serverUrl} [${env}]`);
   });
 });
 
@@ -73,7 +76,6 @@ app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
-
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:5000', {
   decorateRequest: function(proxyReq, originalReq) {
