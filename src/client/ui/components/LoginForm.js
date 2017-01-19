@@ -19,13 +19,19 @@ export default class LoginForm extends Component {
 
   handleFacebook(event) {
     event.preventDefault();
-    console.log(this.a);
+    FB.login(function(response) {
+      FB.api('/me?fields=email,first_name,last_name', function(response) {
+        console.log(response);
+      })
+    }, {scope: "email"})
     // FB.getLoginStatus(function(response) {
     //   console.log(response);
     //   if (response.status !== 'connected') {
+    //     console.log(1);
     //     FB.login(function(response) {
     //       console.log(response);
-    //     })
+    //     }, {scope: "email"})
+    //     console.log(2);
     //   }
     // });
   }
@@ -44,24 +50,28 @@ export default class LoginForm extends Component {
   }
 
   componentDidMount() {
-      window.fbAsyncInit = function() {
+      window.fbAsyncInit = () => {
         FB.init({
           appId      : '379797422386810',
           xfbml      : true,
-          version    : 'v2.6',
-          cookie     : true
+          version    : 'v2.6'
         });
 
-        // FB.AppEvents.logPageView();
-      }.bind(this);
 
-      this.a = (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
+        // FB.AppEvents.logPageView();
+        // FB.getLoginStatus(function(response) {
+        //   console.log(response);
+        // });
+      };
+
+      (function(d, s, id){
+         var fjs = d.getElementsByTagName(s)[0], js=fjs;
          if (d.getElementById(id)) {return;}
+
 
          js = d.createElement(s);
          js.id = id;
-         js.src = "//connect.facebook.net/asd/sdk.js";
+         js.src = "//connect.facebook.net/en_US/sdk.js";
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
 
