@@ -32,7 +32,7 @@ export const optimization = {
     override:      true,
     exception_url: false,
     htmlMinifier: {
-        removeComments:            true,
+        removeComments:            false,
         collapseWhitespace:        true,
         collapseBooleanAttributes: true,
         removeAttributeQuotes:     true,

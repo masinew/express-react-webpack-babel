@@ -11,7 +11,7 @@ export default class Blog extends Component {
               <h3 className="display-3">
                 <Link to={this.props.rootPath}>{this.props.rootName}</Link>
                 {
-                  !this.props.header ? '' :
+                  !this.props.header ? null :
                   [<span key="1">{" > "}{this.props.header}</span>]
                 }
               </h3>
