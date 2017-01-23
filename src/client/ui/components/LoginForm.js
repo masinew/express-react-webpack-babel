@@ -15,44 +15,6 @@ export default class LoginForm extends Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
     this.handleOnFacebookSubmit = this.handleOnFacebookSubmit.bind(this);
-    this.loginWithFacebook = this.loginWithFacebook.bind(this);
-  }
-
-  loginWithFacebook() {
-    FB.api('/me?fields=email,first_name,last_name,gender', function(response) {
-      const formData = new FormData();
-      formData.append("facebookUserId", response.id);
-      formData.append("firstName", response.first_name);
-      formData.append("lastName", response.last_name);
-      formData.append("email", response.email);
-      formData.append("gender", response.gender);
-      console.log(`${server}${config.apis.user}/facebookLogin`);
-      fetch(`${server}/user/loginWithFacebook`, {
-        credentials: 'include',
-        method: 'POST',
-        body: formData
-      }).then((response) => {
-        response.json().then((result) => {
-          const status = result.success;
-          const message = result.message;
-          if (status) {
-            const firstName = result.userInfo.firstName;
-            const lastName = result.userInfo.lastName;
-            localStorage.setItem("userFullName", firstName + " " + lastName);
-            alertify.success(message);
-            const { location } = this.props;
-            if (location.state && location.state.lastPathname) {
-              browserHistory.push('/');
-            } else {
-              browserHistory.push('/');
-            }
-          }
-          else {
-            alertify.error(message);
-          }
-        });
-      })
-    })
   }
 
   handleOnFacebookSubmit(event) {

@@ -62,26 +62,21 @@ export default class Login extends Component {
   }
 
   onFacebookSubmitListener(cb) {
-    if (typeof FB !== 'undefined') {
-      FB.getLoginStatus((response) => {
-        const facebookStatus = response.status;
-        if (facebookStatus === 'connected') {
-          this.onFacebookLoggedIn(cb);
-        }
-        else {
-          FB.login((response) => {
-            if (response.error || response.status !== 'connected') {
-              if (cb) {
-                cb(null, 'Login with Facebook Unsuccessful');
-              }
-              
-              return;
-            }
+    if (this.facebookStatus === 'connected') {
+      this.onFacebookLoggedIn(cb);
+    }
+    else {
+      FB.login((response) => {
+        if (response.error || response.status !== 'connected') {
+          if (cb) {
+            cb(null, 'Login with Facebook Unsuccessful');
+          }
 
-            this.onFacebookLoggedIn(cb);
-          }, {scope: "email"})
+          return;
         }
-      });
+
+        this.onFacebookLoggedIn(cb);
+      }, {scope: "email"})
     }
   }
 
@@ -127,6 +122,12 @@ export default class Login extends Component {
   }
 
   componentDidMount() {
+    // if (typeof FB !== 'undefined') {
+    //   FB.getLoginStatus((response) => {
+    //     this.facebookStatus = response.status;
+    //   });
+    // }
+
     window.fbAsyncInit = () => {
       FB.init({
         appId      : '379797422386810',
@@ -136,9 +137,10 @@ export default class Login extends Component {
       });
 
 
-      // FB.AppEvents.logPageView();
-      // FB.getLoginStatus((response) => {
-      //   this.facebookStatus = response.status;
+      FB.AppEvents.logPageView();
+      // FB.getLoginStatus(function (response) {
+        // console.log(response);
+        // this.facebookStatus = response.status;
       // });
     };
 
