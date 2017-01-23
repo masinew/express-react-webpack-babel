@@ -70,8 +70,8 @@ app.use(morgan('dev'));
 app.use(Session(sessionOptions));
 app.use(minifyHTML(serverConfig.optimization.minifyHTMLOptions));
 app.use(function(req, res, next) {
-  // res.header('Access-Control-Allow-Origin', '*');
-  // res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Origin', 'http://192.168.105.25:3000');
+  res.header('Access-Control-Allow-Credentials', 'true');
   // res.header('Access-Control-Allow-Method', 'GET,POST');
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();

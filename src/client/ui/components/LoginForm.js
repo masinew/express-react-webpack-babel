@@ -14,89 +14,77 @@ export default class LoginForm extends Component {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
-    this.handleFacebook = this.handleFacebook.bind(this);
+    this.handleOnFacebookSubmit = this.handleOnFacebookSubmit.bind(this);
+    this.loginWithFacebook = this.loginWithFacebook.bind(this);
   }
 
-  handleFacebook(event) {
-    event.preventDefault();
-    FB.login(function(response) {
-      FB.api('/me?fields=email,first_name,last_name', function(response) {
-        console.log(response);
+  loginWithFacebook() {
+    FB.api('/me?fields=email,first_name,last_name,gender', function(response) {
+      const formData = new FormData();
+      formData.append("facebookUserId", response.id);
+      formData.append("firstName", response.first_name);
+      formData.append("lastName", response.last_name);
+      formData.append("email", response.email);
+      formData.append("gender", response.gender);
+      console.log(`${server}${config.apis.user}/facebookLogin`);
+      fetch(`${server}/user/loginWithFacebook`, {
+        credentials: 'include',
+        method: 'POST',
+        body: formData
+      }).then((response) => {
+        response.json().then((result) => {
+          const status = result.success;
+          const message = result.message;
+          if (status) {
+            const firstName = result.userInfo.firstName;
+            const lastName = result.userInfo.lastName;
+            localStorage.setItem("userFullName", firstName + " " + lastName);
+            alertify.success(message);
+            const { location } = this.props;
+            if (location.state && location.state.lastPathname) {
+              browserHistory.push('/');
+            } else {
+              browserHistory.push('/');
+            }
+          }
+          else {
+            alertify.error(message);
+          }
+        });
       })
-    }, {scope: "email"})
-    // FB.getLoginStatus(function(response) {
-    //   console.log(response);
-    //   if (response.status !== 'connected') {
-    //     console.log(1);
-    //     FB.login(function(response) {
-    //       console.log(response);
-    //     }, {scope: "email"})
-    //     console.log(2);
-    //   }
-    // });
+    })
+  }
+
+  handleOnFacebookSubmit(event) {
+    event.preventDefault();
+    this.props.onFacebookSubmitListener(function(status, message) {
+      if (status) {
+        alertify.success(message);
+      }
+      else {
+        alertify.error(message);
+      }
+    });
   }
 
   handleOnSubmit(event) {
     event.preventDefault();
     const username = this.refs.username.value;
     const password = this.refs.password.value;
-    this.props.onSubmitListener(username, password);
+    this.props.onSubmitListener(username, password, function(status, message) {
+      if (status) {
+        alertify.success(message);
+      }
+      else {
+        alertify.error(message);
+      }
+    });
   }
 
   handleOnClickBtForgetPassword(event) {
     event.preventDefault();
     alertify.error("Coming Soon");
     // browserHistory.push('/user/forgetPassword');
-  }
-
-  componentDidMount() {
-      window.fbAsyncInit = () => {
-        FB.init({
-          appId      : '379797422386810',
-          xfbml      : true,
-          version    : 'v2.6'
-        });
-
-
-        // FB.AppEvents.logPageView();
-        // FB.getLoginStatus(function(response) {
-        //   console.log(response);
-        // });
-      };
-
-      (function(d, s, id){
-         var fjs = d.getElementsByTagName(s)[0], js=fjs;
-         if (d.getElementById(id)) {return;}
-
-
-         js = d.createElement(s);
-         js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-
-    //  function() {
-    //    var e=this.props,t=e.appId,n=e.locale,r=e.version,i=e.xfbml;
-    //    window.fbAsyncInit = function() {
-    //      FB.init(
-    //        {
-    //          appId:t,
-    //          xfbml:i,
-    //          version:r
-    //        }
-    //      )
-    //    },
-    //    function(e,t,r) {
-    //      var i=e.getElementsByTagName(t)[0],o=i,a=i;
-    //      e.getElementById(r)||
-    //      (
-    //        a=e.createElement(t),
-    //        a.id=r,
-    //        a.src="//connect.facebook.net/"+n+"/sdk.js",
-    //        o.parentNode.insertBefore(a,o)
-    //      )
-    //    }(document,"script","facebook-jssdk")
-    //  }
   }
 
   render() {
@@ -135,7 +123,7 @@ export default class LoginForm extends Component {
                     <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
                   </div>
                   <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
-                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleFacebook} value="Facebook" />
+                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnFacebookSubmit} value="Facebook" />
                   </div>
                 </div>
               </div>

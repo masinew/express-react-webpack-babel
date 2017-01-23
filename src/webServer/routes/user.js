@@ -21,6 +21,28 @@ router.post('/login', function(req, res) {
   );
 });
 
+router.post('/loginWithFacebook', function(req, res) {
+  const facebookUserId = req.body.facebookUserId;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  const gender = req.body.gender;
+  request.post({url: `${server}${apisPath.user}/loginWithFacebook`,
+    form: {
+      facebookUserId: facebookUserId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      gender: gender
+    }}, function(err, httpResponse, body) {
+      let json = JSON.parse(body);
+      req.session.token = json.token
+      delete json.token; // do not send token value to client in case website
+      res.json(json);
+    }
+  );
+});
+
 router.get('/logout', function(req, res) {
   const token = req.session.token;
   const successMessage = Object.assign(success, {message: 'Logout Successful'});

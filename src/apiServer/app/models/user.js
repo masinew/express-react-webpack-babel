@@ -1,11 +1,14 @@
 import mongoose, { Schema } from 'mongoose';
 
 export default mongoose.model('User', new Schema({
-  username: String,
-  password: String,
-  admin: Boolean,
+  username:   String,
+  password:   String,
+  admin:      Boolean,
   userInfo: {
-    firstName: String,
-    lastName: String
+    facebookUserId: String,
+    firstName:      String,
+    lastName:       String,
+    email:          String,
+    gender:         String
   }
 }));
