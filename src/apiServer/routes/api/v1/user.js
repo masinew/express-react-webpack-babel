@@ -40,12 +40,16 @@ router.post('/register', function(req, res) {
 
 router.post('/loginWithFacebook', function(req, res) {
   const successMessage = Object.assign(success, {message: 'Success'});
-  const errorMessage = Object.assign(error, {message: "Register Unsuccessful"});
+  const errorMessage = Object.assign(error, {message: "Login with Facebook unsuccessful"});
   const facebookUserId = req.body.facebookUserId;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
   const gender = req.body.gender;
+  if (facebookUserId === 'undefined') {
+    res.json(errorMessage)
+    return;
+  }
 
   User.findOne({"userInfo.facebookUserId": facebookUserId}, function(err, result) {
     if (err) {

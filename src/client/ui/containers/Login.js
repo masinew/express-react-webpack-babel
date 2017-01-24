@@ -16,25 +16,22 @@ export default class Login extends Component {
     this.onLoggedIn = this.onLoggedIn.bind(this);
     this.onFacebookSubmitListener = this.onFacebookSubmitListener.bind(this);
     this.onFacebookLoggedIn = this.onFacebookLoggedIn.bind(this);
+
+    this.checkFacebookStatus = this.checkFacebookStatus.bind(this);
+    this.setPath = this.setPath.bind(this);
+    this.setUserInfo = this.setUserInfo.bind(this);
   }
 
   onLoggedIn(result, cb) {
     const status = result.success;
     const message = result.message;
     if (status) {
-      const firstName = result.userInfo.firstName;
-      const lastName = result.userInfo.lastName;
-      localStorage.setItem("userFullName", firstName + " " + lastName);
+      this.setUserInfo(result);
       if (cb) {
           cb(status, message);
       }
 
-      const { location } = this.props;
-      if (location.state && location.state.lastPathname) {
-        browserHistory.push(location.state.lastPathname);
-      } else {
-        browserHistory.push('/');
-      }
+      this.setPath();
     }
     else {
       if (cb) {
@@ -97,22 +94,16 @@ export default class Login extends Component {
           const status = result.success;
           const message = result.message;
           if (status) {
-            const firstName = result.userInfo.firstName;
-            const lastName = result.userInfo.lastName;
-            localStorage.setItem("userFullName", firstName + " " + lastName);
+            this.setUserInfo(result);
             if (cb) {
               cb(status, message);
             }
 
-            const { location } = this.props;
-            if (location.state && location.state.lastPathname) {
-              browserHistory.push('/');
-            } else {
-              browserHistory.push('/');
-            }
+            this.setPath();
           }
           else {
             if (cb) {
+              this.checkFacebookStatus();
               cb(status, message);
             }
           }
@@ -121,12 +112,31 @@ export default class Login extends Component {
     })
   }
 
+  checkFacebookStatus() {
+    if (typeof FB !== 'undefined') {
+      FB.getLoginStatus((response) => {
+        this.facebookStatus = response.status;
+      });
+    }
+  }
+
+  setPath() {
+    const { location } = this.props;
+    if (location.state && location.state.lastPathname) {
+      browserHistory.push(location.state.lastPathname);
+    } else {
+      browserHistory.push('/');
+    }
+  }
+
+  setUserInfo(result) {
+    const firstName = result.userInfo.firstName;
+    const lastName = result.userInfo.lastName;
+    localStorage.setItem("userFullName", firstName + " " + lastName);
+  }
+
   componentDidMount() {
-    // if (typeof FB !== 'undefined') {
-    //   FB.getLoginStatus((response) => {
-    //     this.facebookStatus = response.status;
-    //   });
-    // }
+    this.checkFacebookStatus();
 
     window.fbAsyncInit = () => {
       FB.init({
@@ -138,10 +148,7 @@ export default class Login extends Component {
 
 
       FB.AppEvents.logPageView();
-      // FB.getLoginStatus(function (response) {
-        // console.log(response);
-        // this.facebookStatus = response.status;
-      // });
+      this.checkFacebookStatus();
     };
 
     (function(d, s, id){
