@@ -41,12 +41,8 @@ router.post('/register', function(req, res) {
 router.post('/loginWithFacebook', function(req, res) {
   const successMessage = Object.assign(success, {message: 'Success'});
   const errorMessage = Object.assign(error, {message: "Login with Facebook unsuccessful"});
-  const facebookUserId = req.body.facebookUserId;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const gender = req.body.gender;
-  if (facebookUserId === 'undefined') {
+  const { facebookUserId, firstName, lastName, email, gender } = req.body;
+  if (facebookUserId === 'undefined' || typeof facebookUserId === 'undefined') {
     res.json(errorMessage)
     return;
   }
@@ -66,39 +62,27 @@ router.post('/loginWithFacebook', function(req, res) {
       return;
     }
 
-    const newUser = new User({
-      admin: false,
-      userInfo: {
-        facebookUserId: facebookUserId,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        gender: gender
-      }
-    });
+    const userInfo = {
+      facebookUserId: facebookUserId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      gender: gender
+    };
 
-    newUser.save(function(err, result) {
-      if (err) {
-        res.json(errorMessage);
-        return;
-      }
-
-      const token = jwt.sign({id: result._id}, key.tokenKey, {
-        expiresIn: expiration.tokenExpired
-      });
-
-      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
-    });
+    saveUser(userInfo, successMessage, errorMessage, res);
   });
 });
 
 router.post('/loginWithGoogle', function(req, res) {
   const successMessage = Object.assign(success, {message: 'Success'});
   const errorMessage = Object.assign(error, {message: "Login with Google unsuccessful"});
-  const googleUserId = req.body.googleUserId;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
+  const { googleUserId, firstName, lastName, email } = req.body;
+  if (googleUserId === 'undefined' || typeof googleUserId === 'undefined') {
+    res.json(errorMessage)
+    return;
+  }
+
   User.findOne({"userInfo.googleUserId": googleUserId}, function(err, result) {
     if (err) {
       res.json(errorMessage);
@@ -114,30 +98,36 @@ router.post('/loginWithGoogle', function(req, res) {
       return;
     }
 
-    const newUser = new User({
-      admin: false,
-      userInfo: {
-        googleUserId: googleUserId,
-        firstName: firstName,
-        lastName: lastName,
-        email: email
-      }
-    });
+    const userInfo = {
+      googleUserId: googleUserId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    };
 
-    newUser.save(function(err, result) {
-      if (err) {
-        res.json(errorMessage);
-        return;
-      }
-
-      const token = jwt.sign({id: result._id}, key.tokenKey, {
-        expiresIn: expiration.tokenExpired
-      });
-
-      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
-    });
+    saveUser(userInfo, successMessage, errorMessage, res);
   });
 });
+
+function saveUser(userInfo, successMessage, errorMessage, res) {
+  const newUser = new User({
+    admin: false,
+    userInfo: userInfo
+  });
+
+  newUser.save(function(err, result) {
+    if (err) {
+      res.json(errorMessage);
+      return;
+    }
+
+    const token = jwt.sign({id: result._id}, key.tokenKey, {
+      expiresIn: expiration.tokenExpired
+    });
+
+    res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+  });
+}
 
 router.get('/setup', function(req, res) {
   const newUser = new User({
