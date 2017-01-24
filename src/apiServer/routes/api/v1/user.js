@@ -92,6 +92,53 @@ router.post('/loginWithFacebook', function(req, res) {
   });
 });
 
+router.post('/loginWithGoogle', function(req, res) {
+  const successMessage = Object.assign(success, {message: 'Success'});
+  const errorMessage = Object.assign(error, {message: "Login with Google unsuccessful"});
+  const googleUserId = req.body.googleUserId;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+  User.findOne({"userInfo.googleUserId": googleUserId}, function(err, result) {
+    if (err) {
+      res.json(errorMessage);
+      return;
+    }
+
+    if (result) {
+      const token = jwt.sign({id: result._id}, key.tokenKey, {
+        expiresIn: expiration.tokenExpired
+      });
+
+      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+      return;
+    }
+
+    const newUser = new User({
+      admin: false,
+      userInfo: {
+        googleUserId: googleUserId,
+        firstName: firstName,
+        lastName: lastName,
+        email: email
+      }
+    });
+
+    newUser.save(function(err, result) {
+      if (err) {
+        res.json(errorMessage);
+        return;
+      }
+
+      const token = jwt.sign({id: result._id}, key.tokenKey, {
+        expiresIn: expiration.tokenExpired
+      });
+
+      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+    });
+  });
+});
+
 router.get('/setup', function(req, res) {
   const newUser = new User({
     username: 'champ',

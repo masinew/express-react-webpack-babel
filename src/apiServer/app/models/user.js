@@ -6,6 +6,7 @@ export default mongoose.model('User', new Schema({
   admin:      Boolean,
   userInfo: {
     facebookUserId: String,
+    googleUserId:   String,
     firstName:      String,
     lastName:       String,
     email:          String,

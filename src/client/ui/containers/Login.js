@@ -16,6 +16,8 @@ export default class Login extends Component {
     this.onLoggedIn = this.onLoggedIn.bind(this);
     this.onFacebookSubmitListener = this.onFacebookSubmitListener.bind(this);
     this.onFacebookLoggedIn = this.onFacebookLoggedIn.bind(this);
+    this.onGoogleSubmitListener = this.onGoogleSubmitListener.bind(this);
+    this.onGoogleLoggedIn = this.onGoogleLoggedIn.bind(this);
 
     this.checkFacebookStatus = this.checkFacebookStatus.bind(this);
     this.setPath = this.setPath.bind(this);
@@ -112,6 +114,65 @@ export default class Login extends Component {
     })
   }
 
+  onGoogleSubmitListener(cb) {
+    gapi.load('auth2', () => {
+      const auth2 = gapi.auth2.init({
+        client_id: '866864651822-f79j3umd74dtu5adb8fj5q5jl6kvu1j3.apps.googleusercontent.com'
+      })
+// auth2.signOut()
+
+      if (auth2.isSignedIn.get()) {
+        const profile = auth2.currentUser.get().getBasicProfile();
+        this.onGoogleLoggedIn(profile, cb);
+      }
+      else {
+        auth2.signIn().then((result) => {
+          const profile = result.getBasicProfile();
+          this.onGoogleLoggedIn(profile, cb);
+        })
+      }
+    });
+  }
+
+  onGoogleLoggedIn(profile, cb) {
+    const formData = new FormData();
+    formData.append("googleUserId", profile.getId());
+    formData.append("firstName", profile.getGivenName());
+    formData.append("lastName", profile.getFamilyName());
+    formData.append("email", profile.getEmail());
+    fetch(`${server}/user/loginWithGoogle`, {
+      credentials: 'include',
+      method: 'POST',
+      body: formData
+    }).then((response) => {
+      response.json().then((result) => {
+        const status = result.success;
+        const message = result.message;
+        if (status) {
+          this.setUserInfo(result);
+          if (cb) {
+            cb(status, message);
+          }
+
+          this.setPath();
+        }
+        else {
+          if (cb) {
+            this.checkFacebookStatus();
+            cb(status, message);
+          }
+        }
+      });
+    })
+
+    // console.log('ID: ' + profile.getId());
+    // console.log('Full Name: ' + profile.getName());
+    // console.log('Given Name: ' + profile.getGivenName());
+    // console.log('Family Name: ' + profile.getFamilyName());
+    // console.log('Image URL: ' + profile.getImageUrl());
+    // console.log('Email: ' + profile.getEmail());
+  }
+
   checkFacebookStatus() {
     if (typeof FB !== 'undefined') {
       FB.getLoginStatus((response) => {
@@ -165,7 +226,7 @@ export default class Login extends Component {
 
   render() {
     return (
-      <LoginForm onSubmitListener={this.onSubmitListener} onFacebookSubmitListener={this.onFacebookSubmitListener} />
+      <LoginForm onSubmitListener={this.onSubmitListener} onFacebookSubmitListener={this.onFacebookSubmitListener} onGoogleSubmitListener={this.onGoogleSubmitListener} />
     );
   }
 }

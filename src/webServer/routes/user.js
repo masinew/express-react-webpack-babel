@@ -43,6 +43,31 @@ router.post('/loginWithFacebook', function(req, res) {
   );
 });
 
+router.post('/loginWithGoogle', function(req, res) {
+  const googleUserId = req.body.googleUserId;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const email = req.body.email;
+
+  console.log(googleUserId);
+  console.log(firstName);
+  console.log(lastName);
+  console.log(email);
+  request.post({url: `${server}${apisPath.user}/loginWithGoogle`,
+    form: {
+      googleUserId: googleUserId,
+      firstName: firstName,
+      lastName: lastName,
+      email: email
+    }}, function(err, httpResponse, body) {
+      let json = JSON.parse(body);
+      req.session.token = json.token
+      delete json.token; // do not send token value to client in case website
+      res.json(json);
+    }
+  );
+});
+
 router.get('/logout', function(req, res) {
   const token = req.session.token;
   const successMessage = Object.assign(success, {message: 'Logout Successful'});

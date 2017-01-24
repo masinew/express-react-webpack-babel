@@ -15,6 +15,7 @@ export default class LoginForm extends Component {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
     this.handleOnFacebookSubmit = this.handleOnFacebookSubmit.bind(this);
+    this.handleOnGoogleSubmit = this.handleOnGoogleSubmit.bind(this);
   }
 
   handleOnFacebookSubmit(event) {
@@ -47,6 +48,19 @@ export default class LoginForm extends Component {
     event.preventDefault();
     alertify.error("Coming Soon");
     // browserHistory.push('/user/forgetPassword');
+  }
+
+  handleOnGoogleSubmit(event) {
+    event.preventDefault();
+    this.props.onGoogleSubmitListener(function(status, message) {
+      if (status) {
+        alertify.success(message);
+      }
+      else {
+        alertify.error(message);
+      }
+    });
+
   }
 
   render() {
@@ -82,10 +96,14 @@ export default class LoginForm extends Component {
                     <input type="submit" className="btn btn-primary form-control" value="Login" />
                   </div>
                   <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
-                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
+                    <input type="submit" className="btn btn-warning form-control" onClick={this.handleOnClickBtForgetPassword} value="Forget Password" />
                   </div>
                   <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
-                    <input type="submit" className="btn btn-warning form-control " onClick={this.handleOnFacebookSubmit} value="Facebook" />
+                    <input type="submit" className="btn btn-warning form-control" onClick={this.handleOnFacebookSubmit} value="Facebook" />
+                  </div>
+                  <div className="col-xs-12 col-sm-6 col-md-6" style={{marginTop: 10}}>
+
+                    <input type="submit" className="btn btn-warning form-control" onClick={this.handleOnGoogleSubmit} value="Google" />
                   </div>
                 </div>
               </div>
