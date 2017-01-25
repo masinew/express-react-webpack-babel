@@ -10,6 +10,7 @@ import PageNotFound from './ui/components/PageNotFound';
 import HelloWorld from './ui/components/HelloWorld';
 import Home from './ui/components/Home';
 import UserProfile from './ui/components/UserProfile';
+import Chart from './ui/components/Chart';
 
 import BlogList from './ui/containers/BlogList';
 import BlogDetail from './ui/containers/BlogDetail';
@@ -31,6 +32,7 @@ const routes = (
         <Route path=":id" component={BlogDetail} />
       </Route>
       <Route path="profile" component={UserProfile} />
+      <Route path="chart" component={Chart} />
     </Route>
     <Route path="*" component={PageNotFound} />
   </Route>

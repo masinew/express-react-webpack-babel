@@ -89,6 +89,14 @@ app.use('/api', proxy('localhost:5000', {
 }));
 app.use('/user', userRoute);
 
+app.get('/testChart', function(req, res) {
+  res.json({
+    a1: 20,
+    a2: 33,
+    a3: 60
+  });
+})
+
 app.get('/facebook_test', function(req, res) {
   res.sendFile(__dirname + '/template/facebook_test.html');
 });
