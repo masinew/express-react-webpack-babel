@@ -90,10 +90,14 @@ app.use('/api', proxy('localhost:5000', {
 app.use('/user', userRoute);
 
 app.get('/testChart', function(req, res) {
+  let max = 100;
+  const a1 = Math.random() * max;
+  const a2 = Math.random() * max;
+  const a3 = Math.random() * max;
   res.json({
-    a1: 20,
-    a2: 33,
-    a3: 60
+    a1: a1,
+    a2: a2,
+    a3: a3
   });
 })
 
