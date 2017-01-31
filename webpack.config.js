@@ -33,7 +33,8 @@ module.exports = {
       jQuery: "jquery",
       "window.jQuery": "jquery",
       "window.Tether": 'tether',
-      alertify: "alertifyjs"
+      alertify: "alertifyjs",
+      socket: 'socket.io-client'
     })
   ],
   postcss: function() {

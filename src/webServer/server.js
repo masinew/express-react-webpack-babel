@@ -147,3 +147,12 @@ function getClientUIPath(req, res) {
     }
   );
 }
+
+var io = require('socket.io')(server);
+io.on('connection', function(socket) {
+  console.log('Connected');
+  io.on('a', function() {
+    socket.broadcast.emit('a', 'asd');
+  });
+
+});
