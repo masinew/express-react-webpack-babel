@@ -5,6 +5,7 @@ import 'isomorphic-fetch';
 
 import config from '../common/config/client';
 import Layout from './ui/components/Layout';
+import GlobalLayout from './ui/components/GlobalLayout';
 import LoginForm from './ui/components/LoginForm';
 import PageNotFound from './ui/components/PageNotFound';
 import HelloWorld from './ui/components/HelloWorld';
@@ -20,7 +21,7 @@ const port = config.server.port;
 const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
 
 const routes = (
-  <Route>
+  <Route component={GlobalLayout}>
     <Route path="/user">
       <Route path="login" component={Login} />
       <Route path="forgetPassword" component={HelloWorld} />

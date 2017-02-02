@@ -1,0 +1,389 @@
+[33mcommit edac2f95fa59ee44d1c8615bd44eeb4dbb72d23b[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 31 18:06:28 2017 +0700
+
+    test socketio
+
+[33mcommit 17b71524d05c9571112259fa5c5a771b2af59743[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Jan 25 17:26:31 2017 +0700
+
+    WebServer: random data for chart
+
+[33mcommit 5d7d066b774b1bcc064f10cf8670a048b5748b84[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Jan 25 15:38:47 2017 +0700
+
+    add chartjs for testing
+
+[33mcommit e32d4dd7e3bf25633b71d686059fc1db52120b4c[m
+Author: masinew <masinew@gmail.com>
+Date:   Tue Jan 24 21:56:51 2017 +0700
+
+    add UserProfile page and add it to client route
+
+[33mcommit c8aa01fa5f512467816028be7b27bf2117dcb573[m
+Author: masinew <masinew@gmail.com>
+Date:   Tue Jan 24 21:28:59 2017 +0700
+
+    APIServer: clean up source code of user api
+
+[33mcommit 1a72e31a34a74a39a084598331ba2a09de71af7f[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 24 17:54:56 2017 +0700
+
+    add google login
+
+[33mcommit 4c42ff678b17ff083a71d5980e3e9a6d4fa73828[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 24 11:35:54 2017 +0700
+
+    fix some bugs of facebbok login
+
+[33mcommit 49a8192c95b9c8a8e62e89a8837f6a46f26afd27[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Jan 23 21:24:49 2017 +0700
+
+    fix issue about browser blocks when login with facebook
+
+[33mcommit 52c04fd5cf0a1c350168916fea38927cc5efc84c[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Jan 23 21:02:21 2017 +0700
+
+    fix npm script that can not run windows-server-start-dev
+
+[33mcommit 5659b82a1c8762c49cabb1bacc3f6c0132b3aca6[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Mon Jan 23 18:10:56 2017 +0700
+
+    add login with facebook
+
+[33mcommit bfc7a0ae912e4f21e7f8c9c80deb9b2ac8e96eca[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Mon Jan 23 13:14:50 2017 +0700
+
+    disable removeComment of minifyHTML of express for fixing some errors when rendering react pages and add token expiration
+
+[33mcommit 9d116b91cf30412f9a4d00cfe8a343ca5fbcd03c[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 19 18:02:51 2017 +0700
+
+    try to connect to facebook and save facebook's imfomation to our database
+
+[33mcommit 7111b82cc54c44ceae97b3d1105e8fc5f0e28e0f[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 19 15:22:16 2017 +0700
+
+    allow facebook sdk to enable saving cookie
+
+[33mcommit ec2c5e69211eb8c8c317d0756ec016f4d23a9e14[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 19 15:20:32 2017 +0700
+
+    fix session behavior to work correctly
+
+[33mcommit 76767293ad6cbe34db652bf508be5da376095b2a[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 19 15:16:55 2017 +0700
+
+    erase print token out on the console
+
+[33mcommit 1c051495f02a7cfbad95edb5c0c79822569710ae[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 19 10:38:57 2017 +0700
+
+    fix html minify that it do not works
+
+[33mcommit 7caef816a2d9393fc3d98af6f90f1aea29011510[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 17 14:15:13 2017 +0700
+
+    LoginForm: test facebook login
+
+[33mcommit 114fbce9afaef7e99ca6fdaff089b16f2db6ffb5[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 17 11:22:49 2017 +0700
+
+    add page and route for testing facebook login
+
+[33mcommit e64a9dc51ca273000c3df3d8e351fbc8081f0102[m
+Author: masinew <masinew@gmail.com>
+Date:   Sun Jan 15 22:35:27 2017 +0700
+
+    separate login function out of Login container
+
+[33mcommit 0a8d047cad3931aed4415ee4b289fdc67136fe53[m
+Author: masinew <masinew@gmail.com>
+Date:   Thu Jan 12 22:37:40 2017 +0700
+
+    PROJECT: clean up source code 2
+
+[33mcommit 6d52fc12131c6b6db16139b4d12e3d4da65b62b5[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 17:15:39 2017 +0700
+
+    PROJECT: clean up everything in the project
+
+[33mcommit 3165bedd4743d7f9490ca8514740ee519a598e15[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 17:15:00 2017 +0700
+
+    apiServer: clean up source code
+
+[33mcommit 23f675920ed1bed27f9d2d71f04f3742cda503ed[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 16:36:01 2017 +0700
+
+    WebServer: clean up source code
+
+[33mcommit 02418ac394baf7ee8002e6609841e4587edb416f[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 14:19:19 2017 +0700
+
+    Client: clean up source code
+
+[33mcommit c7ad5b5143acc9c38e4aff8ea067bfa382929361[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 12:48:05 2017 +0700
+
+    fix problem body on api server is empty when proxy path to api server by set header content type to application/json before proxy
+
+[33mcommit 37e6ca3c8dfac1e8952fc94d7367c6479643a32a[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 12 10:53:32 2017 +0700
+
+    change naming of APIs
+
+[33mcommit fc1d6254ffd7f20032a160d92076adb481f18f9e[m
+Author: masinew <masinew@gmail.com>
+Date:   Thu Jan 12 00:59:29 2017 +0700
+
+    separate api on api server of auth.js to token.js and destory a token when user is logout from the website
+
+[33mcommit e572f9cb62e4d7f05abe86bf5521f4664781130c[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Jan 10 18:06:47 2017 +0700
+
+    call data from api server instead web server by proxy on web server
+
+[33mcommit 5cbde651f236de01a569c888b4043f99f755bd0a[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Jan 9 23:10:33 2017 +0700
+
+    separate apiServer and webServer folders and add express proxy on web server to get api server instead
+
+[33mcommit 9db6697adec1ff4a41e8e36f6147614d7735307f[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Mon Jan 9 18:07:04 2017 +0700
+
+    test restify
+
+[33mcommit 02bdf7f7f78717c674448ce7159ff1029299513b[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Mon Jan 9 15:27:03 2017 +0700
+
+    disable setTimeout of auth's api and remember prevState of client routes  instead of the nextState route
+
+[33mcommit 3b6b1a8ec17000c79953a0e8ea8a9ee311f7a06a[m
+Author: masinew <masinew@gmail.com>
+Date:   Sun Jan 8 22:52:54 2017 +0700
+
+    check user's authen when user changes views and remember user's next path when session is expired
+
+[33mcommit 5d1e597ed33a31d8c2bba1279e29a686f2cd9b10[m
+Author: masinew <masinew@gmail.com>
+Date:   Fri Jan 6 21:55:46 2017 +0700
+
+    fix react's HRM that did not works
+
+[33mcommit 22daf43b68acfda19022a516993b465df3c2d997[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Jan 5 16:24:39 2017 +0700
+
+    clean source code and add user info for displaying in the site
+
+[33mcommit 419f3bce817a51ac090d3f0c7d74e4709951b320[m
+Author: masinew <masinew@gmail.com>
+Date:   Wed Jan 4 23:47:37 2017 +0700
+
+    fix style on login page for setting the login form to middle of screen on every screen size
+
+[33mcommit 02b7ea45f5cb301cdbb7d8f384aad0f67525ca54[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Jan 4 18:08:05 2017 +0700
+
+    add detail page of blog and build new grid layout of login page
+
+[33mcommit cd48f0e3c53ac3f54f29848213433c75fa359a4d[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Jan 4 11:05:17 2017 +0700
+
+    ignore this commit
+
+[33mcommit fbdd8f9df51d798769e43127a2bddafb2aef221c[m
+Author: masinew <masinew@gmail.com>
+Date:   Tue Jan 3 21:14:08 2017 +0700
+
+    change bootstrap's version and call bloglist from server
+
+[33mcommit c20de185b1e49887e44778da390660f6787400a0[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Jan 2 19:11:51 2017 +0700
+
+    change bootstrap to version 3 and conmfig all webpack.[-, server, client].config.js
+
+[33mcommit fba84aa2a4ecdff827293f08a20fc93dd41f7b63[m
+Author: masinew <masinew@gmail.com>
+Date:   Thu Dec 29 22:10:05 2016 +0700
+
+    ignore for this commit
+
+[33mcommit 47dba650a90064944b08a951d760bc17b7b1340e[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Dec 28 15:56:34 2016 +0700
+
+    add alertify in webpack successful
+
+[33mcommit bf40d6b3a7e6da727d4a080bf2d5621dd55e5338[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Dec 26 22:53:38 2016 +0700
+
+    fix bug can not start the server by setting env of babel_env on windows-server-start-dev npm's script
+
+[33mcommit 011b3109032eb59db66d46a1d05b2437fb3557c3[m
+Author: masinew <masinew@gmail.com>
+Date:   Sun Dec 25 21:05:13 2016 +0700
+
+    the project structure is almost preapred done
+
+[33mcommit 2fadd333055a9a70310e4de683a53826a3d4bff9[m
+Author: masinew <masinew@gmail.com>
+Date:   Sun Dec 25 13:46:51 2016 +0700
+
+    change new path for importing modules in files
+
+[33mcommit f50c9958c5ca44d1ff05ca0f5f9aeef7124ea9a2[m
+Author: masinew <masinew@gmail.com>
+Date:   Sat Dec 24 16:18:39 2016 +0700
+
+    change directory structure completely
+
+[33mcommit 43fe2751dd572d9dca279a54ee43624c46697743[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 23 18:00:33 2016 +0700
+
+    change directory structure of the project
+
+[33mcommit 6ee54fbae4d433d8d2222b6105d4435bf41b808f[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 23 14:37:07 2016 +0700
+
+    prepare to fix can not render the pages on express
+
+[33mcommit 82a373088f61ee0e910040d6d03edfbb1e8decf8[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Dec 21 17:35:34 2016 +0700
+
+    test style scss
+
+[33mcommit f2f84774389c0b22a025b0074b2a3416b1c46136[m
+Author: masinew <masinew@gmail.com>
+Date:   Tue Dec 20 22:14:49 2016 +0700
+
+    nothing chenged
+
+[33mcommit 20aa113b53d7d1858d3fd907ca251876933e5b31[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 20 17:51:26 2016 +0700
+
+    add bootstrap and any style sheet on webpack
+
+[33mcommit 846fd7ef9caae6ad664522afae2e9349276d265f[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Dec 19 21:34:42 2016 +0700
+
+    user authens with api
+
+[33mcommit deb320226ebc5ac9d4492dd4b20b1ca865ce6d10[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 16 18:01:56 2016 +0700
+
+    test fetch on Login page (/ root path)
+
+[33mcommit d33f17f2cd8cab00911780b5189055b6020b7354[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 16 13:09:59 2016 +0700
+
+    create /api/v1/auth for authening a user
+
+[33mcommit 4b273aa244256646f57eeba6a2e564f37e16a687[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Dec 14 18:07:58 2016 +0700
+
+    try to create auth on api(unsuccess)
+
+[33mcommit c3065dad8c61d5fb5bb39931bfa93c1dc6121e60[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 13 17:50:42 2016 +0700
+
+    test
+
+[33mcommit 227d5c6bb72b30b7085aa7c31ac153d546e85036[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 13 17:49:47 2016 +0700
+
+    test
+
+[33mcommit c1dd76fa442ad2f078b25105672acf02be4c4344[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 13 17:43:38 2016 +0700
+
+    test2
+
+[33mcommit 2d5a4f5a67f73b6a16df12b7cf973af9790aed86[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 13 17:42:29 2016 +0700
+
+    test
+
+[33mcommit d5fce500887c8e393f628f2278b63da97188f13b[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Dec 12 23:14:14 2016 +0700
+
+    fix setup path of api-route
+
+[33mcommit 3db6c4b84f8864e5b072c71dcff3a6e022d327b1[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 9 18:04:01 2016 +0700
+
+    learn react router
+
+[33mcommit 436af0442a11fb09daeea58bf6457707ac5b6a2b[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Thu Dec 8 18:17:35 2016 +0700
+
+    user auth with login
+
+[33mcommit 2fe35119576ecbca0c639dbf9c9155bdbda8a09e[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Wed Dec 7 18:08:56 2016 +0700
+
+    add auth-route for authening a session cookie
+
+[33mcommit 743a5722b8c49f15b10d735bb1bd886dc23bdc6e[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Tue Dec 6 18:02:52 2016 +0700
+
+    authen on api route with jwt
+
+[33mcommit 1c9a2620fe526353d67eb63b896011e905beeb06[m
+Author: masinew <masinew@gmail.com>
+Date:   Mon Dec 5 22:53:34 2016 +0700
+
+    move react to running on server as isomophic
+
+[33mcommit 367fbce1c266ad9215391b488824f9109dd696c1[m
+Author: Nattajak Grisiam <nattajak@westernintegration.com>
+Date:   Fri Dec 2 13:31:35 2016 +0700
+
+    a
