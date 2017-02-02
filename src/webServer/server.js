@@ -12,6 +12,9 @@ import proxy from 'express-http-proxy';
 // System configuration
 import * as serverConfig from '../common/config/server';
 
+// Socket
+import Socket from './socket';
+
 // Express routes
 import userRoute from './routes/user';
 
@@ -31,7 +34,7 @@ const app = new Express();
 app.set('views', path.join(__dirname, 'template'));
 app.set('view engine', 'ejs');
 
-const server = new Server(app);
+const server = new Server(app); new Socket(server);
 const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
@@ -147,11 +150,3 @@ function getClientUIPath(req, res) {
     }
   );
 }
-
-var io = require('socket.io')(server);
-io.on('connection', function(socket) {
-  io.on('user connected', function() {
-    socket.broadcast.emit('a', 'asd');
-  });
-
-});

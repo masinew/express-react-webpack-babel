@@ -16,12 +16,14 @@ export default class LoginForm extends Component {
     this.handleOnClickBtForgetPassword = this.handleOnClickBtForgetPassword.bind(this);
     this.handleOnFacebookSubmit = this.handleOnFacebookSubmit.bind(this);
     this.handleOnGoogleSubmit = this.handleOnGoogleSubmit.bind(this);
+    this.socketAlert = this.socketAlert.bind(this);
   }
 
   handleOnFacebookSubmit(event) {
     event.preventDefault();
-    this.props.onFacebookSubmitListener(function(status, message) {
+    this.props.onFacebookSubmitListener((status, message) => {
       if (status) {
+        this.socketAlert();
         alertify.success(message);
       }
       else {
@@ -34,8 +36,22 @@ export default class LoginForm extends Component {
     event.preventDefault();
     const username = this.refs.username.value;
     const password = this.refs.password.value;
-    this.props.onSubmitListener(username, password, function(status, message) {
+    this.props.onSubmitListener(username, password, (status, message) => {
       if (status) {
+        this.socketAlert();
+        alertify.success(message);
+      }
+      else {
+        alertify.error(message);
+      }
+    });
+  }
+
+  handleOnGoogleSubmit(event) {
+    event.preventDefault();
+    this.props.onGoogleSubmitListener((status, message) => {
+      if (status) {
+        this.socketAlert();
         alertify.success(message);
       }
       else {
@@ -50,17 +66,8 @@ export default class LoginForm extends Component {
     // browserHistory.push('/user/forgetPassword');
   }
 
-  handleOnGoogleSubmit(event) {
-    event.preventDefault();
-    this.props.onGoogleSubmitListener(function(status, message) {
-      if (status) {
-        alertify.success(message);
-      }
-      else {
-        alertify.error(message);
-      }
-    });
-
+  socketAlert() {
+    this.context.socket.emit('user connected', localStorage.userFullName);
   }
 
   render() {
@@ -116,3 +123,7 @@ export default class LoginForm extends Component {
     );
   }
 }
+
+LoginForm.contextTypes = {
+  socket: React.PropTypes.object
+};

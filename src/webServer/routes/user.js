@@ -48,11 +48,6 @@ router.post('/loginWithGoogle', function(req, res) {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-
-  console.log(googleUserId);
-  console.log(firstName);
-  console.log(lastName);
-  console.log(email);
   request.post({url: `${server}${apisPath.user}/loginWithGoogle`,
     form: {
       googleUserId: googleUserId,

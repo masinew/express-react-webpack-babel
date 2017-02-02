@@ -30,7 +30,6 @@ export default class Navbar extends Component {
 
   handleOnClickLogout(event) {
     event.preventDefault()
-    localStorage.clear();
     fetch(`${server}/user/logout`, {
       credentials: 'include'
     })
@@ -38,7 +37,9 @@ export default class Navbar extends Component {
       response.json().then((json) => {
         const status = json.success;
         if (status) {
+          this.context.socket.emit('user disconnect', localStorage.userFullName);
           alertify.success(json.message);
+          localStorage.clear();
           browserHistory.push('/user/login');
         }
       });
@@ -94,4 +95,8 @@ export default class Navbar extends Component {
       </nav>
     );
   }
+}
+
+Navbar.contextTypes = {
+  socket: React.PropTypes.object
 }
