@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 
 export default class Blog extends Component {
   render() {
+    const jumbotron = !this.props.header ? null : <span>{" > "}{this.props.header}</span>
     return (
       <div className="content">
         <div className="contentHeader">
@@ -11,8 +12,7 @@ export default class Blog extends Component {
               <h3 className="display-3">
                 <Link to={this.props.rootPath}>{this.props.rootName}</Link>
                 {
-                  !this.props.header ? null :
-                  [<span key="1">{" > "}{this.props.header}</span>]
+                  jumbotron
                 }
               </h3>
             </div>
