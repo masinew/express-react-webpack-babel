@@ -23,9 +23,9 @@ export default class BlogDetail extends Component {
     }).then((response) => {
       response.json().then((json) => {
         var paragraphCount = 0;
-        const header = json.header;
+        const topic = json.topic;
         const detailComponent = [
-          <div className={localStyle.blog} id="callout-btn-group-accessibility" key={json.id}>
+          <div className={localStyle.blog} id="callout-btn-group-accessibility" key={json.blogNumber}>
             {
               json.details.map((detail) => {
                 return <p key={++paragraphCount}>{detail}</p>
@@ -35,7 +35,7 @@ export default class BlogDetail extends Component {
         ];
         this.setState({
           blogDetail: detailComponent,
-          header: header
+          topic: topic
         });
       });
     });
@@ -43,7 +43,7 @@ export default class BlogDetail extends Component {
 
   render() {
     return (
-      <Blog info={this.state.blogDetail} header={this.state.header} />
+      <Blog info={this.state.blogDetail} topic={this.state.topic} />
     );
   }
 }

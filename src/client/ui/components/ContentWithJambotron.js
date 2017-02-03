@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 export default class ContentWithJambotron extends Component {
   render() {
-    const jumbotronInfo = !this.props.header ? null : <span>{" > "}{this.props.header}</span>
+    const jumbotronInfo = !this.props.topic ? null : <span>{" > "}{this.props.topic}</span>
     return (
       <div className="content">
         <div className="contentHeader">

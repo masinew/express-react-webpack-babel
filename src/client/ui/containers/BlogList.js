@@ -26,8 +26,8 @@ export default class BlogList extends Component {
     .then((response) => {
       response.json().then((json) => {
         const dataSet = json.map((data) => {
-          return <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.id}>
-            <Link to={"/blogs/" + data.id}><h3>{data.header}</h3></Link>
+          return <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.blogNumber}>
+            <Link to={"/blogs/" + data.blogNumber}><h3>{data.topic}</h3></Link>
             <hr/>
             <p>{data.shortInfo}</p>
           </div>

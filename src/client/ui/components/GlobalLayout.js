@@ -7,6 +7,12 @@ import config from '../../../common/config/client';
 const port = config.server.port;
 const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
 
+/*
+socket Context is used by these components:
+1. LoginForm: for emitting user login
+2. Navbar: for emitting user logout
+3. Dashboard: for emitting admin submit new blog
+*/
 export default class GlobalLayout extends Component {
   constructor(props) {
     super(props)

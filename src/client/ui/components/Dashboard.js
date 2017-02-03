@@ -1,4 +1,9 @@
 import React, { Component } from 'react'
+import { browserHistory } from 'react-router';
+import config from '../../../common/config/client';
+
+const port = config.server.port;
+const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
 
 export default class Dashboard extends Component {
   constructor(props) {
@@ -8,7 +13,30 @@ export default class Dashboard extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    alert(1)
+    const formData = new FormData();
+    const topic = this.refs.topic.value;
+    const shortInfo = this.refs.shortInfo.value;
+    const details = this.refs.details.value;
+    formData.append("topic", topic);
+    formData.append("shortInfo", shortInfo);
+    formData.append("details", details);
+    fetch(`${server}${config.apis.blog}/save`, {
+      credentials: 'include',
+      method: 'POST',
+      body: formData
+    }).then((response) => {
+      response.json().then((json) => {
+        const success = json.success;
+        if (success) {
+          this.context.socket.emit('blog update', 'blog update');
+          alertify.success(json.message);
+        }
+        else {
+          alertify.error(json.message);
+        }
+      });
+    });
+
   }
 
   render() {
@@ -29,7 +57,7 @@ export default class Dashboard extends Component {
                 <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Topic</label>
                 <div className="col-xs-9 col-sm-10 col-md-10">
                   <div className="col-xs-12 col-sm-12 col-md-12">
-                    <input type="text" className="form-control" ref="password" />
+                    <input type="text" className="form-control" ref="topic" />
                   </div>
                 </div>
               </div>
@@ -38,7 +66,7 @@ export default class Dashboard extends Component {
                 <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Detail</label>
                 <div className="col-xs-9 col-sm-10 col-md-10">
                   <div className="col-xs-12 col-sm-12 col-md-12">
-                    <textarea className="form-control" ref="password" style={{resize: 'none'}} rows="12" />
+                    <textarea className="form-control" ref="details" style={{resize: 'none'}} rows="12" />
                   </div>
                 </div>
               </div>
@@ -47,7 +75,7 @@ export default class Dashboard extends Component {
                 <label className="col-xs-3 col-sm-2 col-md-2 col-form-label">Short Detail</label>
                 <div className="col-xs-9 col-sm-10 col-md-10">
                   <div className="col-xs-12 col-sm-12 col-md-12">
-                    <textarea className="form-control" ref="password" style={{resize: 'none'}} rows="12" />
+                    <textarea className="form-control" ref="shortInfo" style={{resize: 'none'}} rows="12" />
                   </div>
                 </div>
               </div>
@@ -65,4 +93,8 @@ export default class Dashboard extends Component {
       </div>
     );
   }
+}
+
+Dashboard.contextTypes = {
+  socket: React.PropTypes.object
 }

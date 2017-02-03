@@ -76,6 +76,9 @@ export default class Navbar extends Component {
                 <ListItemLink className="nav-link" to="/blogs">
                   Blogs
                 </ListItemLink>
+                <ListItemLink className="nav-link" to="/dashboard">
+                  Dashboard
+                </ListItemLink>
             </ul>
             <ul className="nav navbar-nav navbar-right" id="b" >
               <li className="dropdown">

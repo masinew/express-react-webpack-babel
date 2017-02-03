@@ -1,36 +1,58 @@
 import { Router } from 'express';
+import Blog from '../../../app/models/blog';
 
 const router = new Router();
 
 router.get('/list', function(req, res) {
-  const tmpList = [
-    {
-      id: 1,
-      header: 'Ensure correct role and provide a label',
-      shortInfo: 'In order for assistive technologies – such as screen readers – to convey that a series of buttons is grouped, an appropriate role attribute needs to be provided. For button groups, this would be role="group", while toolbars should have a role="toolbar".'
-    },
-    {
-      id: 2,
-      header: 'Ensure correct role and provide a label',
-      shortInfo: 'In order for assistive technologies – such as screen readers – to convey that a series of buttons is grouped, an appropriate role attribute needs to be provided. For button groups, this would be role="group", while toolbars should have a role="toolbar".'
+  Blog.find({}, {_id: 0, blogNumber: 1, topic: 1, shortInfo: 1}, {sort: {blogNumber: -1}}, function(err, result) {
+    if (err) {
+      console.log('error');
     }
-  ];
 
-  res.json(tmpList);
+    res.json(result);
+  });
 });
 
-router.get('/:id', function(req, res) {
-  const tmpDetail = {
-    id: 1,
-    header: 'Ensure correct role and provide a label',
-    details: [
-      'In order for assistive technologies – such as screen readers – to convey that a series of buttons is grouped, an appropriate role attribute needs to be provided. For button groups, this would be role="group", while toolbars should have a role="toolbar".',
-      'One exception are groups which only contain a single control (for instance the justified button groups with <button> elements) or a dropdown.',
-      'In addition, groups and toolbars should be given an explicit label, as most assistive technologies will otherwise not announce them, despite the presence of the correct role attribute. In the examples provided here, we use aria-label, but alternatives such as aria-labelledby can also be used.'
-    ]
-  }
+router.post('/save', function(req, res) {
+  Blog.count({}, function(err, count) {
+    if (err) {
+      res.json({success: false, message: 'error'});
+      return;
+    }
 
-  res.json(tmpDetail);
+    const topic = req.body.topic;
+    const shortInfo = req.body.shortInfo;
+    const details = req.body.details;
+    const newBlog = new Blog({
+      blogNumber: count+1,
+      topic: topic,
+      shortInfo: shortInfo,
+      details: [details]
+    });
+
+    newBlog.save(function(err) {
+      if (err) {
+        res.json({success: false, message: 'error'});
+        return;
+      }
+
+      res.json({success: true, message: 'success'});
+    });
+  });
+})
+
+router.get('/:blogNumber', function(req, res) {
+  const blogNumber = req.params.blogNumber;
+  Blog.findOne({blogNumber: blogNumber}, {_id: 0, blogNumber: 1, topic: 1, details: 1}, function(err, result) {
+    if (err) {
+      console.log('error');
+    }
+
+    console.log(result);
+    res.json(result);
+  });
 });
+
+
 
 export default router;
