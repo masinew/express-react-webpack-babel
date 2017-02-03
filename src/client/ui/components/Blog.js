@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Content from './Content';
+import ContentWithJambotron from './ContentWithJambotron';
 
 export default class Blog extends Component {
   render() {
     return (
-      <Content rootName="Blog" rootPath="/blogs" info={this.props.info} header={this.props.header} />
+      <ContentWithJambotron rootName="Blog" rootPath="/blogs" info={this.props.info} header={this.props.header} />
     );
   }
 }

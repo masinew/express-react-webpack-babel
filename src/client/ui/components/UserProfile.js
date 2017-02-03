@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Content from './Content';
+import ContentWithJambotron from './ContentWithJambotron';
 
 export default class UserProfile extends Component {
   render() {
@@ -15,7 +15,7 @@ export default class UserProfile extends Component {
       </div>
     ]
     return (
-      <Content rootName="Home" rootPath="/" info={userProfileForm} />
+      <ContentWithJambotron rootName="Home" rootPath="/" info={userProfileForm} />
     );
   }
 }

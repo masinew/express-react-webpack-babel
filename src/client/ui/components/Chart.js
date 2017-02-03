@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
-import Content from './Content';
+import ContentWithJambotron from './ContentWithJambotron';
 
 export default class UserProfile extends Component {
   constructor(props) {
@@ -86,7 +86,7 @@ export default class UserProfile extends Component {
       </div>
     ]
     return (
-      <Content rootName="Home" rootPath="/" info={userProfileForm} />
+      <ContentWithJambotron rootName="Home" rootPath="/" info={userProfileForm} />
     );
   }
 }

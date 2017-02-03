@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 export default class Layout extends Component {
   render() {
     return (
-      <div className="app-container">
+      <div className="app-container"  style={{paddingTop: 50}}>
         <header>
           <Navbar />
         </header>

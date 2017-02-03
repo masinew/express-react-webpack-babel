@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import localStyle from '../style/Home.scss';
-import Content from './Content';
+import ContentWithJambotron from './ContentWithJambotron';
 
 export default class Home extends Component {
   componentDidMount() {
@@ -11,7 +11,7 @@ export default class Home extends Component {
       <div key="1">123</div>
     ]
     return (
-      <Content rootName="Home" rootPath="/" info={a} />
+      <ContentWithJambotron rootName="Home" rootPath="/" info={a} />
     );
   }
 }
