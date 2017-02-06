@@ -30,13 +30,13 @@ router.post('/save', function(req, res) {
       details: [details]
     });
 
-    newBlog.save(function(err) {
+    newBlog.save(function(err, result) {
       if (err) {
         res.json({success: false, message: 'error'});
         return;
       }
 
-      res.json({success: true, message: 'success'});
+      res.json({success: true, message: 'success', info: {blogNumber: result.blogNumber}});
     });
   });
 })

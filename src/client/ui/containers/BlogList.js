@@ -20,6 +20,7 @@ export default class BlogList extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props.blogList);
     fetch(`${server}${config.apis.blog}/list`, {
       credentials: 'include'
     })
@@ -38,6 +39,20 @@ export default class BlogList extends Component {
         });
       });
     })
+  }
+
+  componentDidUpdate() {
+    const a = this.state.blogList;
+    const data = this.props.blogList;
+    a.unshift(
+      <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.blogNumber+1}>
+        <Link to={"/blogs/" + data.blogNumber}><h3>{data.topic}</h3></Link>
+        <hr/>
+        <p>{data.shortInfo}</p>
+      </div>
+    );
+    // console.log(a);
+    // console.log(this.props.blogList);
   }
 
   render() {

@@ -36,7 +36,11 @@ router.post('/addBlog', function(req, res) {
     }
   }, function(err, httpResponse, body) {
     const json = JSON.parse(body);
-    socketInstance.getIO().emit('user connected', 'asd');
+    socketInstance.getIO().emit('new blog', {
+      blogNumber: json.info.blogNumber,
+      topic: topic,
+      shortInfo: shortInfo
+    });
     res.json(json);
   });
 });

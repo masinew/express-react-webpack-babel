@@ -17,7 +17,8 @@ export default class GlobalLayout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      socket: {}
+      socket: {},
+      blogList: {}
     }
   }
 
@@ -54,12 +55,29 @@ export default class GlobalLayout extends Component {
         });
       });
     });
+
+    this.socket.on('new blog', (info) => {
+      this.setState({
+        blogList: {
+          blogNumber: info.blogNumber,
+          topic: info.topic,
+          shortInfo: info.shortInfo
+        }
+      });
+
+      alertify.success('new blog');
+    });
   }
 
   render() {
+    const children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        blogList: this.state.blogList
+      })
+    })
     return (
       <div>
-        {this.props.children}
+        {children}
       </div>
     )
   }
