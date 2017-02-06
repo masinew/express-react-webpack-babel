@@ -21,11 +21,9 @@ router.post('/login', function(req, res) {
       return;
     }
 
-    const token = jwt.sign({id: result._id}, key.tokenKey, {
-      expiresIn: expiration.tokenExpired
-    });
-
-    res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+    const token = createToken(result._id, result.admin);
+    const userInfo = createUserInfo(result);
+    res.json(Object.assign(successMessage, {userInfo: userInfo, token: token}));
   });
 });
 
@@ -54,11 +52,9 @@ router.post('/loginWithFacebook', function(req, res) {
     }
 
     if (result) {
-      const token = jwt.sign({id: result._id}, key.tokenKey, {
-        expiresIn: expiration.tokenExpired
-      });
-
-      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+      const token = createToken(result._id, result.admin);
+      const userInfo = createUserInfo(result);
+      res.json(Object.assign(successMessage, {userInfo: userInfo, token: token}));
       return;
     }
 
@@ -70,7 +66,9 @@ router.post('/loginWithFacebook', function(req, res) {
       gender: gender
     };
 
-    saveUser(userInfo, successMessage, errorMessage, res);
+    saveUser(userInfo, successMessage, errorMessage, function(userInfo, token) {
+      res.json(Object.assign(successMessage, {userInfo: userInfo, token: token}));
+    });
   });
 });
 
@@ -90,11 +88,9 @@ router.post('/loginWithGoogle', function(req, res) {
     }
 
     if (result) {
-      const token = jwt.sign({id: result._id}, key.tokenKey, {
-        expiresIn: expiration.tokenExpired
-      });
-
-      res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+      const token = createToken(result._id, result.admin);
+      const userInfo = createUserInfo(result);
+      res.json(Object.assign(successMessage, {userInfo: userInfo, token: token}));
       return;
     }
 
@@ -105,11 +101,13 @@ router.post('/loginWithGoogle', function(req, res) {
       email: email
     };
 
-    saveUser(userInfo, successMessage, errorMessage, res);
+    saveUser(userInfo, successMessage, errorMessage, function(userInfo, token) {
+      res.json(Object.assign(successMessage, {userInfo: userInfo, token: token}));
+    });
   });
 });
 
-function saveUser(userInfo, successMessage, errorMessage, res) {
+function saveUser(userInfo, successMessage, errorMessage, cb) {
   const newUser = new User({
     admin: false,
     userInfo: userInfo
@@ -121,12 +119,40 @@ function saveUser(userInfo, successMessage, errorMessage, res) {
       return;
     }
 
-    const token = jwt.sign({id: result._id}, key.tokenKey, {
-      expiresIn: expiration.tokenExpired
-    });
-
-    res.json(Object.assign(successMessage, {userInfo: result.userInfo, token: token}));
+    const token = createToken(result._id, result.admin);
+    const userInfo = createUserInfo(result);
+    cb(userInfo, token);
   });
+}
+
+function createToken(id, admin, cb) {
+  const token = jwt.sign({
+    id: id,
+    admin: admin
+  }, key.tokenKey, {
+    expiresIn: expiration.tokenExpired
+  });
+
+  if (cb) {
+    cb(token);
+  }
+
+  return token;
+}
+
+function createUserInfo(result, cb) {
+  const userInfo = {
+    firstName: result.userInfo.firstName,
+    lastName: result.userInfo.lastName,
+    email: result.userInfo.email,
+    gender: result.userInfo.gender
+  }
+
+  if (cb) {
+    cb(userInfo);
+  }
+
+  return userInfo;
 }
 
 router.get('/setup', function(req, res) {
