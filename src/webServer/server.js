@@ -17,6 +17,7 @@ import Socket from './socket';
 
 // Express routes
 import userRoute from './routes/user';
+import adminRoute from './routes/admin';
 
 // React for handling routes
 import React from 'react';
@@ -92,6 +93,7 @@ app.use('/api', proxy('localhost:5000', {
   }
 }));
 app.use('/user', userRoute);
+app.use('/admin', adminRoute);
 
 app.get('/testChart', function(req, res) {
   let max = 100;

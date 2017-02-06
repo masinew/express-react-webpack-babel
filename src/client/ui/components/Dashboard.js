@@ -20,23 +20,23 @@ export default class Dashboard extends Component {
     formData.append("topic", topic);
     formData.append("shortInfo", shortInfo);
     formData.append("details", details);
-    fetch(`${server}${config.apis.blog}/save`, {
+    fetch(`${server}/admin/addBlog`, {
       credentials: 'include',
       method: 'POST',
       body: formData
     }).then((response) => {
       response.json().then((json) => {
-        const success = json.success;
-        if (success) {
-          this.context.socket.emit('blog update', 'blog update');
-          alertify.success(json.message);
-        }
-        else {
-          alertify.error(json.message);
-        }
+        console.log(json);
+        // const success = json.success;
+        // if (success) {
+        //   this.context.socket.emit('blog update', 'blog update');
+        //   alertify.success(json.message);
+        // }
+        // else {
+        //   alertify.error(json.message);
+        // }
       });
     });
-
   }
 
   render() {

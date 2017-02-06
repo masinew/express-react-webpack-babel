@@ -159,7 +159,7 @@ router.get('/setup', function(req, res) {
   const newUser = new User({
     username: 'champ',
     password: 'password',
-    admin: false,
+    admin: true,
     userInfo: {
       firstName: "Nattajak",
       lastName: "Grisiam",
