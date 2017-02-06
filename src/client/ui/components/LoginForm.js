@@ -67,7 +67,9 @@ export default class LoginForm extends Component {
   }
 
   socketAlert() {
-    this.context.socket.emit('user connected', localStorage.userFullName);
+    const firstName = localStorage.firstName;
+    const lastName = localStorage.lastName;
+    this.context.socket.emit('user connected', `${firstName} ${lastName}`);
   }
 
   render() {

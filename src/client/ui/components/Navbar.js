@@ -37,7 +37,9 @@ export default class Navbar extends Component {
       response.json().then((json) => {
         const status = json.success;
         if (status) {
-          this.context.socket.emit('user disconnect', localStorage.userFullName);
+          const firstName = localStorage.firstName;
+          const lastName = localStorage.lastName;
+          this.context.socket.emit('user disconnect', `${firstName} ${lastName}`);
           alertify.success(json.message);
           localStorage.clear();
           browserHistory.push('/user/login');
@@ -47,8 +49,10 @@ export default class Navbar extends Component {
   }
 
   componentDidMount() {
+    const firstName = localStorage.firstName;
+    const lastName = localStorage.lastName;
     this.setState({
-      userFullName: localStorage.userFullName
+      userFullName: `${firstName} ${lastName}`
     });
   }
 
