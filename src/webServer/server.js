@@ -34,7 +34,8 @@ const app = new Express();
 app.set('views', path.join(__dirname, 'template'));
 app.set('view engine', 'ejs');
 
-const server = new Server(app); new Socket(server);
+const server = new Server(app);
+export const socketInstance = new Socket(server);
 const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {

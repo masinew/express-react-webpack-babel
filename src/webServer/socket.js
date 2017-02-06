@@ -3,9 +3,10 @@ import request from 'request';
 
 export default class Sockets {
   constructor(httpServer) {
-    const io = new Socket(httpServer);
+    this.io = new Socket(httpServer);
     let tmpUserFullName;
-    io.on('connection', (socket) => {
+    this.io.on('connection', (socket) => {
+      this.socket = socket;
       socket.on('user connected', (userFullName) => {
         tmpUserFullName = userFullName;
         socket.broadcast.emit('user connected', `${userFullName} Connected`);
@@ -29,5 +30,16 @@ export default class Sockets {
         // socket.broadcast.emit('user disconnect', `${tmpUserFullName} Disonnected`);
       });
     });
+
+    this.getSocket = this.getSocket.bind(this);
+    this.getIO = this.getIO.bind(this);
+  }
+
+  getSocket() {
+    return this.socket;
+  }
+
+  getIO() {
+    return this.io;
   }
 }
