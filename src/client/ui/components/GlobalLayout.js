@@ -33,27 +33,11 @@ export default class GlobalLayout extends Component {
     });
 
     this.socket.on('user connected', function(message) {
-      fetch(`${server}${config.apis.auth}/isActive`, {
-        credentials: 'include'
-      }).then((response) => {
-        response.json().then(function(result) {
-          if (result.success) {
-            alertify.success(message);
-          }
-        });
-      });
+      alertify.success(message);
     });
 
     this.socket.on('user disconnect', function(message) {
-      fetch(`${server}${config.apis.auth}/isActive`, {
-        credentials: 'include'
-      }).then((response) => {
-        response.json().then(function(result) {
-          if (result.success) {
-            alertify.error(message);
-          }
-        });
-      });
+      alertify.error(message);
     });
 
     this.socket.on('new blog', (info) => {
