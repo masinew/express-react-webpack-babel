@@ -17,21 +17,19 @@ export default class BlogList extends Component {
     this.state = {
       blogList: []
     };
+
+    this.createBlogListItem = this.createBlogListItem.bind(this);
   }
 
   componentDidMount() {
-    console.log(this.props.blogList);
     fetch(`${server}${config.apis.blog}/list`, {
       credentials: 'include'
     })
     .then((response) => {
       response.json().then((json) => {
         const dataSet = json.map((data) => {
-          return <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.blogNumber}>
-            <Link to={"/blogs/" + data.blogNumber}><h3>{data.topic}</h3></Link>
-            <hr/>
-            <p>{data.shortInfo}</p>
-          </div>
+          const blogListItem = this.createBlogListItem(data.blogNumber, data.topic, data.shortInfo);
+          return blogListItem;
         });
 
         this.setState({
@@ -41,18 +39,23 @@ export default class BlogList extends Component {
     })
   }
 
-  componentDidUpdate() {
-    const a = this.state.blogList;
-    const data = this.props.blogList;
-    a.unshift(
-      <div className={localStyle.blog} id="callout-btn-group-accessibility" key={data.blogNumber+1}>
-        <Link to={"/blogs/" + data.blogNumber}><h3>{data.topic}</h3></Link>
+  componentWillReceiveProps(nextProps) {
+    if (typeof nextProps.blogList.blogNumber !== 'undefined') {
+      const blogList = this.state.blogList;
+      const data = nextProps.blogList;
+      const blogListItem = this.createBlogListItem(data.blogNumber, data.topic, data.shortInfo);
+      blogList.unshift(blogListItem);
+    }
+  }
+
+  createBlogListItem(blogNumber, topic, shortInfo) {
+    return (
+      <div className={localStyle.blog} id="callout-btn-group-accessibility" key={blogNumber+1}>
+        <Link to={"/blogs/" + blogNumber}><h3>{topic}</h3></Link>
         <hr/>
-        <p>{data.shortInfo}</p>
+        <p>{shortInfo}</p>
       </div>
     );
-    // console.log(a);
-    // console.log(this.props.blogList);
   }
 
   render() {

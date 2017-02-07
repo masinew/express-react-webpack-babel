@@ -26,15 +26,13 @@ export default class Dashboard extends Component {
       body: formData
     }).then((response) => {
       response.json().then((json) => {
-        console.log(json);
-        // const success = json.success;
-        // if (success) {
-        //   this.context.socket.emit('blog update', 'blog update');
-        //   alertify.success(json.message);
-        // }
-        // else {
-        //   alertify.error(json.message);
-        // }
+        const success = json.success;
+        if (success) {
+          alertify.success(json.message);
+        }
+        else {
+          alertify.error(json.message);
+        }
       });
     });
   }

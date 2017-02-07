@@ -47,8 +47,7 @@ router.get('/:blogNumber', function(req, res) {
     if (err) {
       console.log('error');
     }
-
-    console.log(result);
+    
     res.json(result);
   });
 });

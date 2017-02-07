@@ -15,16 +15,7 @@ export default class Sockets {
       socket.on('user disconnect', (userFullName) => {
         socket.broadcast.emit('user disconnect', `${userFullName} Disonnected`);
       });
-
-      socket.on('blog update', (messageBlogUpdate) => {
-        request.get({
-          url: 'http://localhost:3000/api/v1/blog/list'
-        }, function(err, httpResponse, body) {
-          console.log(body);
-        });
-        console.log(messageBlogUpdate);
-      });
-
+      
       socket.on('disconnect', () => {
         // console.log(tmpUserFullName);
         // socket.broadcast.emit('user disconnect', `${tmpUserFullName} Disonnected`);
