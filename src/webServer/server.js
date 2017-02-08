@@ -90,6 +90,14 @@ app.use('/api', proxy('localhost:5000', {
     }
 
     return proxyReq;
+  },
+  intercept: function(rsp, data, req, res, callback) {
+    if (typeof res.get('token') !== 'undefined') {
+      req.session.token = res.get('token');
+      res.removeHeader('token');
+    }
+
+    callback(null, data);
   }
 }));
 app.use('/user', userRoute);

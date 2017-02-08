@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';
-import { key } from '../../../../common/config/server';
+import { key, expiration } from '../../../../common/config/server';
 import BlacklistToken from '../../../app/models/blacklistToken';
 import User from '../../../app/models/user';
 
@@ -21,12 +21,7 @@ routes.use(function(req, res, next) {
 
   req.token = req.get('Authorization');
   // Is token verify?
-  jwt.verify(req.token, key.tokenKey, function(err, decoded) {
-    if (err) {
-      res.json(errMessage);
-      return;
-    }
-
+  jwt.verify(req.token, key.tokenKey, function(tokenErr, decoded) {
     // token is in blacklist?
     BlacklistToken.findOne({
       token: req.token
@@ -36,15 +31,30 @@ routes.use(function(req, res, next) {
         return;
       }
 
-      // Is a our user?
-      User.findOne({_id: decoded.id}, function(err, userResult) {
-        if (err || !userResult) {
-          res.json(errMessage);
-          return;
+      if (tokenErr) {
+        if (tokenErr.name === 'TokenExpiredError') {
+          const oldToken = jwt.verify(req.token, key.tokenKey, {ignoreExpiration: true});
+          const now = Math.floor(new Date().getTime()/1000);
+          // refreshing condition
+          if ((oldToken.exp + expiration.acceptRefreshingToken) > now) {
+            const token = jwt.sign({
+              id: oldToken.id,
+              admin: oldToken.admin
+            }, key.tokenKey, {
+              expiresIn: expiration.tokenExpired
+            });
+
+            res.set('token', token);
+            next();
+            return;
+          }
         }
 
-        next();
-      })
+        res.json(errMessage);
+        return;
+      }
+
+      next();
     });
   });
 });

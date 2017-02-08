@@ -6,7 +6,8 @@ import ApisPath from './apisPath';
 const expiresIn = 60*60*1000; /*one hour in millisec*/
 export const expiration = {
   sessionExpired: expiresIn,
-  tokenExpired: (expiresIn/1000)
+  tokenExpired: (expiresIn/1000),
+  acceptRefreshingToken: (expiresIn/1000)
 }
 
 export const key = {

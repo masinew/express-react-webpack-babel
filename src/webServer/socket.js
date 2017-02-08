@@ -8,12 +8,12 @@ export default class Sockets {
       this.socket = socket;
       socket.on('user connected', (userFullName) => {
         socket.join('user');
-        socket.to('user').broadcast.emit('user connected', `${userFullName} Connected`);
+        socket.broadcast.to('user').emit('user connected', `${userFullName} Connected`);
       });
 
       socket.on('user disconnect', (userFullName) => {
         socket.leave('user');
-        socket.to('user').broadcast.emit('user disconnect', `${userFullName} Disonnected`);
+        socket.broadcast.to('user').emit('user disconnect', `${userFullName} Disonnected`);
       });
 
       socket.on('disconnect', () => {
