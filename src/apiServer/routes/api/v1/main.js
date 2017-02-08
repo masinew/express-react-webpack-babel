@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
+
+import { key } from '../../../../common/config/server';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';
-import { key, expiration } from '../../../../common/config/server';
+import { createToken } from './utils';
 import BlacklistToken from '../../../app/models/blacklistToken';
 import User from '../../../app/models/user';
 
@@ -37,13 +39,7 @@ routes.use(function(req, res, next) {
           const now = Math.floor(new Date().getTime()/1000);
           // refreshing condition
           if ((oldToken.exp + expiration.acceptRefreshingToken) > now) {
-            const token = jwt.sign({
-              id: oldToken.id,
-              admin: oldToken.admin
-            }, key.tokenKey, {
-              expiresIn: expiration.tokenExpired
-            });
-
+            const token = createToken(oldToken.id, oldToken.admin);
             res.set('token', token);
             next();
             return;

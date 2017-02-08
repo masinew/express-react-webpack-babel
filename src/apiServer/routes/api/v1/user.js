@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
-import { key, expiration } from '../../../../common/config/server';
 
 import User from '../../../app/models/user';
+import { createToken } from './utils';
 
 const router = new Router();
 const success = {success: true};
@@ -123,21 +122,6 @@ function saveUser(userInfo, successMessage, errorMessage, cb) {
     const userInfo = createUserInfo(result);
     cb(userInfo, token);
   });
-}
-
-function createToken(id, admin, cb) {
-  const token = jwt.sign({
-    id: id,
-    admin: admin
-  }, key.tokenKey, {
-    expiresIn: expiration.tokenExpired
-  });
-
-  if (cb) {
-    cb(token);
-  }
-
-  return token;
 }
 
 function createUserInfo(result, cb) {
