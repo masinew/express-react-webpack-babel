@@ -49,7 +49,7 @@ export default class GlobalLayout extends Component {
         }
       });
 
-      alertify.success('new blog');
+      alertify.success(info.message);
     });
   }
 

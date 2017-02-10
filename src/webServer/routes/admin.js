@@ -36,11 +36,11 @@ router.post('/addBlog', function(req, res) {
     }
   }, function(err, httpResponse, body) {
     const json = JSON.parse(body);
-    socketInstance.getSocket().broadcast.emit('new blog', {
-      blogNumber: json.info.blogNumber,
-      topic: topic,
-      shortInfo: shortInfo
-    });
+    // socketInstance.getSocket().broadcast.emit('new blog', {
+    //   blogNumber: json.info.blogNumber,
+    //   topic: topic,
+    //   shortInfo: shortInfo
+    // });
     res.json(json);
   });
 });

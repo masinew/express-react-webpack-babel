@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import jwt from 'jsonwebtoken';
 
-import { key } from '../../../../common/config/server';
+import { key, expiration } from '../../../../common/config/server';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';

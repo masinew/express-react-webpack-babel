@@ -13,28 +13,20 @@ export default class Dashboard extends Component {
 
   handleOnSubmit(event) {
     event.preventDefault();
-    const formData = new FormData();
-    const topic = this.refs.topic.value;
-    const shortInfo = this.refs.shortInfo.value;
-    const details = this.refs.details.value;
-    formData.append("topic", topic);
-    formData.append("shortInfo", shortInfo);
-    formData.append("details", details);
-    fetch(`${server}/admin/addBlog`, {
-      credentials: 'include',
-      method: 'POST',
-      body: formData
-    }).then((response) => {
-      response.json().then((json) => {
-        const success = json.success;
-        if (success) {
-          alertify.success(json.message);
-        }
-        else {
-          alertify.error(json.message);
-        }
+    if (typeof localStorage.token !== 'undefined') {
+      const topic = this.refs.topic.value;
+      const shortInfo = this.refs.shortInfo.value;
+      const details = this.refs.details.value;
+      this.context.socket.emit('new blog', {
+        topic: topic,
+        shortInfo: shortInfo,
+        details: details,
+        token: localStorage.token
       });
-    });
+    }
+    else {
+      alertify.error('Required Admin User!!');
+    }
   }
 
   render() {

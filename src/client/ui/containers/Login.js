@@ -195,11 +195,15 @@ export default class Login extends Component {
     const lastName = result.userInfo.lastName || '';
     const email = result.userInfo.email || '';
     const gender = result.userInfo.gender || '';
+    const token = result.token;
     localStorage.setItem("userFullName", firstName + " " + lastName);
     localStorage.setItem("firstName", firstName);
     localStorage.setItem("lastName", lastName);
     localStorage.setItem("email", email);
     localStorage.setItem("gender", gender);
+    if (token) {
+      localStorage.setItem("token", token);
+    }
   }
 
   componentDidMount() {

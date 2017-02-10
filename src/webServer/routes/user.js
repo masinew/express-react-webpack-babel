@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import request from 'request';
-import { apiServer, apisPath } from '../../common/config/server'
+import { apiServer, apisPath, key } from '../../common/config/server';
+import jwt from 'jsonwebtoken';
 
 const router = new Router();
 const success = {success: true};
@@ -15,8 +16,9 @@ router.post('/login', function(req, res) {
     form: {username: username, password: password}}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
       req.session.token = json.token
-      delete json.token; // do not send token value to client in case website
-      res.json(json);
+      removeSomeValues(json, (json) => {
+        res.json(json);
+      });
     }
   );
 });
@@ -37,8 +39,9 @@ router.post('/loginWithFacebook', function(req, res) {
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
       req.session.token = json.token
-      delete json.token; // do not send token value to client in case website
-      res.json(json);
+      removeSomeValues(json, (json) => {
+        res.json(json);
+      });
     }
   );
 });
@@ -57,8 +60,9 @@ router.post('/loginWithGoogle', function(req, res) {
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
       req.session.token = json.token
-      delete json.token; // do not send token value to client in case website
-      res.json(json);
+      removeSomeValues(json, (json) => {
+        res.json(json);
+      });
     }
   );
 });
@@ -83,11 +87,16 @@ router.get('/logout', function(req, res) {
       res.json(successMessage);
     });
   });
-  // req.session.destroy(function(err) {
-  //   if (err) console.log('destroy session error');
-  //
-  //
-  // });
 });
+
+function removeSomeValues(json, cb) {
+  jwt.verify(json.token, key.tokenKey, function(err, decoded) {
+    if (!decoded.admin) {
+      delete json.token
+    }
+    
+    cb(json);
+  });
+}
 
 export default router;
