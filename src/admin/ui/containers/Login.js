@@ -186,7 +186,7 @@ export default class Login extends Component {
     if (location.state && location.state.lastPathname) {
       browserHistory.push(location.state.lastPathname);
     } else {
-      browserHistory.push('/');
+      browserHistory.push('/admin/dashboard');
     }
   }
 

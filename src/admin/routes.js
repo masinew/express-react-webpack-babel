@@ -23,19 +23,13 @@ const server = `${config.server.protocal}://${config.server.host}${ port ? `:${p
 
 const routes = (
   <Route component={GlobalLayout}>
-    <Route path="/user">
+    <Route path="/admin">
       <Route path="login" component={Login} />
       <Route path="forgetPassword" component={HelloWorld} />
     </Route>
-    <Route path="/" component={Layout} onChange={requireCredentials}>
+    <Route path="/admin/dashboard" component={Layout} onChange={requireCredentials}>
       <IndexRoute component={Home} />
-      <Route path="blogs">
-        <IndexRoute component={BlogList} />
-        <Route path=":id" component={BlogDetail} />
-      </Route>
-      <Route path="profile" component={UserProfile} />
-      <Route path="chart" component={Chart} />
-      <Route path="Dashboard" component={Dashboard} />
+      <Route path="blog" component={Dashboard} />
     </Route>
     <Route path="*" component={PageNotFound} />
   </Route>

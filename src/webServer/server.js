@@ -101,7 +101,6 @@ app.use('/api', proxy('localhost:5000', {
   }
 }));
 app.use('/user', userRoute);
-app.use('/admin', adminRoute);
 
 app.get('/testChart', function(req, res) {
   let max = 100;
@@ -119,13 +118,34 @@ app.get('/facebook_test', function(req, res) {
   res.sendFile(__dirname + '/template/facebook_test.html');
 });
 
+
+const clientIndex = 'index';
+const adminIndex = 'admin-index';
+app.get('/admin/login', function(req, res) {
+  if (req.session.token) {
+    res.redirect('/admin');
+    return;
+  }
+
+  getClientUIPath(req, res, adminIndex);
+});
+
+app.get('/admin*', (req, res) => {
+  if (!req.session.token) {
+    res.redirect('/admin/login');
+    return;
+  }
+
+  getClientUIPath(req, res, adminIndex);
+});
+
 app.get('/user/login', function(req, res) {
   if (req.session.token) {
     res.redirect('/');
     return;
   }
 
-  getClientUIPath(req, res);
+  getClientUIPath(req, res, clientIndex);
 });
 
 app.get('*', (req, res) => {
@@ -134,10 +154,13 @@ app.get('*', (req, res) => {
     return;
   }
 
-  getClientUIPath(req, res);
+  getClientUIPath(req, res, clientIndex);
 });
 
-function getClientUIPath(req, res) {
+
+
+function getClientUIPath(req, res, pageName) {
+  console.log(pageName);
   match(
     {routes, location: req.url},
     (err, redirectLocation, renderProps) => {
@@ -157,7 +180,7 @@ function getClientUIPath(req, res) {
         res.status(404);
       }
 
-      return res.render('index', { markup });
+      return res.render(pageName, { markup });
     }
   );
 }
