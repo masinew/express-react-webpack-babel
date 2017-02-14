@@ -1,6 +1,6 @@
-const apiMainPath = '/api/v1';
+const apiV1Path = 'api/v1';
 export default {
-  user: `${apiMainPath}/user`,
-  auth: `${apiMainPath}/auth`,
-  blog: `${apiMainPath}/blog`
+  user: `${apiV1Path}/user`,
+  auth: `${apiV1Path}/auth`,
+  blog: `${apiV1Path}/blog`
 }

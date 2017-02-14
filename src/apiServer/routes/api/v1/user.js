@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import User from '../../../app/models/user';
-import { createToken } from './utils';
+import { createToken } from '../utils';
 
 const router = new Router();
 const success = {success: true};

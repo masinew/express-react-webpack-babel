@@ -22,7 +22,7 @@ export default class Sockets {
 
       socket.on('new blog', (blogInfo) => {
         request.post({
-          url: `${server}${apisPath.blog}/save`,
+          url: `${server}/${apisPath.blog}/save`,
           headers: {'Authorization': blogInfo.token},
           form: {
             topic: blogInfo.topic,

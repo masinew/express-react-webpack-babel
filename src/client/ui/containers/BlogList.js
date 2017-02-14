@@ -22,7 +22,7 @@ export default class BlogList extends Component {
   }
 
   componentDidMount() {
-    fetch(`${server}${config.apis.blog}/list`, {
+    fetch(`${server}/${config.apis.blog}/list`, {
       credentials: 'include'
     })
     .then((response) => {

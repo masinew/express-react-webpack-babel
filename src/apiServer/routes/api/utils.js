@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { key, expiration } from '../../../../common/config/server';
+import { key, expiration } from '../../../common/config/server';
 
 export const createToken = function (id, admin, cb) {
   const token = jwt.sign({

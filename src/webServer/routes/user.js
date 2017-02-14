@@ -12,7 +12,7 @@ const server = `${apiServer.protocal}://${apiServer.host}${ port ? `:${port}` : 
 router.post('/login', function(req, res) {
   const username = req.body.username;
   const password = req.body.password;
-  request.post({url: `${server}${apisPath.user}/login`,
+  request.post({url: `${server}/${apisPath.user}/login`,
     form: {username: username, password: password}}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
       req.session.token = json.token
@@ -29,7 +29,7 @@ router.post('/loginWithFacebook', function(req, res) {
   const lastName = req.body.lastName;
   const email = req.body.email;
   const gender = req.body.gender;
-  request.post({url: `${server}${apisPath.user}/loginWithFacebook`,
+  request.post({url: `${server}/${apisPath.user}/loginWithFacebook`,
     form: {
       facebookUserId: facebookUserId,
       firstName: firstName,
@@ -51,7 +51,7 @@ router.post('/loginWithGoogle', function(req, res) {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
-  request.post({url: `${server}${apisPath.user}/loginWithGoogle`,
+  request.post({url: `${server}/${apisPath.user}/loginWithGoogle`,
     form: {
       googleUserId: googleUserId,
       firstName: firstName,
@@ -71,7 +71,7 @@ router.get('/logout', function(req, res) {
   const token = req.session.token;
   const successMessage = Object.assign(success, {message: 'Logout Successful'});
   const errorMessage = Object.assign(error, {message: 'Logout Unsuccessful'});
-  request.post({url: `${server}${apisPath.auth}/logout`, headers: {'Authorization': token}}, function(err, httpResponse, body) {
+  request.post({url: `${server}/${apisPath.auth}/logout`, headers: {'Authorization': token}}, function(err, httpResponse, body) {
     const json = JSON.parse(body);
     if (err || !json.success) {
       res.json(errorMessage);
@@ -90,11 +90,12 @@ router.get('/logout', function(req, res) {
 });
 
 function removeSomeValues(json, cb) {
-  jwt.verify(json.token, key.tokenKey, function(err, decoded) {
-    if (!decoded.admin) {
+  request.get({url: `${server}/${apisPath.auth}/isAdmin`, headers: {'Authorization': json.token}}, function(err, httpResponse, body) {
+    const jsonBody = JSON.parse(body);
+    if (!jsonBody.admin) {
       delete json.token
     }
-    
+
     cb(json);
   });
 }

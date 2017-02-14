@@ -25,9 +25,8 @@ router.post('/addBlog', function(req, res) {
   const topic = req.body.topic;
   const shortInfo = req.body.shortInfo;
   const details = req.body.details;
-  console.log(`${server}${apisPath.blog}/save`);
   request.post({
-    url: `${server}${apisPath.blog}/save`,
+    url: `${server}/${apisPath.blog}/save`,
     headers: {'Authorization': req.session.token},
     form: {
       topic: topic,

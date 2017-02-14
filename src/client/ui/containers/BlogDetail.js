@@ -18,7 +18,7 @@ export default class BlogDetail extends Component {
   }
 
   componentDidMount() {
-    fetch(`${server}${config.apis.blog}/${this.blogId}`, {
+    fetch(`${server}/${config.apis.blog}/${this.blogId}`, {
       credentials: 'include'
     }).then((response) => {
       response.json().then((json) => {

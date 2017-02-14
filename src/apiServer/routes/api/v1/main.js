@@ -5,7 +5,7 @@ import { key, expiration } from '../../../../common/config/server';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';
-import { createToken } from './utils';
+import { createToken } from '../utils';
 import BlacklistToken from '../../../app/models/blacklistToken';
 import User from '../../../app/models/user';
 
