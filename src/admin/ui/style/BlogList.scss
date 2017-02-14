@@ -1,0 +1,10 @@
+@import '_color';
+
+.blog {
+    padding: 20px;
+    margin: 15px 0;
+    border: 1px solid $lightGray;
+    border-left-width: 5px;
+    border-left-color: $lightbBlue;
+    border-radius: 5px;
+}

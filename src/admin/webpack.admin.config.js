@@ -1,21 +1,18 @@
 const path = require('path');
 const webpack = require('webpack');
 var merge = require('webpack-merge');
-var autoprefixer = require('autoprefixer');
-var config = require('../common/config/devServer');
+
+const config = require('../common/config/devServer');
 const mainWebpackConfig = require('../../webpack.config');
 
-const TARGET = process.env.npm_lifecycle_event;
-
-const devServer = `${config.client.protocal}://${config.client.host}:${config.client.port}`;
+const devServer = `${config.admin.protocal}://${config.admin.host}:${config.admin.port}`;
 
 module.exports = merge(mainWebpackConfig, {
   entry: [
     'react-hot-loader/patch',
     `webpack-dev-server/client?${devServer}`,
     'webpack/hot/only-dev-server',
-    './src/client/ui/style/Home.scss',
-    './src/client/client-app.js'
+    './src/admin/admin-app.js'
   ],
   output: {
     publicPath: `${devServer}/assets/js/`
@@ -56,6 +53,6 @@ module.exports = merge(mainWebpackConfig, {
     inline: false,
     historyApiFallback: true,
     contentBase: 'static',
-    port: config.client.port
+    port: config.admin.port
   }
 })
