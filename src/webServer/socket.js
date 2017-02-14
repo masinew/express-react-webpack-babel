@@ -32,12 +32,12 @@ export default class Sockets {
         }, function(err, httpResponse, body) {
           const json = JSON.parse(body);
           if (json.success) {
-            socket.emit('new blog', {message: 'success1'});
+            socket.emit('new blog', {message: 'Success'});
             socket.broadcast.emit('new blog', {
               blogNumber: json.info.blogNumber,
               topic: blogInfo.topic,
               shortInfo: blogInfo.shortInfo,
-              message: 'success2'
+              message: 'Admin wrote a new blog'
             });
           }
           else {
