@@ -34,6 +34,7 @@ module.exports = {
       "window.jQuery": "jquery",
       "window.Tether": 'tether',
       alertify: "alertifyjs",
+      swal: "sweetalert",
       socket: 'socket.io-client'
     })
   ],

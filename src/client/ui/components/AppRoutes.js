@@ -7,6 +7,7 @@ import 'alertifyjs';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'alertifyjs/build/css/alertify.min.css';
 import 'alertifyjs/build/css/themes/bootstrap.min.css';
+import 'sweetalert/dist/sweetalert.css';
 
 export default class AppRoutes extends Component {
   render() {
