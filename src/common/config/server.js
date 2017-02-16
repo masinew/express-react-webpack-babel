@@ -15,6 +15,10 @@ export const key = {
   tokenKey: 'tokenKey'
 }
 
+export const cookie = {
+  name: 'ss'
+}
+
 export const webServer = WebServer;
 
 export const apiServer = ApiServer;

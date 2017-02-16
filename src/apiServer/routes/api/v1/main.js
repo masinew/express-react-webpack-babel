@@ -5,12 +5,14 @@ import { key, expiration } from '../../../../common/config/server';
 import userRoute from './user';
 import blogRoute from './blog';
 import authRoute from './auth';
+import sessionRoute from './session';
 import { createToken } from '../utils';
 import BlacklistToken from '../../../app/models/blacklistToken';
 import User from '../../../app/models/user';
 
 const routes = new Router();
 routes.use('/user', userRoute);
+routes.use('/session', sessionRoute);
 
 // below apis require auth
 routes.use(function(req, res, next) {

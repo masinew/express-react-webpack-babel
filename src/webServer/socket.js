@@ -1,6 +1,8 @@
 import Socket from 'socket.io';
 import request from 'request';
+import Cookie from 'cookie';
 
+import { cookie } from '../common/config/server';
 import { apiServer, apisPath } from '../common/config/server';
 
 const port = apiServer.port;
@@ -10,6 +12,24 @@ export default class Sockets {
   constructor(httpServer) {
     const io = new Socket(httpServer);
     io.on('connection', (socket) => {
+      // check user session and then add the user on the user room
+      const cookieString = socket.request.headers.cookie;
+      if (typeof cookieString !== 'undefined') {
+        const cookieParsed = Cookie.parse(cookieString);
+        const cookieSession = cookieParsed[cookie.name];
+        if (typeof cookieSession !== 'undefined') {
+          const prefixSize = 2;
+          const sessionId = cookieSession.substr(prefixSize, cookieSession.indexOf('.')-prefixSize)
+          request.get({url: `http://localhost:5000/api/v1/session/isSessionDestroyed?sessionId=${sessionId}`}, function(err, httpResponse, body) {
+            const json = JSON.parse(body);
+            if (json.success) {
+              socket.join('user');
+            }
+          });
+        }
+      }
+
+
       socket.on('user connected', (userFullName) => {
         socket.join('user');
         socket.broadcast.to('user').emit('user connected', `${userFullName} Connected`);

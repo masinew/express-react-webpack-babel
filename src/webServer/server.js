@@ -40,6 +40,7 @@ export const socketInstance = new Socket(server);
 const multer = new Multer();
 const SessionStore = new MongoStore(Session);
 const sessionOptions = {
+  name: serverConfig.cookie.name,
   cookie: {
     maxAge: serverConfig.expiration.sessionExpired,
     httpOnly: true

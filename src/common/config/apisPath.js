@@ -1,6 +1,7 @@
 const apiV1Path = 'api/v1';
 export default {
-  user: `${apiV1Path}/user`,
-  auth: `${apiV1Path}/auth`,
-  blog: `${apiV1Path}/blog`
+  user:     `${apiV1Path}/user`,
+  auth:     `${apiV1Path}/auth`,
+  blog:     `${apiV1Path}/blog`,
+  session:  `${apiV1Path}/session`,
 }
