@@ -42,7 +42,7 @@ export default class Navbar extends Component {
           this.context.socket.emit('user disconnect', `${firstName} ${lastName}`);
           alertify.success(json.message);
           localStorage.clear();
-          browserHistory.push('/user/login');
+          browserHistory.push('/admin/login');
         }
       });
     });
@@ -74,13 +74,13 @@ export default class Navbar extends Component {
 
           <div className="collapse navbar-collapse" id="myCollapseNavbar">
             <ul className="nav navbar-nav" onClick={this.handleOnClickNavbar}>
-                <ListItemLink className="nav-link" to="/" onlyActiveOnIndex={true}>
+                <ListItemLink className="nav-link" to="/admin" onlyActiveOnIndex={true}>
                   Home
                 </ListItemLink>
-                <ListItemLink className="nav-link" to="/blogs">
+                <ListItemLink className="nav-link" to="/admin/blogs">
                   Blogs
                 </ListItemLink>
-                <ListItemLink className="nav-link" to="/dashboard">
+                <ListItemLink className="nav-link" to="/admin/dashboard">
                   Dashboard
                 </ListItemLink>
             </ul>
@@ -88,9 +88,6 @@ export default class Navbar extends Component {
               <li className="dropdown">
                 <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.userFullName}<span className="caret"></span></a>
                 <ul className="dropdown-menu" onClick={this.handleOnClickNavbar}>
-                  <ListItemLink className="nav-link" to="/user/profile" onClick={this.handleOnClickProfile}>
-                    Profile
-                  </ListItemLink>
                   <ListItemLink className="nav-link" to="/user/logout" onClick={this.handleOnClickLogout}>
                     Logout
                   </ListItemLink>

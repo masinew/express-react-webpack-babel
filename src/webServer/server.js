@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import Multer from 'multer';
 import minifyHTML from 'express-minify-html';
 import proxy from 'express-http-proxy';
+import request from 'request';
 
 // System configuration
 import * as serverConfig from '../common/config/server';
@@ -23,7 +24,8 @@ import adminRoute from './routes/admin';
 import React from 'react';
 import { match, RouterContext } from 'react-router';
 import { renderToString } from 'react-dom/server';
-import routes from '../client/routes'
+import fClientRoute from '../client/routes'
+import fAdminRoute from '../admin/routes'
 import PageNotFound from '../client/ui/components/PageNotFound';
 
 // Express Session
@@ -82,6 +84,18 @@ app.use(function(req, res, next) {
   // res.header('Access-Control-Allow-Header', 'Content-Type');
   next();
 });
+app.use(function(req, res, next) {
+  if (req.session.token) {
+    request.get({url: `http://localhost:5000/api/v1/auth/isAdmin`, headers: {'Authorization': req.session.token}}, function(err, httpResponse, body) {
+      const json = JSON.parse(body);
+      req.admin = json.admin;
+      next();
+    });
+  }
+  else {
+    next();
+  }
+});
 app.use(Express.static(path.join(__dirname, 'public')));
 app.use('/api', proxy('localhost:5000', {
   decorateRequest: function(proxyReq, originalReq) {
@@ -123,7 +137,7 @@ app.get('/facebook_test', function(req, res) {
 const clientIndex = 'index';
 const adminIndex = 'admin-index';
 app.get('/admin/login', function(req, res) {
-  if (req.session.token) {
+  if (req.admin) {
     res.redirect('/admin');
     return;
   }
@@ -132,7 +146,7 @@ app.get('/admin/login', function(req, res) {
 });
 
 app.get('/admin*', (req, res) => {
-  if (!req.session.token) {
+  if (!req.admin) {
     res.redirect('/admin/login');
     return;
   }
@@ -161,7 +175,14 @@ app.get('*', (req, res) => {
 
 
 function getClientUIPath(req, res, pageName) {
-  console.log(pageName);
+  let routes;
+  if (pageName === clientIndex) {
+    routes = fClientRoute;
+  }
+  else {
+    routes = fAdminRoute;
+  }
+
   match(
     {routes, location: req.url},
     (err, redirectLocation, renderProps) => {
