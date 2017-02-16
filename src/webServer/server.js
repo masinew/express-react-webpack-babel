@@ -116,6 +116,7 @@ app.use('/api', proxy('localhost:5000', {
   }
 }));
 app.use('/user', userRoute);
+app.use('/admin', adminRoute);
 
 app.get('/testChart', function(req, res) {
   let max = 100;

@@ -52,7 +52,7 @@ export default class Login extends Component {
       credentials: 'include'
     };
 
-    fetch(`${server}/user/login`, fetchOptions)
+    fetch(`${server}/admin/login`, fetchOptions)
       .then((response) => {
         response.json().then((result) => {
           this.onLoggedIn(result, cb)
@@ -87,7 +87,7 @@ export default class Login extends Component {
       formData.append("lastName", response.last_name);
       formData.append("email", response.email);
       formData.append("gender", response.gender);
-      fetch(`${server}/user/loginWithFacebook`, {
+      fetch(`${server}/admin/loginWithFacebook`, {
         credentials: 'include',
         method: 'POST',
         body: formData
@@ -140,7 +140,7 @@ export default class Login extends Component {
     formData.append("firstName", profile.getGivenName());
     formData.append("lastName", profile.getFamilyName());
     formData.append("email", profile.getEmail());
-    fetch(`${server}/user/loginWithGoogle`, {
+    fetch(`${server}/admin/loginWithGoogle`, {
       credentials: 'include',
       method: 'POST',
       body: formData
