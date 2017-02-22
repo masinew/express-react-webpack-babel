@@ -4,6 +4,7 @@ import Cookie from 'cookie';
 
 import { cookie } from '../common/config/server';
 import { apiServer, apisPath } from '../common/config/server';
+import Session from './app/models/session';
 
 const port = apiServer.port;
 const server = `${apiServer.protocal}://${apiServer.host}${ port ? `:${port}` : '' }`
@@ -19,16 +20,16 @@ export default class Sockets {
         const cookieSession = cookieParsed[cookie.name];
         if (typeof cookieSession !== 'undefined') {
           const prefixSize = 2;
-          const sessionId = cookieSession.substr(prefixSize, cookieSession.indexOf('.')-prefixSize)
-          request.get({url: `http://localhost:5000/api/v1/session/isSessionDestroyed?sessionId=${sessionId}`}, function(err, httpResponse, body) {
-            const json = JSON.parse(body);
-            if (json.success) {
-              socket.join('user');
-            }
-          });
+          const sessionId = cookieSession.substr(prefixSize, cookieSession.indexOf('.')-prefixSize);
+          if (typeof sessionId !== 'undefined') {
+            Session.findOne({_id: sessionId}, function(err, result) {
+              if (result) {
+                socket.join('user');
+              }
+            })
+          }
         }
       }
-
 
       socket.on('user connected', (userFullName) => {
         socket.join('user');
