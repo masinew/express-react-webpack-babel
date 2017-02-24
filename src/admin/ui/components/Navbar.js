@@ -14,7 +14,7 @@ export default class Navbar extends Component {
       userFullName: ''
     }
 
-    this.handleOnClickProfile = this.handleOnClickProfile.bind(this);
+    this.handleOnClickUnavailable = this.handleOnClickUnavailable.bind(this);
     this.handleOnClickLogout = this.handleOnClickLogout.bind(this);
     this.handleOnClickNavbar = this.handleOnClickNavbar.bind(this);
   }
@@ -23,7 +23,7 @@ export default class Navbar extends Component {
     $('#myCollapseNavbar').collapse('hide');
   }
 
-  handleOnClickProfile(event) {
+  handleOnClickUnavailable(event) {
     event.preventDefault();
     alertify.error("Coming Soon");
   }
@@ -68,22 +68,36 @@ export default class Navbar extends Component {
               <span className="icon-bar"></span>
             </button>
             <Link className="navbar-brand" to="/">
-              Brand
+              PIXCA
             </Link>
           </div>
 
           <div className="collapse navbar-collapse" id="myCollapseNavbar">
             <ul className="nav navbar-nav" onClick={this.handleOnClickNavbar}>
-                <ListItemLink className="nav-link" to="/admin" onlyActiveOnIndex={true}>
-                  Home
-                </ListItemLink>
-                <ListItemLink className="nav-link" to="/admin/blogs">
-                  Blogs
-                </ListItemLink>
-                <ListItemLink className="nav-link" to="/admin/dashboard">
-                  Dashboard
-                </ListItemLink>
+              <li className="dropdown">
+                <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Visitor View<span className="caret"></span></a>
+                <ul className="dropdown-menu" onClick={this.handleOnClickNavbar}>
+                  <ListItemLink className="nav-link" to="/admin" onlyActiveOnIndex={true}>
+                    Home
+                  </ListItemLink>
+                  <ListItemLink className="nav-link" to="/admin/blogs">
+                    Blogs
+                  </ListItemLink>
+                </ul>
+              </li>
+              <li className="dropdown">
+                <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" onClick={this.handleOnClickUnavailable}>Customer View<span className="caret"></span></a>
+              </li>
+              <li className="dropdown">
+                <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dashboard<span className="caret"></span></a>
+                <ul className="dropdown-menu" onClick={this.handleOnClickNavbar}>
+                  <ListItemLink className="nav-link" to="/admin/dashboard">
+                    New Blog
+                  </ListItemLink>
+                </ul>
+              </li>
             </ul>
+
             <ul className="nav navbar-nav navbar-right" id="b" >
               <li className="dropdown">
                 <a id="a" href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{this.state.userFullName}<span className="caret"></span></a>

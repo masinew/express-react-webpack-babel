@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { polyfill } from 'es6-promise'; polyfill();
-import 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 
 import localStyle from '../style/LoginForm.scss';

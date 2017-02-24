@@ -3,7 +3,7 @@ import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../../../client/ui/components/LoginForm';
 import config from '../../../common/config/client';
 
 const port = config.server.port;
