@@ -21,7 +21,7 @@ router.post('/login', function(req, res) {
           res.json(json);
         }
         else {
-          res.json({success: false, message: 'Required Admin!!'});
+          res.json({success: false, message: 'Required Admin User!!'});
         }
       });
     }
@@ -49,7 +49,7 @@ router.post('/loginWithFacebook', function(req, res) {
           res.json(json);
         }
         else {
-          res.json({success: false, message: 'Required Admin!!'});
+          res.json({success: false, message: 'Required Admin User!!'});
         }
       });
     }
@@ -75,7 +75,7 @@ router.post('/loginWithGoogle', function(req, res) {
           res.json(json);
         }
         else {
-          res.json({success: false, message: 'Required Admin!!'});
+          res.json({success: false, message: 'Required Admin User!!'});
         }
       });
     }
