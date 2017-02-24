@@ -15,10 +15,9 @@ router.post('/login', function(req, res) {
   request.post({url: `${server}/${apisPath.user}/login`,
     form: {username: username, password: password}}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token
-      removeSomeValues(json, (json) => {
-        res.json(json);
-      });
+      req.session.token = json.token;
+      delete json.token;
+      res.json(json);
     }
   );
 });
@@ -38,10 +37,9 @@ router.post('/loginWithFacebook', function(req, res) {
       gender: gender
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token
-      removeSomeValues(json, (json) => {
-        res.json(json);
-      });
+      req.session.token = json.token;
+      delete json.token;
+      res.json(json);
     }
   );
 });
@@ -59,10 +57,9 @@ router.post('/loginWithGoogle', function(req, res) {
       email: email
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token
-      removeSomeValues(json, (json) => {
-        res.json(json);
-      });
+      req.session.token = json.token;
+      delete json.token;
+      res.json(json);
     }
   );
 });
@@ -88,16 +85,5 @@ router.get('/logout', function(req, res) {
     });
   });
 });
-
-function removeSomeValues(json, cb) {
-  request.get({url: `${server}/${apisPath.auth}/isAdmin`, headers: {'Authorization': json.token}}, function(err, httpResponse, body) {
-    const jsonBody = JSON.parse(body);
-    if (!jsonBody.admin) {
-      delete json.token
-    }
-
-    cb(json);
-  });
-}
 
 export default router;

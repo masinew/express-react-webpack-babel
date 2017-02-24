@@ -4,15 +4,20 @@ import { polyfill } from 'es6-promise'; polyfill();
 import 'isomorphic-fetch';
 
 import config from '../common/config/client';
+
+// Admin components
 import GlobalLayout from './ui/components/GlobalLayout';
-import PageNotFound from './ui/components/PageNotFound';
 import Dashboard from './ui/components/Dashboard';
 import Layout from './ui/components/Layout';
-import Home from './ui/components/Home';
 
 import Login from './ui/containers/Login';
-import BlogList from './ui/containers/BlogList';
-import BlogDetail from './ui/containers/BlogDetail';
+
+// Client components
+import PageNotFound from '../client/ui/components/PageNotFound';
+import Home from '../client/ui/components/Home';
+
+import BlogList from '../client/ui/containers/BlogList';
+import BlogDetail from '../client/ui/containers/BlogDetail';
 
 const port = config.server.port;
 const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : ''}`;
