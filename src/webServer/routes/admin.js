@@ -15,9 +15,9 @@ router.post('/login', function(req, res) {
   request.post({url: `${server}/${apisPath.user}/login`,
     form: {username: username, password: password}}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token;
       isAdmin(json, (isAdmin) => {
         if (isAdmin) {
+          req.session.token = json.token;
           res.json(json);
         }
         else {
@@ -43,9 +43,9 @@ router.post('/loginWithFacebook', function(req, res) {
       gender: gender
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token
       isAdmin(json, (isAdmin) => {
         if (isAdmin) {
+          req.session.token = json.token
           res.json(json);
         }
         else {
@@ -69,9 +69,9 @@ router.post('/loginWithGoogle', function(req, res) {
       email: email
     }}, function(err, httpResponse, body) {
       let json = JSON.parse(body);
-      req.session.token = json.token
       isAdmin(json, (isAdmin) => {
         if (isAdmin) {
+          req.session.token = json.token
           res.json(json);
         }
         else {
