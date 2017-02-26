@@ -165,10 +165,10 @@ app.get('/user/login', function(req, res) {
 });
 
 app.get('*', (req, res) => {
-  if (!req.session.token) {
-    res.redirect('/user/login');
-    return;
-  }
+  // if (!req.session.token) {
+  //   res.redirect('/user/login');
+  //   return;
+  // }
 
   getClientUIPath(req, res, clientIndex);
 });

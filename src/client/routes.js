@@ -26,7 +26,7 @@ const routes = (
       <Route path="login" component={Login} />
       <Route path="forgetPassword" component={HelloWorld} />
     </Route>
-    <Route path="/" component={Layout} onChange={requireCredentials}>
+    <Route path="/" component={Layout} onChange={handleOnChange} onEnter={handleOnEnter}>
       <IndexRoute component={Home} />
       <Route path="blogs">
         <IndexRoute component={BlogList} />
@@ -39,24 +39,27 @@ const routes = (
   </Route>
 );
 
-function requireCredentials(prevState, nextState, replace, next) {
+function handleOnEnter(nextState, replace, next) {
+  requireCredentials((isLoggedIn) => {
+    this.isLoggedIn = isLoggedIn;
+    next();
+  });
+}
+
+function handleOnChange(prevState, nextState, replace, next) {
+  requireCredentials((isLoggedIn) => {
+    this.isLoggedIn = isLoggedIn;
+    next();
+  });
+}
+
+function requireCredentials(cb) {
   fetch(`${server}/${config.apis.auth}/isActive`, {
     credentials: 'include'
   }).then((response) => {
     response.json().then((json) => {
       const status = json.success;
-      const message = json.message;
-      if (!status) {
-        alertify.warning(message);
-        localStorage.clear();
-        replace({
-          pathname: '/user/login',
-          state: {lastPathname: prevState.location.pathname}
-        })
-        next();
-      }
-
-      next()
+      cb(status);
     });
   });
 }
