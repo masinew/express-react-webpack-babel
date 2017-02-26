@@ -68,7 +68,7 @@ export default class Navbar extends Component {
               <span className="icon-bar"></span>
             </button>
             <Link className="navbar-brand" to="/">
-              Brand
+              {config.brandName}
             </Link>
           </div>
 
