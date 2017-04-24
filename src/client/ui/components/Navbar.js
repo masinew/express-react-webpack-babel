@@ -4,6 +4,8 @@ import ListItemLink from './ListItemLink';
 import { browserHistory } from 'react-router';
 import config from '../../../common/config/client';
 
+import Login from '../containers/Login';
+
 const port = config.server.port;
 const server = `${config.server.protocal}://${config.server.host}${ port ? `:${port}` : '' }`;
 
@@ -17,8 +19,9 @@ export default class Navbar extends Component {
     this.handleOnClickProfile = this.handleOnClickProfile.bind(this);
     this.handleOnClickLogout = this.handleOnClickLogout.bind(this);
     this.handleOnClickNavbar = this.handleOnClickNavbar.bind(this);
-    this.handleOnLogin = this.handleOnLogin.bind(this);
-    this.handleOnSignUp = this.handleOnSignUp.bind(this);
+
+    this.handleOnLoginClick = this.handleOnLoginClick.bind(this);
+    this.handleOnSignUpClick = this.handleOnSignUpClick.bind(this);
   }
 
   handleOnClickNavbar() {
@@ -30,13 +33,12 @@ export default class Navbar extends Component {
     alertify.error("Coming Soon");
   }
 
-  handleOnLogin(event) {
+  handleOnLoginClick(event) {
     event.preventDefault();
-    console.log(this.refs.username);
     $('#loginModal').modal('show');
   }
 
-  handleOnSignUp(event) {
+  handleOnSignUpClick(event) {
     event.preventDefault();
     alertify.error('Sign Up');
   }
@@ -87,10 +89,10 @@ export default class Navbar extends Component {
       </ul>
     ) : (
       <ul className="nav navbar-nav navbar-right">
-        <ListItemLink className="nav-link" to="/user/login" onClick={this.handleOnLogin}>
+        <ListItemLink className="nav-link" to="/user/login" onClick={this.handleOnLoginClick}>
           Login
         </ListItemLink>
-        <ListItemLink className="nav-link" to="/user/signup" onClick={this.handleOnSignUp}>
+        <ListItemLink className="nav-link" to="/user/signup" onClick={this.handleOnSignUpClick}>
           Sign Up
         </ListItemLink>
       </ul>
@@ -155,7 +157,7 @@ export default class Navbar extends Component {
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Login</button>
+                <button type="button" className="btn btn-primary" onClick={this.handleOnLogin}>Login</button>
               </div>
             </div>
           </div>
